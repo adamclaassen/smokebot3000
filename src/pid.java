@@ -8,6 +8,12 @@ public class pid {
 	float ki = 0;
 	float kd = 0;
 	
+	public pid(float kp, float ki, float kd){
+		this.kp = kp;
+		this.ki = ki;
+		this.kd = kd;
+	}
+	
 	public void setSetpoint(int setpoint){
 		this.setpoint=setpoint;
 	}
