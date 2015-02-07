@@ -4,9 +4,12 @@ import java.util.ArrayList;
 public class OSV{
 	Location currentLoc;
 	ArrayList<Location> locMap;
+	Long currentTime;
+	ArrayList<Long> timeMap;
 	int currentBatteryStatus;
 	int currentDirection;
 	String currentHeading;
+	float currentSpeed;
 	
 	public OSV(){}
 	
@@ -43,10 +46,13 @@ public class OSV{
 	
 	public void setCurrentLocation(Location loc){
 		if(currentLoc==null){
+			currentTime = System.currentTimeMillis();
 			currentLoc = loc;
 		}
 		else{
+			timeMap.add(currentTime);
 			locMap.add(currentLoc);
+			currentTime = System.currentTimeMillis();
 			currentLoc = loc;
 		}
 	}
@@ -74,5 +80,16 @@ public class OSV{
 	}
 	public void setCurrentDirection(int dir){
 		currentDirection = dir;
+	}
+	
+	public float getCurrentSpeed(){
+		if(timeMap.size()<2 || locMap.size()<2){
+			return 0;
+		}
+		else{
+			double deltaX = Math.hypot((locMap.get(locMap.size()-1).getX()) - (locMap.get(locMap.size()-2).getX()),(locMap.get(locMap.size()-1).getX()) - (locMap.get(locMap.size()-2).getX()));
+			long deltaT = timeMap.get(timeMap.size() - 1) - timeMap.get(timeMap.size() - 2);
+			return (float)(deltaX/deltaT);
+		}
 	}
 }
