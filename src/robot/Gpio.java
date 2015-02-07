@@ -14,7 +14,7 @@ public class Gpio {
 		try{
 			Process makePin = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/export", this.pin));
 			makePin.waitFor();
-			Process setDir = Runtime.getRuntime().exec(String.format("echo %s > /sys/class/gpio/gpio%d/direction",this.direction));
+			Process setDir = Runtime.getRuntime().exec(String.format("echo %s > /sys/class/gpio/gpio%d/direction",this.direction, this.pin));
 			setDir.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class Gpio {
 	public void set(int value){
 		this.value = value;
 		try {
-			Process setValue = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/value", this.value));
+			Process setValue = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/gpio%d/value", this.value, this.pin));
 			setValue.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
