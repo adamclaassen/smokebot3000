@@ -2,14 +2,14 @@ package mapOverlay;
 import java.util.ArrayList;
 
 public class OSV{
-	Location currentLoc;
-	ArrayList<Location> locMap;
-	Long currentTime;
-	ArrayList<Long> timeMap;
-	int currentBatteryStatus;
-	int currentDirection;
-	String currentHeading;
-	float currentSpeed;
+	private Location currentLoc;
+	private ArrayList<Location> locMap;
+	private Long currentTime;
+	private ArrayList<Long> timeMap;
+	private int currentBatteryStatus;
+	private int currentDirection;
+	private String currentHeading;
+	private float currentSpeed;
 	
 	public OSV(){}
 	
