@@ -1,13 +1,13 @@
 package robot;
 
 public class pid {
-	int setpoint = 0;
-	int error = 0;
-	int prevError = 0;
-	int accumError = 0;
-	float kp = 0;
-	float ki = 0;
-	float kd = 0;
+	private int setpoint = 0;
+	private int error = 0;
+	private int prevError = 0;
+	private int accumError = 0;
+	private float kp = 0;
+	private float ki = 0;
+	private float kd = 0;
 	
 	public pid(float kp, float ki, float kd){
 		this.kp = kp;

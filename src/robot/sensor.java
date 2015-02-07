@@ -1,19 +1,7 @@
 package robot;
 
-public class sensor {
-	int pin;
-	int inputLow;
-	int inputHigh;
+public interface sensor {
 	
-	public sensor(int pin, int inputLow, int inputHigh){
-		this.pin = pin;
-		this.inputLow = inputLow;
-		this.inputHigh = inputHigh;
-	}
-	public int read(){
-		return 0;
-	}
-	public int getPin(){
-		return this.pin;
-	}
+	public int read();
+	
 }
