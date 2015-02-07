@@ -1,13 +1,13 @@
 package robot;
 
-import robot.sensor;
+import robot.Sensor;
 
 
-public class analogSensor implements sensor {
+public class AnalogSensor implements Sensor {
 	
 	private int pin;
 	
-	public analogSensor(int pin){
+	public AnalogSensor(int pin){
 		this.pin = pin;
 	}
 	public int read() {

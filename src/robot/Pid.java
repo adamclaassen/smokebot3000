@@ -1,6 +1,6 @@
 package robot;
 
-public class pid {
+public class Pid {
 	private int setpoint = 0;
 	private int error = 0;
 	private int prevError = 0;
@@ -9,7 +9,7 @@ public class pid {
 	private float ki = 0;
 	private float kd = 0;
 	
-	public pid(float kp, float ki, float kd){
+	public Pid(float kp, float ki, float kd){
 		this.kp = kp;
 		this.ki = ki;
 		this.kd = kd;

@@ -1,12 +1,12 @@
 package robot;
 
-public class motor {
+public class Motor {
 	private int pin;
 	private int outputLow;
 	private int outputHigh;
 	private int speed;
 	
-	public motor(int pin, int outputLow, int outputHigh){
+	public Motor(int pin, int outputLow, int outputHigh){
 		this.pin = pin;
 		this.outputLow = outputLow;
 		this.outputHigh = outputHigh;
