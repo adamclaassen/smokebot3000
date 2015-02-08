@@ -8,9 +8,7 @@ public class OSV{
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
 	private int currentDirection;
-	private String currentHeading;
-	private float currentSpeed;
-	
+
 	public OSV(){}
 	
 	//gets all values from a string of data from the program running on the Pi;
