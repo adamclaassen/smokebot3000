@@ -3,8 +3,8 @@ package robot;
 import java.util.ArrayList;
 
 public class OSVStatus{
-	private Location currentLoc;
-	private ArrayList<Location> locMap;
+	private Position currentLoc;
+	private ArrayList<Position> locMap;
 	private Long currentTime;
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
@@ -22,7 +22,7 @@ public class OSVStatus{
 		this.setCurrentDirection(Integer.parseInt(dataList[3]));
 	}
 	
-	public OSVStatus(Location loc, int batStat, int dir){
+	public OSVStatus(Position loc, int batStat, int dir){
 		currentLoc = loc;
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
@@ -39,11 +39,11 @@ public class OSVStatus{
 		return status;
 	}
 	
-	public Location getCurrentLocation(){
+	public Position getCurrentLocation(){
 		return currentLoc;
 	}
 	
-	public void setCurrentLocation(Location loc){
+	public void setCurrentLocation(Position loc){
 		if(currentLoc==null){
 			currentTime = System.currentTimeMillis();
 			currentLoc = loc;
@@ -58,11 +58,11 @@ public class OSVStatus{
 	
 	public void setCurrentLocation(int x, int y){
 		if(currentLoc==null){
-			currentLoc.setLocation(x,y);
+			currentLoc.setCoord(x,y);
 		}
 		else{
 			locMap.add(currentLoc);
-			currentLoc.setLocation(x, y);
+			currentLoc.setCoord(x, y);
 		}
 	}
 	
