@@ -1,4 +1,4 @@
-package robot;
+package server;
 
 public class Server {
 

@@ -1,7 +1,8 @@
-package mapOverlay;
+package robot;
+
 import java.util.ArrayList;
 
-public class OSV{
+public class OSVStatus{
 	private Location currentLoc;
 	private ArrayList<Location> locMap;
 	private Long currentTime;
@@ -9,25 +10,25 @@ public class OSV{
 	private int currentBatteryStatus;
 	private int currentDirection;
 
-	public OSV(){}
+	public OSVStatus(){}
 	
 	//gets all values from a string of data from the program running on the Pi;
 	//If we're using Java though, we can just instantiate it with all the values.
 	//Format: "x-Coordinate,y-Coordinate,batteryStatus,direction
-	public OSV(String data){
+	public OSVStatus(String data){
 		String[] dataList = data.split(",");
 		this.setCurrentLocation(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]));
 		this.setCurrentBatteryStatus(Integer.parseInt(dataList[2]));
 		this.setCurrentDirection(Integer.parseInt(dataList[3]));
 	}
 	
-	public OSV(Location loc, int batStat, int dir){
+	public OSVStatus(Location loc, int batStat, int dir){
 		currentLoc = loc;
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
 	
-	public OSV(int x, int y, int batStat, int dir){
+	public OSVStatus(int x, int y, int batStat, int dir){
 		this.setCurrentLocation(x,y);
 		currentBatteryStatus = batStat;
 		currentDirection = dir;

@@ -1,5 +1,5 @@
 package robot;
-import mapOverlay.OSV;
+import applet.OSV;
 
 public class Robot {
 	

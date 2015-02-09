@@ -1,4 +1,4 @@
-package mapOverlay;
+package applet;
 
 public class Location {
 	 private int x,y;
