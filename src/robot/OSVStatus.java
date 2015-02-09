@@ -3,8 +3,13 @@ package robot;
 import java.util.ArrayList;
 
 public class OSVStatus{
+<<<<<<< HEAD
 	private Position currentPos;
 	private ArrayList<Position> posMap;
+=======
+	private Position currentLoc;
+	private ArrayList<Position> locMap;
+>>>>>>> FETCH_HEAD
 	private Long currentTime;
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
@@ -22,8 +27,13 @@ public class OSVStatus{
 		this.setCurrentDirection(Integer.parseInt(dataList[4]));
 	}
 	
+<<<<<<< HEAD
 	public OSVStatus(Position pos, int batStat, int dir){
 		currentPos = pos;
+=======
+	public OSVStatus(Position loc, int batStat, int dir){
+		currentLoc = loc;
+>>>>>>> FETCH_HEAD
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
@@ -40,6 +50,7 @@ public class OSVStatus{
 	}
 	
 	public Position getCurrentLocation(){
+<<<<<<< HEAD
 		return currentPos;
 	}
 	
@@ -52,6 +63,32 @@ public class OSVStatus{
 	
 	public void setCurrentCoord(int x, int y, int h){
 		
+=======
+		return currentLoc;
+	}
+	
+	public void setCurrentLocation(Position loc){
+		if(currentLoc==null){
+			currentTime = System.currentTimeMillis();
+			currentLoc = loc;
+		}
+		else{
+			timeMap.add(currentTime);
+			locMap.add(currentLoc);
+			currentTime = System.currentTimeMillis();
+			currentLoc = loc;
+		}
+	}
+	
+	public void setCurrentLocation(int x, int y){
+		if(currentLoc==null){
+			currentLoc.setCoord(x,y);
+		}
+		else{
+			locMap.add(currentLoc);
+			currentLoc.setCoord(x, y);
+		}
+>>>>>>> FETCH_HEAD
 	}
 	
 	public int getCurrentBatteryStatus(){
