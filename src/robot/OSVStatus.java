@@ -3,8 +3,8 @@ package robot;
 import java.util.ArrayList;
 
 public class OSVStatus{
-	private Location currentLoc;
-	private ArrayList<Location> locMap;
+	private Position currentPos;
+	private ArrayList<Position> posMap;
 	private Long currentTime;
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
@@ -17,19 +17,19 @@ public class OSVStatus{
 	//Format: "x-Coordinate,y-Coordinate,batteryStatus,direction
 	public OSVStatus(String data){
 		String[] dataList = data.split(",");
-		this.setCurrentLocation(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]));
-		this.setCurrentBatteryStatus(Integer.parseInt(dataList[2]));
-		this.setCurrentDirection(Integer.parseInt(dataList[3]));
+		this.setCurrentPos(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]),Integer.parseInt(dataList[2j]));
+		this.setCurrentBatteryStatus(Integer.parseInt(dataList[3]));
+		this.setCurrentDirection(Integer.parseInt(dataList[4]));
 	}
 	
-	public OSVStatus(Location loc, int batStat, int dir){
-		currentLoc = loc;
+	public OSVStatus(Position pos, int batStat, int dir){
+		currentPos = pos;
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
 	
 	public OSVStatus(int x, int y, int batStat, int dir){
-		this.setCurrentLocation(x,y);
+		this.setCurrentPosition(x,y);
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
@@ -39,31 +39,19 @@ public class OSVStatus{
 		return status;
 	}
 	
-	public Location getCurrentLocation(){
-		return currentLoc;
+	public Position getCurrentLocation(){
+		return currentPos;
 	}
 	
-	public void setCurrentLocation(Location loc){
-		if(currentLoc==null){
-			currentTime = System.currentTimeMillis();
-			currentLoc = loc;
-		}
-		else{
-			timeMap.add(currentTime);
-			locMap.add(currentLoc);
-			currentTime = System.currentTimeMillis();
-			currentLoc = loc;
-		}
+	public void setCurrentCoord(Position pos){
+		currentTime = System.currentTimeMillis();
+		currentPos = pos;
+		posMap.add(currentPos);
+		timeMap.add(currentTime);
 	}
 	
-	public void setCurrentLocation(int x, int y){
-		if(currentLoc==null){
-			currentLoc.setLocation(x,y);
-		}
-		else{
-			locMap.add(currentLoc);
-			currentLoc.setLocation(x, y);
-		}
+	public void setCurrentCoord(int x, int y, int h){
+		
 	}
 	
 	public int getCurrentBatteryStatus(){
