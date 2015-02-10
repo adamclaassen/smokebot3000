@@ -9,8 +9,9 @@ public abstract class Sensor {
 		this.inputHigh = inputHigh;
 		this.inputLow = inputLow;
 	}
-	abstract int read();
+	abstract Object read();
 	
+	@SuppressWarnings("unused")
 	private int mapFromInput(float input){
 		  return (int) ((input - this.inputLow) * (100 - 0) / (this.inputHigh - this.inputLow) + 0 + 0.5);
 	}
