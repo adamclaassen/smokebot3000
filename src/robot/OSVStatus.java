@@ -3,13 +3,8 @@ package robot;
 import java.util.ArrayList;
 
 public class OSVStatus{
-<<<<<<< HEAD
 	private Position currentPos;
 	private ArrayList<Position> posMap;
-=======
-	private Position currentLoc;
-	private ArrayList<Position> locMap;
->>>>>>> FETCH_HEAD
 	private Long currentTime;
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
@@ -22,24 +17,19 @@ public class OSVStatus{
 	//Format: "x-Coordinate,y-Coordinate,batteryStatus,direction
 	public OSVStatus(String data){
 		String[] dataList = data.split(",");
-		this.setCurrentPos(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]),Integer.parseInt(dataList[2j]));
+		this.setCurrentPos(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]),Integer.parseInt(dataList[2]));
 		this.setCurrentBatteryStatus(Integer.parseInt(dataList[3]));
 		this.setCurrentDirection(Integer.parseInt(dataList[4]));
 	}
-	
-<<<<<<< HEAD
+
 	public OSVStatus(Position pos, int batStat, int dir){
 		currentPos = pos;
-=======
-	public OSVStatus(Position loc, int batStat, int dir){
-		currentLoc = loc;
->>>>>>> FETCH_HEAD
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
 	
-	public OSVStatus(int x, int y, int batStat, int dir){
-		this.setCurrentPosition(x,y);
+	public OSVStatus(int x, int y, int h, int batStat, int dir){
+		this.setCurrentPos(x,y,h);
 		currentBatteryStatus = batStat;
 		currentDirection = dir;
 	}
@@ -50,45 +40,31 @@ public class OSVStatus{
 	}
 	
 	public Position getCurrentLocation(){
-<<<<<<< HEAD
 		return currentPos;
 	}
 	
-	public void setCurrentCoord(Position pos){
-		currentTime = System.currentTimeMillis();
-		currentPos = pos;
-		posMap.add(currentPos);
-		timeMap.add(currentTime);
-	}
 	
-	public void setCurrentCoord(int x, int y, int h){
-		
-=======
-		return currentLoc;
-	}
-	
-	public void setCurrentLocation(Position loc){
-		if(currentLoc==null){
+	public void setCurrentPos(Position pos){
+		if(currentPos==null){
 			currentTime = System.currentTimeMillis();
-			currentLoc = loc;
+			currentPos = pos;
 		}
 		else{
 			timeMap.add(currentTime);
-			locMap.add(currentLoc);
+			posMap.add(currentPos);
 			currentTime = System.currentTimeMillis();
-			currentLoc = loc;
+			currentPos = pos;
 		}
 	}
 	
-	public void setCurrentLocation(int x, int y){
-		if(currentLoc==null){
-			currentLoc.setCoord(x,y);
+	public void setCurrentPos(int x, int y,int h){
+		if(currentPos==null){
+			currentPos.setPos(x,y,h);
 		}
 		else{
-			locMap.add(currentLoc);
-			currentLoc.setCoord(x, y);
+			posMap.add(currentPos);
+			currentPos.setPos(x,y,h);
 		}
->>>>>>> FETCH_HEAD
 	}
 	
 	public int getCurrentBatteryStatus(){
@@ -107,11 +83,11 @@ public class OSVStatus{
 	}
 	
 	public float getCurrentSpeed(){
-		if(timeMap.size()<2 || locMap.size()<2){
+		if(timeMap.size()<2 || posMap.size()<2){
 			return 0;
 		}
 		else{
-			double deltaX = Math.hypot((locMap.get(locMap.size()-1).getX()) - (locMap.get(locMap.size()-2).getX()),(locMap.get(locMap.size()-1).getX()) - (locMap.get(locMap.size()-2).getX()));
+			double deltaX = Math.hypot((posMap.get(posMap.size()-1).getX()) - (posMap.get(posMap.size()-2).getX()),(posMap.get(posMap.size()-1).getX()) - (posMap.get(posMap.size()-2).getX()));
 			long deltaT = timeMap.get(timeMap.size() - 1) - timeMap.get(timeMap.size() - 2);
 			return (float)(deltaX/deltaT);
 		}
