@@ -14,7 +14,8 @@ public class Gpio {
 		try{
 			Process makePin = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/export", this.pin));
 			makePin.waitFor();
-			Process setDir = Runtime.getRuntime().exec(String.format("echo %s > /sys/class/gpio/gpio%d/direction",this.direction, this.pin));
+			Process setDir = Runtime.getRuntime().exec(String.format("echo %s > /sys/class/gpio/gpio%d/direction",
+					this.direction, this.pin));
 			setDir.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();

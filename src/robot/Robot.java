@@ -1,6 +1,14 @@
 package robot;
-import applet.OSV;
+
 
 public class Robot {
 	
+	
+	public Robot(){
+		
+	}
+	
+	public void drive(int speed, int turn){
+		
+	}
 }

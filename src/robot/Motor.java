@@ -24,5 +24,5 @@ public class Motor {
 	}
 	private int mapToOutput(int x){
 		  return (x - 0) * (this.outputHigh - this.outputLow) / (100 - 0) + this.outputLow;
-		}
+	}
 }
