@@ -21,5 +21,11 @@ public class Position {
 	public void setCoord(int x, int y){this.x=x; this.y=y;}
 	public void setPos(int x, int y, int head){setCoord(x, y); this.head = head;}
 	public void setHead(int head){this.head = head;}
+	public boolean equals(Position pos){
+		if(this.x==pos.x && this.y==pos.y){
+			return true;
+		}
+		return false;
+	}
 	
 }

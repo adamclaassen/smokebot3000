@@ -1,14 +1,16 @@
 package robot;
 
 
-public class Robot {
+public abstract class Robot {
 	
 	
 	public Robot(){
 		
 	}
 	
-	public void drive(int speed, int turn){
-		
-	}
+	public abstract void drive(int speed, int turn);
+	
+	
+	
+	
 }
