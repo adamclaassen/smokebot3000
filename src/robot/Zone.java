@@ -4,27 +4,22 @@ import java.util.ArrayList;
 
 public class Zone {
 	
-	private ArrayList<Position> boundaryPoints;
+	private Position center;
+	private int radius;
 	
-	public Zone(ArrayList<Position> points){
-		this.boundaryPoints.addAll(points);
+	public Zone(Position center, int radius){
+		this.center = center;
+		this.radius = radius;
 	}
-	public Zone(){}
 	
-	public ArrayList<Position> getPoints(){
-		return this.boundaryPoints;
-	}
-	public Position getPoint(int index){
-		return this.boundaryPoints.get(index);
-	}
-	public void addPoint(Position pos){
-		this.boundaryPoints.add(pos);
-	}
-	public void addPoints(ArrayList<Position> pos){
-		this.boundaryPoints.addAll(pos);
-	}
 	public boolean isInZone(Position pos){
-			return false;
+		if(this.getDistance(pos)<this.radius){
+			return true;
+		}
+		return false;
 	}
 	
+	private int getDistance(Position pos){
+		return  (int) Math.sqrt((pos.getX()-this.center.getX())^2 + (pos.getY()-this.center.getY())^2);
+	}
 }
