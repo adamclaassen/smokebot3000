@@ -1,3 +1,8 @@
+/* By Joshua Owens
+ * The OSVStatus Object is meant to be a buffer between the 
+ * running OSV and the Java applet. It recieves information
+ * from the OSV and outputs it to an XML file for the applet.
+ */
 package robot;
 
 import java.util.ArrayList;
