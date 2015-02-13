@@ -1,75 +1,42 @@
 package robot;
 
+import java.util.ArrayList;
+
 public class RectZone {
-	private Position pos1;
-	private Position pos2;
+	private Position upperLeft;
+	private Position upperRight;
+	private Position lowerLeft;
+	private Position lowerRight;
 	
-	public RectZone(Position pos1, Position pos2){
-		this.setPos1(pos1);
-		this.setPos2(pos2);
-	}
-
-	public Position getPos1() {
-		return pos1;
-	}
-
-	public void setPos1(Position pos) {
-		this.pos1 = pos;
-	}
-
-	public Position getPos2() {
-		return pos2;
-	}
-
-	public void setPos2(Position pos) {
-		this.pos2 = pos;
+	public RectZone(Position center, int distToEdge){
+		this.upperLeft.setCoord(center.getX()-distToEdge, center.getY()+distToEdge);
+		this.upperRight.setCoord(center.getX()+distToEdge, center.getY()+distToEdge);
+		this.lowerLeft.setCoord(center.getX()-distToEdge, center.getY()-distToEdge);
+		this.lowerRight.setCoord(center.getX()+distToEdge, center.getY()-distToEdge);
 	}
 	
-	private boolean isBetweenX(Position pos){
-		if(pos2.getX()-pos1.getX()>0){
-			if(pos1.getX()<pos.getX() && pos.getX()<pos2.getX()){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			if(pos2.getX()<pos.getX() && pos.getX()<pos1.getX()){
-				return true;
-			}else{
-				return false;
-			}
+	public RectZone(Position upperLeft, Position lowerRight){
+		this.upperLeft = upperLeft;
+		this.lowerRight = lowerRight;
+		this.upperRight.setCoord(this.lowerRight.getX(), this.upperLeft.getY());
+		this.lowerLeft.setCoord(this.upperLeft.getX(), this.lowerRight.getY());
+	}
+	
+	public ArrayList<Position> getWallPositions(){
+		ArrayList<Position> walls = new ArrayList<Position>();
+		for(int i = 0; i<(this.upperRight.getX()-this.upperLeft.getX()); i++){
+			walls.add(new Position( i, upperRight.getY() ));
 		}
-	}
-	
-	private boolean isBetweenY(Position pos){
-		if(pos2.getY()-pos1.getY()>0){
-			if(pos1.getY()<pos.getY() && pos.getY()<pos2.getY()){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			if(pos2.getY()<pos.getY() && pos.getY()<pos1.getY()){
-				return true;
-			}else{
-				return false;
-			}
+		for(int i = 0; i<(this.upperRight.getY()-this.lowerRight.getY()); i++){
+			walls.add(new Position(this.upperRight.getX(), i));
 		}
-	}
-	public boolean isInZone(Position pos){
-		if((pos.equals(pos1) && pos.equals(pos2))){
-			return true;
+		for(int i = 0; i<(this.lowerRight.getX()-this.lowerLeft.getX()); i++){
+			walls.add(new Position(i, this.lowerRight.getY()));
 		}
-		else if(this.isBetweenX(pos) && this.isBetweenY(pos)){
-			return true;
-		}else{
-			return false;
+		for(int i = 0; i<(this.upperLeft.getY()-this.lowerLeft.getY()); i++){
+			walls.add(new Position(this.lowerLeft.getY(), i));
 		}
+		return walls;
 	}
-	
-	public boolean equals(RectZone zone){
-		return false;
-	}
-	
 
 }
