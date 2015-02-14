@@ -1,15 +1,10 @@
-/* By Joshua Owens
- * The OSVStatus Object is meant to be a buffer between the 
- * running OSV and the Java applet. It recieves information
- * from the OSV and outputs it to an XML file for the applet.
- */
 package robot;
 
 import java.util.ArrayList;
 
 public class OSVStatus{
 	private Position currentPos;
-	private ArrayList<Position> posMap;
+	private ArrayList<Position> prevPos;
 	private Long currentTime;
 	private ArrayList<Long> timeMap;
 	private int currentBatteryStatus;
@@ -20,11 +15,9 @@ public class OSVStatus{
 	//gets all values from a string of data from the program running on the Pi;
 	//If we're using Java though, we can just instantiate it with all the values.
 	//Format: "x-Coordinate,y-Coordinate,batteryStatus,direction
-	public OSVStatus(String data){
-		String[] dataList = data.split(",");
-		this.setCurrentPos(Integer.parseInt(dataList[0]),Integer.parseInt(dataList[1]),Integer.parseInt(dataList[2]));
-		this.setCurrentBatteryStatus(Integer.parseInt(dataList[3]));
-		this.setCurrentDirection(Integer.parseInt(dataList[4]));
+	public OSVStatus(Position pos, int battPercent){
+		this.currentPos = pos;
+		this.setCurrentBatteryStatus(battPercent);
 	}
 
 	public OSVStatus(Position pos, int batStat, int dir){
@@ -56,7 +49,7 @@ public class OSVStatus{
 		}
 		else{
 			timeMap.add(currentTime);
-			posMap.add(currentPos);
+			prevPos.add(currentPos);
 			currentTime = System.currentTimeMillis();
 			currentPos = pos;
 		}
@@ -67,7 +60,7 @@ public class OSVStatus{
 			currentPos.setPos(x,y,h);
 		}
 		else{
-			posMap.add(currentPos);
+			prevPos.add(currentPos);
 			currentPos.setPos(x,y,h);
 		}
 	}
@@ -88,11 +81,11 @@ public class OSVStatus{
 	}
 	
 	public float getCurrentSpeed(){
-		if(timeMap.size()<2 || posMap.size()<2){
+		if(timeMap.size()<2 || prevPos.size()<2){
 			return 0;
 		}
 		else{
-			double deltaX = Math.hypot((posMap.get(posMap.size()-1).getX()) - (posMap.get(posMap.size()-2).getX()),(posMap.get(posMap.size()-1).getX()) - (posMap.get(posMap.size()-2).getX()));
+			double deltaX = Math.hypot((prevPos.get(prevPos.size()-1).getX()) - (prevPos.get(prevPos.size()-2).getX()),(prevPos.get(prevPos.size()-1).getX()) - (prevPos.get(prevPos.size()-2).getX()));
 			long deltaT = timeMap.get(timeMap.size() - 1) - timeMap.get(timeMap.size() - 2);
 			return (float)(deltaX/deltaT);
 		}

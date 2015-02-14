@@ -29,4 +29,10 @@ public class ExampleRobot extends Robot{
 		
 	}
 
+	@Override
+	public void sendSensorValue() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
