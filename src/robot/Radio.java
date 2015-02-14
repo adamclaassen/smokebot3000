@@ -1,9 +1,6 @@
 package robot;
-
+// int radio_id,double x,double y,double head (radians),double timer
 public class Radio {
-	int x;
-	int y;
-	int head;
 	int txPin;
 	int rxPin;
 	
