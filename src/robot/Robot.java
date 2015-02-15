@@ -1,5 +1,9 @@
 package robot;
-
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public abstract class Robot {
 	
@@ -8,10 +12,32 @@ public abstract class Robot {
 	protected Pid pid;
 	protected Radio radio;
 	protected Gpio gpio;
+	
+	private int inetPort;
+	
+	private ServerSocket serverSocket;
+	private Socket socket;
+	private BufferedWriter writer;
+	
 	public Robot(){
 		
 	}
 	public void startSocket(){
+		try {
+			this.serverSocket = new ServerSocket(this.inetPort);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			this.socket = this.serverSocket.accept();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

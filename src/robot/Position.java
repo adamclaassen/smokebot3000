@@ -35,5 +35,8 @@ public class Position {
 	public boolean isNearby(Position pos){
 		return this.nearby.isInZone(pos);
 	}
+	public String toString(){
+		return String.format("[%d,%d,%f]", this.getX(), this.getY(), this.getHead());
+	}
 	
 }
