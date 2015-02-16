@@ -1,9 +1,5 @@
 # smokebot3000
-########################################
-#DON'T RUN THIS SCRIPT RIGHT NOW!!!!!!!#
-#IT DOES NOT WORK YET AND WILL PROBABLY#
-#FUCK SHIT UP!!!!!!!!!!!!!!!!!!!!!!!!!!#
-########################################
+#Use of the setup.sh script is not recommended at this time. It is not ready yet, and may do weird things to your pi.
 Setting up your Pi for the robot is pretty easy.
 1. Simply type `./setup.sh robotname` into your terminal, replacing robotname with your robot's name.
 2. This will reboot your pi at the end, so wait for it to reboot and connect to the `robotname` WiFi network.
