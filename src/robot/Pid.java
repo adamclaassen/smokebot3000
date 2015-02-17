@@ -5,9 +5,9 @@ public class Pid {
 	private double error = 0;
 	private double prevError = 0;
 	private int accumError = 0;
-	private double kp = 0;
-	private double ki = 0;
-	private double kd = 0;
+	private double kp;
+	private double ki;
+	private double kd;
 	
 	public Pid(double d, double e, double f){
 		this.kp = d;
