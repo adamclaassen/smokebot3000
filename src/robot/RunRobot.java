@@ -1,10 +1,14 @@
 package robot;
 
-public class RunRobot {
+public class RunRobot{
+	static Robot robot;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+		//insert starting code here
+		robot = new ExampleRobot();
+		robot.currentPos.setNearbyRadius(10);
+		while(true){	
+			
+		}
 	}
-
 }

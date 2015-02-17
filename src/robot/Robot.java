@@ -4,24 +4,29 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public abstract class Robot {
 	
 	protected Position currentPos;
 	protected Pathfinder pathfinder;
-	protected Pid pid;
+	protected Pid distPid;
+	protected Pid turnPid;
 	protected Radio radio;
-	protected Gpio gpio;
 	
 	private int inetPort;
-	
 	private ServerSocket serverSocket;
 	private Socket socket;
 	private BufferedWriter writer;
 	
 	public Robot(){
-		
+		this.radio = new Radio(0,0);
+		//this.currentPos = new Position(Radio.something);
+		this.pathfinder = new Pathfinder(this.currentPos);
+		this.distPid = new Pid(0.0, 0.0, 0.0);
+		this.turnPid = new Pid(0.0, 0.0, 0.0);
 	}
+	
 	public void startSocket(){
 		try {
 			this.serverSocket = new ServerSocket(this.inetPort);

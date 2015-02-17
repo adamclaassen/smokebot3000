@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Pathfinder {
 	private Position start;
-	private Position end;
+	private ArrayList<Position> goals;
 	private int currentTurnPoint;
 	private ArrayList<Zone> illegalZones;
 	private ArrayList<Position> turnPoints;
@@ -13,9 +13,9 @@ public class Pathfinder {
 		this.start = start;
 	}
 	
-	public Pathfinder(Position start, Position end){
+	public Pathfinder(Position start, ArrayList<Position> goals){
 		this(start);
-		this.end = end;
+		this.goals = goals;
 	}
 
 	public ArrayList<Position> getTurnPoints(){
@@ -32,5 +32,18 @@ public class Pathfinder {
 	
 	public Position getNextTurnPoint(){
 		return this.turnPoints.get(this.currentTurnPoint+1);
+	}
+	
+	public void reachedTurnPoint(){
+		this.currentTurnPoint++;
+	}
+	
+	public boolean isAtGoal(Position pos){
+		for(Position goal:this.goals){
+			if(pos.isNearby(goal)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
