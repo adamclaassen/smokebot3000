@@ -9,10 +9,8 @@ public class Pid {
 	private double ki;
 	private double kd;
 	
-	public Pid(double d, double e, double f){
-		this.kp = d;
-		this.ki = e;
-		this.kd = f;
+	public Pid(double p, double i, double d){
+		this.kp = p; this.ki = i; this.kd = d;
 	}
 	
 	public void setSetpoint(double d){this.setpoint=d;}
