@@ -19,12 +19,15 @@ public abstract class Robot {
 	private Socket socket;
 	private BufferedWriter writer;
 	
+	public ArrayList<Runnable> commandList;
+	
 	public Robot(){
 		this.radio = new Radio(0,0);
 		//this.currentPos = new Position(Radio.something);
 		this.pathfinder = new Pathfinder(this.currentPos);
 		this.distPid = new Pid(0.0, 0.0, 0.0);
 		this.turnPid = new Pid(0.0, 0.0, 0.0);
+		this.commandList = new ArrayList<Runnable>();
 	}
 	
 	public void startSocket(){
