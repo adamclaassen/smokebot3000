@@ -7,8 +7,6 @@ public class RunRobot{
 		//insert starting code here
 		robot = new ExampleRobot();
 		robot.currentPos.setNearbyRadius(10);
-		while(true){	
-			
-		}
+		robot.commandList.forEach((command) -> command.run());
 	}
 }
