@@ -38,6 +38,12 @@ public class ExampleRobot extends Robot{
 		
 		
 	}
+
+	@Override
+	public void sendBattStatus() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
