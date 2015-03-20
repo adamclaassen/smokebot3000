@@ -34,17 +34,17 @@ public abstract class Robot {
 		try {
 			this.serverSocket = new ServerSocket(this.inetPort);
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.sendError(e);
 		}
 		try {
 			this.socket = this.serverSocket.accept();
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.sendError(e);
 		}
 		try {
 			this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.sendError(e);
 		}
 		
 	}
@@ -69,7 +69,11 @@ public abstract class Robot {
 	
 	public abstract void sendSensorValue();
 	
-	public void sendError(Error e){
+	public void sendError(Exception e){
+		
+	}
+	
+	public void sendError(String s){
 		
 	}
 }
