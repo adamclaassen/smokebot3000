@@ -61,13 +61,15 @@ public abstract class Robot {
 		
 	}
 	
-	public void sendBattStatus(){
-		
-	}
+	public abstract void sendBattStatus();
 	
 	public void sendPath(){
 		
 	}
 	
 	public abstract void sendSensorValue();
+	
+	public void sendError(Error e){
+		
+	}
 }
