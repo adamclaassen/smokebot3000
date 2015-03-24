@@ -6,6 +6,7 @@ public enum MessageTypes{
 	BATT_STATUS,
 	PATH,
 	CUSTOM_DATA_A,
-	CUSTOM_DATA_B;
+	CUSTOM_DATA_B,
+	ERROR_MESSAGE;
 }
 
