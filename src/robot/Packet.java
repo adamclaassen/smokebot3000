@@ -21,9 +21,9 @@ public class Packet {
 	}
 	public Packet(Position pos, MessageTypes mType, Object data){
 		
-		this.packetID = new String(Integer.toString(this.nextPacketID));
+		this.packetID = new String(Integer.toString(Packet.nextPacketID));
 		this.messageType = new String(mType.toString());
-		this.nextPacketID++;
+		Packet.nextPacketID++;
 		this.osvPosition = new String(
 				"%"+
 				Integer.toString(pos.getX())+"%"+
@@ -55,7 +55,7 @@ public class Packet {
 	public String toString(){
 		String output = new String(
 				"<<"+
-				Integer.toString(this.nextPacketID)+"/"+
+				Integer.toString(Packet.nextPacketID)+"/"+
 				this.osvPosition+"/"+
 				this.messageType+"/"+
 				this.data+">>");
