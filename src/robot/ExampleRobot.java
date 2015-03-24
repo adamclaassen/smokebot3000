@@ -10,9 +10,9 @@ public class ExampleRobot extends Robot{
 	Runnable command1;
 	Runnable command2;
 	
-	public ExampleRobot(){
+	/*public ExampleRobot(){
 		this.commandList.add(command1 = () -> this.drive(0, 0));
-	}
+	}*/
 	
 	public void drive(int speed, int turn) {
 		//make sure drive is out-of-bounds safe
