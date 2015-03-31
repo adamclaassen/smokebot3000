@@ -1,6 +1,6 @@
 package robot;
 
-public abstract class Packet{
+public class Packet{
 	
 	private String packet;
 	
@@ -57,9 +57,15 @@ public abstract class Packet{
 		
 	}
 	
-	public abstract Object decodeSensorData(String data);
-	public abstract Object decodeCustomA(String data);
-	public abstract Object decodeCustomB(String data);
+	public double decodeSensorData(String data){
+		return Double.parseDouble(data);
+	}
+	public double decodeCustomA(String data){
+		return Double.parseDouble(data);
+	}
+	public double decodeCustomB(String data){
+		return Double.parseDouble(data);
+	}
 	
 	public String toString(){
 		return this.packet;
