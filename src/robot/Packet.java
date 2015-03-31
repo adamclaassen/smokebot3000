@@ -1,64 +1,67 @@
 package robot;
 
-public class Packet {
-	static int nextPacketID = 0;
-	String rawPacket;
-	String messageType;
-	String data;
-	String osvPosition;
-	String packetID;
-	/*tentative packet format: <<packetID/%x%y%head/messageType/data>>
-	 * messageType rules:
-	 * POSITION: pass integer 0 for 'data', it is ignored
-	 * SENSOR_DATA: pass a Sensor object, it must have a properly implemented toString
-	 * BATT_STATUS: pass a battery voltage as a float (NOTE: may change in favor of passing batt sensor instance)
-	 * PATH: pass the Pathfinder object, this will generate a very large packet
-	 * CUSTOM_DATA_A: pass anything with a toString method, this is what the packet will contain
-	 * CUSTOM_DATA_B: see CUSTOM_DATA_A
-	 */
-	public Packet(String rawPacket){
-		
-	}
+public abstract class Packet{
+	
+	private String packet;
+	
+	Position pos;
+	MessageTypes mType;
+	Object data;
+	
 	public Packet(Position pos, MessageTypes mType, Object data){
-		
-		this.packetID = new String(Integer.toString(Packet.nextPacketID));
-		this.messageType = new String(mType.toString());
-		Packet.nextPacketID++;
-		this.osvPosition = new String(
-				"%"+
-				Integer.toString(pos.getX())+"%"+
-				Integer.toString(pos.getY())+"%"+
-				Float.toString(pos.getHead())
-				);
-		this.data = new String(data.toString());
-		/*switch(mType){
-		case POSITION:
-			this.data = new String("0");
-			break;
-		case SENSOR_DATA:
-			break;
-		case BATT_STATUS:
-			break;
-		case PATH:
-			break;
-		case CUSTOM_DATA_A:
-			this.data = new String(data.toString());
-			break;
-		case CUSTOM_DATA_B:
-			this.data = new String(data.toString());
-			break;
-		}
-		this.osvPosition.concat(">>");
-		*/
+		packet = new String("<<"+
+				pos.toString()+"/"+
+				mType.toString()+"/"+
+				data.toString()+"/"+
+				">>");
 	}
 	
+	public Packet(Position pos){
+		this(pos, MessageTypes.POSITION, 0);
+	}
+	
+	public Packet(Position pos, Exception e){
+		this(pos, MessageTypes.ERROR_MESSAGE, e.toString());
+	}
+	
+	public Packet(String incoming){
+		int posEnd;
+		int mTypeEnd;
+		int dataEnd;
+		
+		posEnd = incoming.indexOf("/");
+		mTypeEnd = incoming.indexOf("/", posEnd);
+		dataEnd = incoming.indexOf(">");
+		
+		String posString = incoming.substring(2, posEnd);
+		String mTypeString = incoming.substring(posEnd+1, mTypeEnd);
+		String dataString = incoming.substring(mTypeEnd+1, dataEnd);
+		
+		this.pos = new Position( //[143,445,449]
+				Integer.parseInt(posString.substring(1,2)),
+				Integer.parseInt(posString.substring(3,4)),
+				Integer.parseInt(posString.substring(5,6))
+				);
+
+		this.mType = MessageTypes.valueOf(mTypeString);
+		
+		switch(this.mType){
+		case POSITION:      break;
+		case BATT_STATUS:   data = Integer.getInteger(dataString); break;
+		case SENSOR_DATA:   data = decodeSensorData(dataString); break;
+		case CUSTOM_DATA_A: data = decodeCustomA(dataString); break;
+		case CUSTOM_DATA_B: data = decodeCustomB(dataString); break;
+		default:
+			break;
+		}
+		
+	}
+	
+	public abstract Object decodeSensorData(String data);
+	public abstract Object decodeCustomA(String data);
+	public abstract Object decodeCustomB(String data);
+	
 	public String toString(){
-		String output = new String(
-				"<<"+
-				Integer.toString(Packet.nextPacketID)+"/"+
-				this.osvPosition+"/"+
-				this.messageType+"/"+
-				this.data+">>");
-		return output;
+		return this.packet;
 	}
 }
