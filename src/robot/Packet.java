@@ -51,6 +51,8 @@ public abstract class Packet{
 		case SENSOR_DATA:   data = decodeSensorData(dataString); break;
 		case CUSTOM_DATA_A: data = decodeCustomA(dataString); break;
 		case CUSTOM_DATA_B: data = decodeCustomB(dataString); break;
+		default:
+			break;
 		}
 		
 	}
