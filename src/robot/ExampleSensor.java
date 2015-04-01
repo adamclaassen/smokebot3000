@@ -6,6 +6,7 @@ public class ExampleSensor extends Sensor {
 		super(0,0);
 	}
 	Object read() {
+		
 		return null;
 	}
 
