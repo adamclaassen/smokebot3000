@@ -1,4 +1,4 @@
-package robot;
+package comm;
 // int radio_id,double x,double y,double head (radians),double timer
 public class Radio {
 	int txPin;

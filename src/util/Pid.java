@@ -1,10 +1,10 @@
-package robot;
+package util;
 
 public class Pid {
 	private double setpoint = 0;
 	private double error = 0;
 	private double prevError = 0;
-	private int accumError = 0;
+	private double accumError = 0;
 	private double kp;
 	private double ki;
 	private double kd;
@@ -21,11 +21,11 @@ public class Pid {
 	public double getKi(){return this.ki;}
 	public void setKd(float kd){this.kd = kd;}
 	public double getKd(){return this.kd;}
-	public int update(int signal){
+	public double update(int signal){
 		this.prevError = this.error;
 		this.error = this.setpoint-signal;
 		double diffError = this.error-this.prevError;
 		this.accumError += this.error;
-		return (int) ((this.error*this.kp)+(diffError*this.kd)+(this.accumError*this.ki) + 0.5);
+		return ((this.error*this.kp)+(diffError*this.kd)+(this.accumError*this.ki) + 0.5);
 	}
 }

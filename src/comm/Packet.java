@@ -1,4 +1,6 @@
-package robot;
+package comm;
+
+import util.Position;
 
 public class Packet{
 	
