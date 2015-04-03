@@ -1,14 +1,20 @@
 #! /bin/bash
-echo "Don't run this, it does not work yet"
+
 exit 0
-ROBOTNAME=$1
-USERNAME = $(whoami)
 
-sudo apt-get update
-sudo apt-get install apache2
+#install software
+sudo apt-git install apache2
+sudo apt-get install pi4j
+sudo apt-get install git
 
-sudo cat $ROBOTNAME > /etc/hostname
-sudo ln -s /home/$USERNAME/smokebot3000/web/$ROBOTNAME.html /var/www/index.html
+#add the git repository
 
+git clone https://github.com/adamclaassen/smokebot3000.git
+git checkout $1
 
-sudo reboot
+#symlink the web landing page to apacke's web folder
+cp ln -s web/index.html /www/
+
+#disable the serial console on the rpi to make UART available.
+sudo chmod 775 scripts/*
+sudo scripts/rpi-serial-console.sh disable
