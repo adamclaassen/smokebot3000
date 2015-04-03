@@ -1,6 +1,6 @@
 package sensor;
 
-import comm.SPI;
+import comm.SPIWrapper;
 
 public class AnalogDigitalConverter extends Sensor{
 

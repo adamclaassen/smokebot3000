@@ -9,8 +9,8 @@ import util.Pid;
 import util.Position;
 import comm.Gpio;
 import comm.Radio;
-import comm.SPI;
-import comm.Serial;
+import comm.SPIWrapper;
+import comm.SerialWrapper;
 
 public class SimpleRobot {
 	
@@ -22,8 +22,8 @@ public class SimpleRobot {
 	private static Motor leftMotor;
 	private static Motor rightMotor;
 	private static Gpio gpio;
-	private static SPI spi;
-	private static Serial serial;
+	private static SPIWrapper spi;
+	private static SerialWrapper serial;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	

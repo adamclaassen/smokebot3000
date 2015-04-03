@@ -1,13 +1,13 @@
 package motor;
 
-import comm.SPI;
+import comm.SPIWrapper;
 
 
 public class ArduinoMotorController extends Motor{
 
-	private SPI spi;
+	private SPIWrapper spi;
 	
-	public ArduinoMotorController(int pin, SPI spibus) {
+	public ArduinoMotorController(int pin, SPIWrapper spibus) {
 		super(pin, 0, 255);
 		this.spi = spibus;
 	}
