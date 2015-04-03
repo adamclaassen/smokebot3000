@@ -18,3 +18,5 @@ cp ln -s web/index.html /www/
 #disable the serial console on the rpi to make UART available.
 sudo chmod 775 scripts/*
 sudo scripts/rpi-serial-console.sh disable
+
+sudo reboot
