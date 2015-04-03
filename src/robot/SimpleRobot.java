@@ -7,6 +7,7 @@ import sensor.AnalogDigitalConverter;
 import util.Pathfinder;
 import util.Pid;
 import util.Position;
+import comm.ErrorHandler;
 import comm.Gpio;
 import comm.Radio;
 import comm.SPIWrapper;
@@ -14,7 +15,7 @@ import comm.SerialWrapper;
 
 public class SimpleRobot {
 	
-	// various objects
+	// various private objects
 	private static Pathfinder pathfinder;
 	private static Radio radio;
 	private static Pid distPid;
@@ -27,8 +28,11 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	
-	// various numbers
-	static double defaultSpeed = 10;
+	//public objects
+	public static ErrorHandler eHandler;
+	
+	// constants
+	private final static double defaultSpeed = 10;
 	
 	
 	public SimpleRobot(){
