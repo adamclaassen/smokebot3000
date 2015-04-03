@@ -2,16 +2,11 @@ package robot;
 
 import java.util.ArrayList;
 
-import motor.Motor;
-import sensor.AnalogDigitalConverter;
-import util.Pathfinder;
-import util.Pid;
-import util.Position;
-import comm.ErrorHandler;
-import comm.Gpio;
-import comm.Radio;
-import comm.SPIWrapper;
-import comm.SerialWrapper;
+import motor.*;
+import sensor.*;
+import comm.*;
+import util.*;
+
 
 public class SimpleRobot {
 	
@@ -49,8 +44,9 @@ public class SimpleRobot {
 	 * fwdSpeed is between -1 (full back) and 1 (full fwd).
 	 * turnSpeed is between -1 (full left) and 1 (full right).
 	 * The speed of the outside motor in a turn is fwdSpeed+|turnSpeed|.
-	 * The speed of the inside motor is fwdSpeed-|turnSpeed|
-	 * (technically this is the mathematical equivalent)
+	 * The speed of the inside motor is fwdSpeed-|turnSpeed|.
+	 * The actual math below is mathematically equivalent to the steps above,
+	 * but requires less code to implement.
 	 * @param fwdSpeed
 	 * @param turnSpeed
 	 */
@@ -60,8 +56,8 @@ public class SimpleRobot {
 	}
 	
 	public static void readSensors(){
-		double smokeValue = adc.read();
-		//radio.send(Double.toString(smokeValue));
+		
+		//radio.send(Double.toString());
 	}
 	
 	/**
