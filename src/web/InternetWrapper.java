@@ -2,29 +2,29 @@ package web;
 
 import java.util.ArrayList;
 
+import util.Position;
 import comm.Packet;
+import robot.SimpleRobot;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class InternetWrapper {
 	
-	private ArrayList<Packet> incomingPackets;
+	private Document doc;
 	
-	public InternetWrapper(int port){
-		 
+	public InternetWrapper(){
+		DocumentBuilderFactory unnessecaryAbstraction = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder docBuilder = unnessecaryAbstraction.newDocumentBuilder();
+			this.doc = docBuilder.newDocument();
+		} catch (ParserConfigurationException e) {
+			SimpleRobot.eHandler.addError(e);
+		}
 	}
-	 
-	public void sendPacket(Packet packet){
-		 
-	}
-	 
-	public Packet getLatestPacket(){
-		Packet temp = this.incomingPackets.get(this.incomingPackets.size()-1);
-		this.incomingPackets.remove(this.incomingPackets.size()-1);
-		return temp;
-	}
-	 
-	public Packet getOldestPacket(){
-		Packet temp = this.incomingPackets.get(0);
-		this.incomingPackets.remove(0);
-		return temp;
-	}
+	
 }

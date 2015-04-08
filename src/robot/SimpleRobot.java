@@ -1,6 +1,7 @@
 package robot;
 
 import java.util.ArrayList;
+import org.w3c.dom.*;
 
 import motor.*;
 import sensor.*;
@@ -12,6 +13,7 @@ public class SimpleRobot {
 	
 	// various private objects
 	private static Pathfinder pathfinder;
+	private static ArrayList<Position> routeTaken;
 	private static Radio radio;
 	private static Pid distPid;
 	private static Pid turnPid;
@@ -28,8 +30,7 @@ public class SimpleRobot {
 	
 	// constants
 	private final static double defaultSpeed = 10;
-	
-	
+		
 	public SimpleRobot(){
 		pathfinder = new Pathfinder(currentPos);
 	}
@@ -101,6 +102,55 @@ public class SimpleRobot {
 	 */
 	public static void startup(){
 		
+	}
+	
+	/**
+	 * Elements of XML Doc:
+	 * currentPos
+	 * path
+	 * previousPositions
+	 * battery
+	 * sensorData
+	 */
+	private static void generateXML(Document docXML){
+		
+		//declare elements
+		Element robotXML = docXML.createElement("robot");
+		Element currentPosXML = docXML.createElement("current position");
+		Element pathXML = docXML.createElement("path");
+		Element routeTakenXML = docXML.createElement("route taken");
+		Element batteryStatusXML = docXML.createElement("battery");
+		Element sensorValueXML = docXML.createElement("sensor data");
+		
+		//append all sub-elements of root
+		robotXML.appendChild(currentPosXML);
+		robotXML.appendChild(pathXML);
+		robotXML.appendChild(routeTakenXML);
+		robotXML.appendChild(batteryStatusXML);
+		robotXML.appendChild(sensorValueXML);
+		
+		//create structures for all positional elements
+		addPositionXML(docXML, currentPosXML, radio.getCurrentPos());
+		routeTaken.forEach((routePoint) -> addPositionXML(docXML, routeTakenXML, routePoint));
+		pathfinder.getTurnPoints().forEach((turnPoint) -> addPositionXML(docXML, pathXML, turnPoint));
+		
+		//add data for all other elements
+		batteryStatusXML.appendChild(docXML.createTextNode(Double.toString(10)));
+		sensorValueXML.appendChild(docXML.createTextNode(Double.toString(20)));
+	}
+	
+	private static void addPositionXML(Document doc, Element parent, Position pos){
+		Element x = doc.createElement("x");
+		Element y = doc.createElement("y");
+		Element rot = doc.createElement("rot");
+		
+		x.appendChild(doc.createTextNode(Integer.toString(pos.getX())));
+		y.appendChild(doc.createTextNode(Integer.toString(pos.getY())));
+		rot.appendChild(doc.createTextNode(Double.toString(pos.getHead())));
+		
+		parent.appendChild(x);
+		parent.appendChild(y);
+		parent.appendChild(rot);
 	}
 
 }
