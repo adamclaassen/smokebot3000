@@ -1,6 +1,10 @@
 package applet;
 import javax.swing.*;
+
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
 //This is a default OSVA Component used for displaying
 //information on the applet. Individual teams will have
 //to implement the Field themselves, so that they can 
@@ -12,8 +16,8 @@ import java.awt.*;
 public class AppletField extends JPanel{
 	String info;
 	
-	public AppletField(String data){
-		info = data;
+	public AppletField(URL xml){
+		InputStream in = new BufferedInputStream(xml.openStream());
 	}
 	
 	public void paintComponent(Graphics g){

@@ -26,19 +26,7 @@ public class OSVA extends JApplet{
 		
 	}
 	
-	public void destroy(){}
+	public void destroy(){
 		
-	public void paint(Graphics g){
-		//g.setFont(Font.SANS_SERIF);
-		//retrieve packet (getPacket) and draw strings, generate map overlay once path is determined
-		Packet data = getPacket("192.168.0.11");
-		g.drawString(data.toString(), 0, 0);
 	}
-	
-	public Packet getPacket(String ip){
-		//Do internety things
-		Packet defaultPacket = null;
-		return defaultPacket;
-	}
-	
 }
