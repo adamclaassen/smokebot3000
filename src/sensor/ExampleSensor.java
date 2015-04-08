@@ -1,4 +1,5 @@
-package robot;
+package sensor;
+
 
 public class ExampleSensor extends Sensor {
 	

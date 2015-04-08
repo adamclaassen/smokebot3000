@@ -1,4 +1,4 @@
-package robot;
+package sensor;
 
 public abstract class Sensor {
 	

@@ -1,18 +1,17 @@
-package robot;
-import com.pi4j.io.spi.*;
+package sensor;
+
+import comm.SPIWrapper;
 
 public class AnalogDigitalConverter extends Sensor{
 
 	public AnalogDigitalConverter(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
-		
-		
 	}
 
 	@Override
-	public Object read() {
-		
-		return 0;
+	public Double read() {
+		//this.spi.askfordata();
+		return 0.0;
 	}
 
 }

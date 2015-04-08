@@ -1,4 +1,4 @@
-package robot;
+package comm;
 
 import java.io.IOException;
 

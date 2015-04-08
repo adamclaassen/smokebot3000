@@ -1,6 +1,8 @@
-package robot;
+package comm;
 
 import java.util.ArrayList;
+
+import util.Position;
 
 public class OSVStatus{
 	private Position currentPos;
