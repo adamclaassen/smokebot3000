@@ -1,4 +1,7 @@
 package comm;
+
+import util.Position;
+
 // int radio_id,double x,double y,double head (radians),double timer
 public class Radio {
 	int txPin;
@@ -7,6 +10,10 @@ public class Radio {
 	public Radio(int txPin, int rxPin){
 		this.txPin = txPin;
 		this.rxPin = rxPin;
+	}
+	
+	public Position getCurrentPos(){
+		return new Position(0,0);
 	}
 	
 }
