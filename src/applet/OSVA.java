@@ -1,10 +1,11 @@
 package applet;
 
 import javax.swing.*;
-
-import java.awt.*;
+import robot.*;
+import comm.Packet;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.awt.*;
 
 public class OSVA extends JApplet{
 
@@ -15,6 +16,7 @@ public class OSVA extends JApplet{
 	public void init(){
 		width = this.getWidth();
 		height = this.getHeight();
+		
 		URL source = null;
 		try {
 			source = new URL("http://192.168.1.161");
