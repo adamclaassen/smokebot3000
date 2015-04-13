@@ -3,6 +3,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 //This is a default OSVA Component used for displaying
@@ -17,7 +18,15 @@ public class AppletField extends JPanel{
 	String info;
 	
 	public AppletField(URL xml){
-		InputStream in = new BufferedInputStream(xml.openStream());
+		try {
+			InputStream in = new BufferedInputStream(xml.openStream());
+		} catch (IOException e) {
+			info = e.getMessage();
+		}
+	}
+	
+	public AppletField(String error){
+		info = error;
 	}
 	
 	public void paintComponent(Graphics g){
