@@ -1,6 +1,9 @@
-package util;
+package pathfinder;
 
 import java.util.ArrayList;
+
+import util.Position;
+import util.Zone;
 
 public class Pathfinder {
 	private Position start;

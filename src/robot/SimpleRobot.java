@@ -1,8 +1,10 @@
 package robot;
 
 import java.util.ArrayList;
+
 import org.w3c.dom.*;
 
+import pathfinder.Pathfinder;
 import motor.*;
 import sensor.*;
 import comm.*;

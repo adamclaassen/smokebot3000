@@ -18,7 +18,7 @@ public class Gpio {
 					this.direction, this.pin));
 			setDir.waitFor();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			robot.SimpleRobot.eHandler.addError(e);
 		}
 	}
 	public Gpio(int pin, String direction, int value){
@@ -31,7 +31,7 @@ public class Gpio {
 			Process setValue = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/gpio%d/value", this.value, this.pin));
 			setValue.waitFor();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			robot.SimpleRobot.eHandler.addError(e);
 		}
 	}
 	public int get(){
@@ -43,7 +43,7 @@ public class Gpio {
 			destroy = Runtime.getRuntime().exec(String.format("echo %d > /sys/class/gpio/unexport", this.pin));
 			destroy.waitFor();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			robot.SimpleRobot.eHandler.addError(e);
 		}
 		
 	}
