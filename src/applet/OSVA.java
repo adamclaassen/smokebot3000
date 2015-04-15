@@ -1,8 +1,6 @@
 package applet;
 
 import javax.swing.*;
-import robot.*;
-import comm.Packet;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.awt.*;
