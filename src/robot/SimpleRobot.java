@@ -26,6 +26,7 @@ public class SimpleRobot {
 	private static SerialWrapper serial;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
+	private static int currentDriveSpeed = 0;
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -54,8 +55,8 @@ public class SimpleRobot {
 	 * @param turnSpeed
 	 */
 	public static void drive(double fwdSpeed, double turnSpeed){
-		leftMotor.setSpeed((fwdSpeed+turnSpeed));
-		rightMotor.setSpeed((fwdSpeed-turnSpeed));
+		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
+		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
 	}
 	
 	public static void readSensors(){
