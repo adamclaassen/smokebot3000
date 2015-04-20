@@ -2,6 +2,8 @@ package pathfinder;
 
 import java.util.ArrayList;
 
+import util.Position;
+
 public class Path {
         // The waypoints in the path (list of coordiantes making up the path)
         private ArrayList<Node> waypoints = new ArrayList<Node>();
@@ -13,8 +15,15 @@ public class Path {
                 return waypoints.size();
         }
         
-        public ArrayList<Node> getPath(){
+        public ArrayList<Node> getPathAsNodes(){
         	return waypoints;
+        }
+        
+        public ArrayList<Position> getPathAsTurnPositions(){
+        	//implement path vector change detections
+        	//check if node position relation changes
+        	//return list of nodes where it does, as positions
+        	return null;
         }
 
         public Node getWayPoint(int index) {

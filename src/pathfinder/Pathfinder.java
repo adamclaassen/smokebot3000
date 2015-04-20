@@ -11,14 +11,15 @@ public class Pathfinder {
 	private ArrayList<Zone> illegalZones;
 	private ArrayList<Position> turnPoints;
 	
-	public Pathfinder(Position start){
-		this.start = start;
-		//pathfind
-	}
+	private AreaMap map;
+	private AStarHeuristic heuristic;
+	private AStar astar;
 	
 	public Pathfinder(Position start, ArrayList<Position> goals){
-		this(start);
 		this.goals = goals;
+		 map = new AreaMap(4000, 2000, this.illegalZones);
+		heuristic = new ClosestHeuristic();
+		astar = new AStar(map, heuristic);
 		this.calculateRoute();
 	}
 
@@ -27,7 +28,8 @@ public class Pathfinder {
 	}
 	
 	public void calculateRoute(){
-		
+		this.astar.calcShortestPath(this.start.getX(), this.start.getY(), 
+				this.goals.get(0).getX(), this.goals.get(0).getY());
 	}
 	
 	public void addIllegalZone(Zone illegalZone){
@@ -37,5 +39,9 @@ public class Pathfinder {
 	public void updateStart(Position newStart){
 		this.start = newStart;
 		this.calculateRoute();
+	}
+	
+	public void switchToNextGoal(){
+		this.goals.remove(0);
 	}
 }

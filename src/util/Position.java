@@ -2,6 +2,8 @@ package util;
 
 import org.w3c.dom.Element;
 
+import pathfinder.Node;
+
 
 public class Position {
 	private int x,y,head;
@@ -46,6 +48,13 @@ public class Position {
 	}
 	public double getHeadTo(Position pos){
 		return Math.acos((this.getX()-pos.getX())/this.getDist(pos));
+	}
+	
+	public boolean matchesNode(Node node){
+		if(this.x==node.getX()&&this.y==node.getY()){
+			return true;
+		}
+		return false;
 	}
 	
 
