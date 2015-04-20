@@ -12,7 +12,7 @@ public class ErrorHandler {
 		this.errors.add(e);
 	}
 	
-	protected ArrayList<Exception> getErrors(){
+	public ArrayList<Exception> getErrors(){
 		return this.errors;
 	}
 	
