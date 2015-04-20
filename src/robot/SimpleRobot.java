@@ -40,6 +40,9 @@ public class SimpleRobot {
 	
 	public static void main(String[] args) {
 		startup();
+		for(;;){
+			serial.write("Hello from Vinai");
+		}
 		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed);
 		
 	}
