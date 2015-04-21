@@ -10,6 +10,9 @@ import sensor.*;
 import comm.*;
 import util.*;
 
+import com.pi4j.wiringpi.Spi;
+import com.pi4j.wiringpi.Serial;
+
 
 public class SimpleRobot {
 	
@@ -22,8 +25,8 @@ public class SimpleRobot {
 	private static Motor leftMotor;
 	private static Motor rightMotor;
 	private static Gpio gpio;
-	private static SPIWrapper spi;
-	private static SerialWrapper serial;
+	private static Spi spi;
+	private static Serial serial;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
@@ -35,15 +38,12 @@ public class SimpleRobot {
 	private final static double defaultSpeed = 10;
 		
 	public SimpleRobot(){
-		pathfinder = new Pathfinder(currentPos);
+		pathfinder = new Pathfinder(currentPos); // add obsticle map
 	}
 	
 	public static void main(String[] args) {
 		startup();
-		for(;;){
-			serial.write("Hello from Vinai");
-		}
-		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed);
+		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
 		
 	}
 	
