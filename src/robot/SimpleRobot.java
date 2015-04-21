@@ -119,7 +119,7 @@ public class SimpleRobot {
 	 * sensorData
 	 */
 	private static void generateXML(Document docXML){
-		
+
 		//declare elements
 		Element robotXML = docXML.createElement("robot");
 		Element currentPosXML = docXML.createElement("current position");
