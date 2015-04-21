@@ -2,6 +2,8 @@ package robot;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
+
 import org.w3c.dom.*;
 
 import pathfinder.Pathfinder;
@@ -127,6 +129,7 @@ public class SimpleRobot {
 		Element routeTakenXML = docXML.createElement("route taken");
 		Element batteryStatusXML = docXML.createElement("battery");
 		Element sensorValueXML = docXML.createElement("sensor data");
+		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
 		robotXML.appendChild(currentPosXML);
@@ -134,6 +137,9 @@ public class SimpleRobot {
 		robotXML.appendChild(routeTakenXML);
 		robotXML.appendChild(batteryStatusXML);
 		robotXML.appendChild(sensorValueXML);
+		robotXML.appendChild(errors);
+		
+		
 		
 		//create structures for all positional elements
 		addPositionXML(docXML, currentPosXML, radio.getCurrentPos());
@@ -143,6 +149,10 @@ public class SimpleRobot {
 		//add data for all other elements
 		batteryStatusXML.appendChild(docXML.createTextNode(Double.toString(10)));
 		sensorValueXML.appendChild(docXML.createTextNode(Double.toString(20)));
+		
+		//Append to errors node a string representation.
+		eHandler.getErrors().forEach((e) -> errors.appendChild(docXML.createTextNode(e.toString())));
+		
 	}
 	
 	private static void addPositionXML(Document doc, Element parent, Position pos){
