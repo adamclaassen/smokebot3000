@@ -4,17 +4,20 @@ import com.pi4j.wiringpi.I2C;
 
 public class LidarLite extends Sensor{
 	
-	private I2C i2cbus;
+	private int lidarDevice;
+	private int lidarDevAddr = 0x62;
+	private int enableMeasureReg;
+	private int enableMeasureVal;
+	private int regHighLow;
 
-	public LidarLite(I2C i2cBus, float inputHigh, float inputLow) {
+	public LidarLite(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
-		this.i2cbus = i2cBus;
+		this.lidarDevice = I2C.wiringPiI2CSetup(this.lidarDevAddr);
+		I2C.wiringPiI2CWriteReg8(this.lidarDevice, this.enableMeasureReg, this.enableMeasureVal);
 	}
 
 	@Override
-	Object read() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer read() {
+		return I2C.wiringPiI2CReadReg16(this.lidarDevice, this.regHighLow);
 	}
-
 }
