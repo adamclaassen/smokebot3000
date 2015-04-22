@@ -21,6 +21,7 @@ public class Pid {
 	public double getKi(){return this.ki;}
 	public void setKd(float kd){this.kd = kd;}
 	public double getKd(){return this.kd;}
+	
 	public double update(int signal){
 		this.prevError = this.error;
 		this.error = this.setpoint-signal;
