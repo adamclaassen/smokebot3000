@@ -1,16 +1,18 @@
 package sensor;
 
-import comm.SPIWrapper;
+import com.pi4j.wiringpi.Spi;
 
 public class AnalogDigitalConverter extends Sensor{
 
-	public AnalogDigitalConverter(float inputHigh, float inputLow) {
+	private int spiChannel;
+	
+	public AnalogDigitalConverter(float inputHigh, float inputLow, int spiChannel) {
 		super(inputHigh, inputLow);
+		this.spiChannel = spiChannel;
 	}
 
 	@Override
 	public Double read() {
-		//this.spi.askfordata();
 		return 0.0;
 	}
 
