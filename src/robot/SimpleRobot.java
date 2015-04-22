@@ -19,6 +19,8 @@ public class SimpleRobot {
 	// various private objects
 	private static Pathfinder pathfinder;
 	private static ArrayList<Position> routeTaken;
+	private static ArrayList<Zone> obsticleMap;
+	private static ArrayList<Position> destinations;
 	private static Radio radio;
 	private static Pid distPid;
 	private static Pid turnPid;
@@ -38,7 +40,7 @@ public class SimpleRobot {
 	private final static double defaultSpeed = 10;
 		
 	public SimpleRobot(){
-		pathfinder = new Pathfinder(currentPos); // add obsticle map
+		pathfinder = new Pathfinder(currentPos, destinations, obsticleMap); // add obsticle map
 	}
 	
 	public static void main(String[] args) {

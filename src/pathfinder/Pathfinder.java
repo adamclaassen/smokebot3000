@@ -15,9 +15,10 @@ public class Pathfinder {
 	private AStarHeuristic heuristic;
 	private AStar astar;
 	
-	public Pathfinder(Position start, ArrayList<Position> goals){
+	public Pathfinder(Position start, ArrayList<Position> goals, ArrayList<Zone> illegalZones){
 		this.goals = goals;
-		 map = new AreaMap(4000, 2000, this.illegalZones);
+		this.illegalZones = illegalZones;
+		map = new AreaMap(4000, 2000, this.illegalZones);
 		heuristic = new ClosestHeuristic();
 		astar = new AStar(map, heuristic);
 		this.calculateRoute();
