@@ -1,21 +1,22 @@
 package motor;
 
-import comm.SPIWrapper;
+import com.pi4j.wiringpi.Spi;
 
 
 public class ArduinoMotorController extends Motor{
-
-	private SPIWrapper spi;
 	
-	public ArduinoMotorController(int pin, SPIWrapper spibus) {
+	public ArduinoMotorController(int pin) {
 		super(pin, 0, 255);
-		this.spi = spibus;
 	}
 
 	@Override
 	public void setSpeed(double speed) {
 		this.speed = speed;
-		//spi.write(appropriate data);
+		byte scaledSpeed = (byte) this.mapToOutput(speed);
+		byte[] dataArray = {scaledSpeed, (byte) this.pin};
+		Spi.wiringPiSPIDataRW(Spi.CHANNEL_1, dataArray);
 	}
+	
+	public double getSpeed(){return this.speed;}
 
 }

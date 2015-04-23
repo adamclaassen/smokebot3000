@@ -27,11 +27,7 @@ public class SimpleRobot {
 	private static Pid distPid;
 	private static Pid turnPid;
 	private static Motor leftMotor;
-	private static Motor rightMotor;
-	private static Gpio gpio;
-	private static Spi spi;
-	private static Serial serial;
-	private static Position currentPos;
+	private static Motor rightMotor; static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	
