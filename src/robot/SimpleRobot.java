@@ -31,6 +31,21 @@ public class SimpleRobot {
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	
+	private static int obsDist;
+	private Zone[] obs = {
+			new Zone(1200,1400,obsDist),
+			new Zone(1200,600 ,obsDist),
+			new Zone(2100,1800,obsDist),
+			new Zone(2400,1800,obsDist),
+			new Zone(2200,8000,obsDist),
+			new Zone(2200,800 ,obsDist),
+			new Zone(3200,700 ,obsDist)
+		};
+	
+	private Position[] goals = {
+			new Position(3250,1700)
+	};
+	
 	//public objects
 	public static ErrorHandler eHandler;
 	
@@ -38,7 +53,7 @@ public class SimpleRobot {
 	private final static double defaultSpeed = 10;
 		
 	public SimpleRobot(){
-		pathfinder = new Pathfinder(currentPos); // add obsticle map
+		pathfinder = new Pathfinder(currentPos,obs,goals); // add obsticle map
 	}
 	
 	public static void main(String[] args) {

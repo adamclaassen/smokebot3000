@@ -17,7 +17,7 @@ public class OSVA extends JApplet{
 		
 		URL source = null;
 		try {
-			source = new URL("http://www.kangaroocg.com");
+			source = new URL("file:///C:/");
 			AppletField field = new AppletField(source);	//Creates a new AppletField, field. AppletField is a default content pane for displaying information on the applet
 			field.setBackground(new Color(0,0,0));
 			field.setForeground(new Color(255,255,255));

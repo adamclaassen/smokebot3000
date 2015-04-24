@@ -17,11 +17,11 @@ public class AreaMap {
 	private int goalLocationX = 0;
 	private int goalLocationY = 0;
 	private boolean[][] obstacleMap;
-	private ArrayList<Zone> obstList;
+	private Zone[] obstList;
 
 	//private Logger log = new Logger();
 	
-	AreaMap(int mapWith, int mapHeight, ArrayList<Zone> obsticals) {
+	AreaMap(int mapWith, int mapHeight, Zone[] obsticals) {
 		this.mapWidth = mapWith;
 		this.mapHeight = mapHeight;
 		this.obstacleMap = obstacleMap;
