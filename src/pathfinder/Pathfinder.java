@@ -26,7 +26,7 @@ public class Pathfinder {
 	}
 
 	public ArrayList<Position> getTurnPoints(){
-		return this.turnPoints;
+		return this.astar.shortestPath.getPathAsTurnPositions();
 	}
 	
 	public void calculateRoute(){
