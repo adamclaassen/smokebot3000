@@ -36,7 +36,7 @@ public class SimpleRobot {
 	public static ErrorHandler eHandler;
 	
 	// constants
-	private final static double defaultSpeed = 10;
+	private final static double defaultSpeed = 1;
 	
 	public static void main(String[] args) {
 		
@@ -44,16 +44,17 @@ public class SimpleRobot {
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-		radio = new Radio();
+		//radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		currentPos = radio.getCurrentPos();
-		adc = new AnalogDigitalConverter(0, 1024, 0);
+		//currentPos = radio.getCurrentPos();
+		currentPos = new Position(0,0,0);
+		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		
-		driveToPoint(new Position(1000,2000), 10);
+		driveToPoint(new Position(2000, 1000), 1);
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
@@ -86,6 +87,9 @@ public class SimpleRobot {
 	public static void driveToPoint(Position dest, double speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
+		
+		System.out.println(dest.getDist(currentPos));
+		
 		while(!dest.isNearby(currentPos)){
 			drive(speed, turnPid.update(currentPos.getHead()));
 			updateAll();

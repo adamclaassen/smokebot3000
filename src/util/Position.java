@@ -7,7 +7,6 @@ import pathfinder.Node;
 
 public class Position {
 	private int x,y,head;
-	private Zone nearby;
 	private int nearbyRadius = 100;
 	
 	public Position(){}
@@ -18,7 +17,6 @@ public class Position {
 		this.x = x;
 		this.y = y;
 		this.head = head;
-		nearby = new Zone(this, this.nearbyRadius);
 	}
 	
 	public int getX(){ return this.x;}
@@ -38,13 +36,16 @@ public class Position {
 		return false;
 	}
 	public boolean isNearby(Position pos){
-		return this.nearby.isInZone(pos);
+		if(this.getDist(pos)<this.nearbyRadius){
+			return true;
+		}
+		return false;
 	}
 	public String toString(){
 		return String.format("[%d,%d,%f]", this.getX(), this.getY(), this.getHead());
 	}
 	public int getDist(Position pos){
-		return (int) Math.sqrt((this.x-pos.x)^2 + (this.y-pos.y)^2);
+		return (int) Math.sqrt((this.x-pos.getX())^2 + (this.y-pos.getY())^2);
 	}
 	public double getHeadTo(Position pos){
 		return Math.acos((this.getX()-pos.getX())/this.getDist(pos));
