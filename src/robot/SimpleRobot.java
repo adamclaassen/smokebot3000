@@ -2,6 +2,8 @@ package robot;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
+
 import org.w3c.dom.*;
 
 import pathfinder.Pathfinder;
@@ -10,36 +12,34 @@ import sensor.*;
 import comm.*;
 import util.*;
 
+import com.pi4j.wiringpi.Spi;
+import com.pi4j.wiringpi.Serial;
+
 
 public class SimpleRobot {
 	
 	// various private objects
 	private static Pathfinder pathfinder;
 	private static ArrayList<Position> routeTaken;
+	private static ArrayList<Zone> obsticleMap;
+	private static ArrayList<Position> destinations;
 	private static Radio radio;
 	private static Pid distPid;
 	private static Pid turnPid;
 	private static Motor leftMotor;
-	private static Motor rightMotor;
-	private static Gpio gpio;
-	private static SPIWrapper spi;
-	private static SerialWrapper serial;
-	private static Position currentPos;
+	private static Motor rightMotor; static Position currentPos;
 	private static AnalogDigitalConverter adc;
+	private static int currentDriveSpeed = 0;
 	
 	//public objects
 	public static ErrorHandler eHandler;
 	
 	// constants
 	private final static double defaultSpeed = 10;
-		
-	public SimpleRobot(){
-		pathfinder = new Pathfinder(currentPos);
-	}
 	
 	public static void main(String[] args) {
 		startup();
-		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed);
+		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
 		
 	}
 	
@@ -54,8 +54,8 @@ public class SimpleRobot {
 	 * @param turnSpeed
 	 */
 	public static void drive(double fwdSpeed, double turnSpeed){
-		leftMotor.setSpeed((fwdSpeed+turnSpeed));
-		rightMotor.setSpeed((fwdSpeed-turnSpeed));
+		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
+		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
 	}
 	
 	public static void readSensors(){
@@ -103,7 +103,7 @@ public class SimpleRobot {
 	 * Behaves the same as arduino's setup()
 	 */
 	public static void startup(){
-		
+		pathfinder = new Pathfinder(currentPos, destinations, obsticleMap); // add obsticle map
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class SimpleRobot {
 	 * sensorData
 	 */
 	private static void generateXML(Document docXML){
-		
+
 		//declare elements
 		Element robotXML = docXML.createElement("robot");
 		Element currentPosXML = docXML.createElement("current position");
@@ -123,6 +123,7 @@ public class SimpleRobot {
 		Element routeTakenXML = docXML.createElement("route taken");
 		Element batteryStatusXML = docXML.createElement("battery");
 		Element sensorValueXML = docXML.createElement("sensor data");
+		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
 		robotXML.appendChild(currentPosXML);
@@ -130,6 +131,9 @@ public class SimpleRobot {
 		robotXML.appendChild(routeTakenXML);
 		robotXML.appendChild(batteryStatusXML);
 		robotXML.appendChild(sensorValueXML);
+		robotXML.appendChild(errors);
+		
+		
 		
 		//create structures for all positional elements
 		addPositionXML(docXML, currentPosXML, radio.getCurrentPos());
@@ -139,6 +143,10 @@ public class SimpleRobot {
 		//add data for all other elements
 		batteryStatusXML.appendChild(docXML.createTextNode(Double.toString(10)));
 		sensorValueXML.appendChild(docXML.createTextNode(Double.toString(20)));
+		
+		//Append to errors node a string representation.
+		eHandler.getErrors().forEach((e) -> errors.appendChild(docXML.createTextNode(e.toString())));
+		
 	}
 	
 	private static void addPositionXML(Document doc, Element parent, Position pos){
