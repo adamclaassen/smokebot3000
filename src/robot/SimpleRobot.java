@@ -27,7 +27,8 @@ public class SimpleRobot {
 	private static Pid distPid;
 	private static Pid turnPid;
 	private static Motor leftMotor;
-	private static Motor rightMotor; static Position currentPos;
+	private static Motor rightMotor;
+	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	
@@ -38,9 +39,22 @@ public class SimpleRobot {
 	private final static double defaultSpeed = 10;
 	
 	public static void main(String[] args) {
-		startup();
-		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
 		
+		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		routeTaken = new ArrayList<Position>();
+		obsticleMap = new ArrayList<Zone>();
+		destinations = new ArrayList<Position>();
+		radio = new Radio();
+		distPid = new Pid(1, 1, 1);
+		turnPid = new Pid(1, 1, 1);
+		leftMotor = new ArduinoMotorController(9);
+		rightMotor = new ArduinoMotorController(10);
+		currentPos = radio.getCurrentPos();
+		adc = new AnalogDigitalConverter(0, 1024, 0);
+		eHandler = new ErrorHandler();
+		
+		driveToPoint(new Position(1000,2000), 10);
+		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
 	/**
@@ -49,7 +63,7 @@ public class SimpleRobot {
 	 * The speed of the outside motor in a turn is fwdSpeed+|turnSpeed|.
 	 * The speed of the inside motor is fwdSpeed-|turnSpeed|.
 	 * The actual math below is mathematically equivalent to the steps above,
-	 * but requires less code to implement.
+	 * but requires less code to implement. (I think)
 	 * @param fwdSpeed
 	 * @param turnSpeed
 	 */
@@ -92,18 +106,9 @@ public class SimpleRobot {
 	/**
 	 * This method should include update calls
 	 * to anything that doesn't update some other way. 
-	 * Will be depreciated in favor of separate subsystem update calls
 	 */
 	public static void updateAll(){
 		//this.currentPos = radio.getLatestPos();
-	}
-	
-	/**
-	 * Any code to be run once at startup.
-	 * Behaves the same as arduino's setup()
-	 */
-	public static void startup(){
-		pathfinder = new Pathfinder(currentPos, destinations, obsticleMap); // add obsticle map
 	}
 	
 	/**

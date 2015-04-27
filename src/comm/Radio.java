@@ -8,11 +8,28 @@ import com.pi4j.wiringpi.Serial;
 public class Radio {
 	int txPin;
 	int rxPin;
+	int fd;
 	
-	public Radio(){}
+	public Radio(){
+		fd = Serial.serialOpen("/dev/ttyAMA0", 115200);
+		Serial.serialFlush(fd);
+		
+	}
 	
 	public Position getCurrentPos(){
-		return new Position(0,0,0);
+		int dataAvail = Serial.serialDataAvail(this.fd);
+		char[] serialChars = new char[dataAvail];
+		
+		for(int i = 0; i< dataAvail; i++){
+			serialChars[i] = (char) Serial.serialGetByte(fd);
+		}
+		
+		String[] splitData = String.copyValueOf(serialChars).split(",");
+		return new Position(
+				(int) (1000* Double.parseDouble(splitData[1])),
+				(int) (1000* Double.parseDouble(splitData[2])),
+				(int) Double.parseDouble(splitData[3])
+				);
 	}
 	
 }
