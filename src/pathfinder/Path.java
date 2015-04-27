@@ -7,6 +7,7 @@ import util.Position;
 public class Path {
         // The waypoints in the path (list of coordiantes making up the path)
         private ArrayList<Node> waypoints = new ArrayList<Node>();
+        private ArrayList<Position> turnPoints = new ArrayList<Position>();
         
         public Path() {
         }
@@ -23,7 +24,20 @@ public class Path {
         	//implement path vector change detections
         	//check if node position relation changes
         	//return list of nodes where it does, as positions
-        	return null;
+        	ArrayList<Position> turnPoints = new ArrayList<Position>();
+        	ArrayList<Position> waypointPos = new ArrayList<Position>();
+        	
+        	for(Node node:this.waypoints){
+        		waypointPos.add(new Position(node.getX(), node.getY()));
+        	}
+        	
+        	for(int i = 1; i<waypointPos.size()-1; i++){
+        		if(waypointPos.get(i).getHeadTo(waypointPos.get(i-1)) == waypointPos.get(i).getHeadTo(waypointPos.get(i+1))){
+        			turnPoints.add(waypointPos.get(i));
+        		}
+        	}
+        	
+        	return waypointPos;
         }
 
         public Node getWayPoint(int index) {

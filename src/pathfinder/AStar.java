@@ -18,7 +18,7 @@ public class AStar {
 	 */
 	private ArrayList<Node> closedList;
 	private SortedNodeList openList;
-	private Path shortestPath;
+	protected Path shortestPath;
 	
 
 	AStar(AreaMap map, AStarHeuristic heuristic) {

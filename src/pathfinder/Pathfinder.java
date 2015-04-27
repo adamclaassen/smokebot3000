@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import util.Position;
 import util.Zone;
+import pathfinder.Node;
 
 public class Pathfinder {
 	private Position start;
