@@ -36,10 +36,14 @@ public class SimpleRobot {
 	
 	// constants
 	private final static double defaultSpeed = 10;
+		
+	public SimpleRobot(){
+		pathfinder = new Pathfinder(currentPos, destinations, obsticleMap); // add obsticle map
+	}
 	
 	public static void main(String[] args) {
 		startup();
-		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
+		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
 		
 	}
 	
@@ -103,7 +107,7 @@ public class SimpleRobot {
 	 * Behaves the same as arduino's setup()
 	 */
 	public static void startup(){
-		pathfinder = new Pathfinder(currentPos, destinations, obsticleMap); // add obsticle map
+		
 	}
 	
 	/**
