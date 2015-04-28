@@ -4,11 +4,8 @@ import com.pi4j.wiringpi.Spi;
 
 public class AnalogDigitalConverter extends Sensor{
 
-	private int spiChannel;
-	
-	public AnalogDigitalConverter(float inputHigh, float inputLow, int spiChannel) {
+	public AnalogDigitalConverter(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
-		this.spiChannel = spiChannel;
 	}
 
 	public Double read(int channel) {
