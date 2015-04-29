@@ -4,9 +4,10 @@
 
 
 
-
+#include <servo.h>
 #include <OneWire.h>
 
+Servo 
 int eTape = 0;
 //eTape_RawVoltageOut
 
@@ -20,10 +21,22 @@ void setup(void) {
 }
 
 void loop(void) {
+  int motorSpeed = int(Serial.read());
+  if(motorSpeed != 0){
+    motor(motorSpeed);
+  }
+  else{
+    sensor();
+  }
+ 
+}
 
-  //liquid level
 
+void motor(int MotorSpeed){
+  //motor control
+}
 
+void sensor(){
   Serial.print("Voltage");
   Serial.println(analogRead(A5));
 
@@ -34,16 +47,7 @@ void loop(void) {
   Serial.print("eTape Voltage Depth");
   Serial.println(eTape, DEC); 
 
- 
 }
-
-
-
-
-
-
-
-
 
 /*
 eTape_rcTime_Output
