@@ -1,6 +1,7 @@
 package comm;
 
 import util.Position;
+
 import com.pi4j.wiringpi.Serial;
 
 
@@ -16,12 +17,13 @@ public class Radio {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public Position getCurrentPos(){
 		int dataAvail = Serial.serialDataAvail(this.fd);
 		char[] serialChars = new char[dataAvail];
 		
 		for(int i = 0; i< dataAvail; i++){
-			serialChars[i] = (char) Serial.serialGetByte(fd);
+			serialChars[i] = (char) Serial.serialGetchar(fd);
 		}
 		
 		String[] splitData = String.copyValueOf(serialChars).split(",");
