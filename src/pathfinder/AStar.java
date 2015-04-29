@@ -124,7 +124,7 @@ public class AStar {
 				} else if (node.isGoal) {
 					System.out.print("g");
 				} else if (shortestPath.contains(node.getX(), node.getY())) {
-					System.out.print("¤");
+					System.out.print("*");
 				} else {
 					System.out.print(" ");
 				}
