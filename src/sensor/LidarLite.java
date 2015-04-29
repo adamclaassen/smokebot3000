@@ -9,7 +9,7 @@ public class LidarLite extends Sensor{
 	private int lidarDevAddr = 0x62;
 	private int enableMeasureReg;
 	private int enableMeasureVal;
-	private int regHighLow;
+	private int highLowReg;
 	
 	//constants 
 	private final int nack = 1;
@@ -18,7 +18,6 @@ public class LidarLite extends Sensor{
 	public LidarLite(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
 		this.lidarDevice = I2C.wiringPiI2CSetup(this.lidarDevAddr);
-		I2C.wiringPiI2CWriteReg8(this.lidarDevice, this.enableMeasureReg, this.enableMeasureVal);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class LidarLite extends Sensor{
 		int ackStatus = -1;
 		I2C.wiringPiI2CWriteReg8(this.lidarDevice, this.enableMeasureReg, this.enableMeasureVal);
 		while(ackStatus == nack){
-			ackStatus = I2C.wiringPiI2CReadReg16(this.lidarDevice, this.regHighLow);
+			ackStatus = I2C.wiringPiI2CReadReg16(this.lidarDevice, this.highLowReg);
 		}
 		
 		return ackStatus;
