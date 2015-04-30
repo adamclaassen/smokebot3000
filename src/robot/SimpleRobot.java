@@ -29,6 +29,7 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
+	private static Motor servoMotor;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
@@ -40,8 +41,8 @@ public class SimpleRobot {
 	private final static double defaultSpeed = 1;
 	
 	public static void main(String[] args) {
-		
-		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		currentPos = radio.getCurrentPos();
+		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap);
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
@@ -50,12 +51,15 @@ public class SimpleRobot {
 		turnPid = new Pid(1, 1, 1);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		//currentPos = radio.getCurrentPos();
+		servoMotor= new ArduinoMotorController(11);
+	//
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
-		
-		driveToPoint(new Position(2000, 1000), 1);
+		//addSetGoal Method
+		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		//openClaw method goes right here
+		servoMotor.setSpeed(170);
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
@@ -72,6 +76,10 @@ public class SimpleRobot {
 	public static void drive(double fwdSpeed, double turnSpeed){
 		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
+	}
+	
+	public static void openClaw(){
+		
 	}
 	
 	public static void readSensors(){
