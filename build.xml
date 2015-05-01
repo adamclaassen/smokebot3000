@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project name="smokebot3000" basedir="." default="main">
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+	<property name="main.class" value="robot.SimpleRobot"/>
+
+
+	<path id="classpath">
+		<fileset dir="/opt/pi4j/lib/">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+
 	<target name="clean">
 		<delete dir="build/classes"/>
 	</target>
-	<target name="compile">
+	<target name="compile" depends="clean">
 		<mkdir dir="build/classes"/>
-		<javac srcdir="src" destdir="build/classes" classpath=".:classes:/opt/lib/*"/>
+		<javac srcdir="src" destdir="build/classes">
+			<classpath refid="classpath"/>
+		</javac>
 	</target>
 	<target name="run">
-		<java file="robot.SimpleRobot"/>
+		<java value="robot.SimpleRobot"/>
 	</target>
+
 </project>
