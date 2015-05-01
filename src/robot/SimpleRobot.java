@@ -2,11 +2,15 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.io.IOException;
 import java.time.Clock;
 
 import javafx.geometry.Pos;
 
 import org.w3c.dom.*;
+
+import com.pi4j.io.serial.Serial;
+import com.pi4j.io.serial.SerialFactory;
 
 import pathfinder.Pathfinder;
 import motor.*;
@@ -14,8 +18,6 @@ import sensor.*;
 import comm.*;
 import util.*;
 
-import com.pi4j.wiringpi.Spi;
-import com.pi4j.wiringpi.Serial;
 
 
 
@@ -39,6 +41,7 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
+	public static Serial serial = SerialFactory.createInstance();
 	public static ArduinoAdapter ardu;
 
 	
@@ -61,6 +64,11 @@ public class SimpleRobot {
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		ardu = new ArduinoAdapter();
+		try {
+			serial.open(Serial.FIRST_USB_COM_PORT, 115200);
+		} catch (IOException e) {
+			robot.SimpleRobot.eHandler.addError(e);
+		}
 		
 		System.out.println("All objects initialized");
 		driveToPoint(new Position(2000, 1000), 1);
