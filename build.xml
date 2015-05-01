@@ -6,7 +6,7 @@
 
 
 	<path id="classpath">
-		<fileset dir="/opt/pi4j/lib/">
+		<fileset dir="${basedir}/lib/">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
@@ -15,6 +15,7 @@
 	<target name="clean">
 		<delete dir="build/classes"/>
 	</target>
+	<target name="build" depends="compile"/>
 	<target name="compile" depends="clean">
 		<mkdir dir="build/classes"/>
 		<javac srcdir="src" destdir="build/classes">
