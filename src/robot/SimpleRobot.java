@@ -2,6 +2,7 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.time.Clock;
 
 import javafx.geometry.Pos;
 
@@ -15,6 +16,8 @@ import util.*;
 
 import com.pi4j.wiringpi.Spi;
 import com.pi4j.wiringpi.Serial;
+
+
 
 
 public class SimpleRobot {
@@ -32,9 +35,12 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
+	private static Clock timer;
 	
 	//public objects
 	public static ErrorHandler eHandler;
+	public static ArduinoAdapter ardu;
+
 	
 	// constants
 	private final static double defaultSpeed = 1;
@@ -54,8 +60,11 @@ public class SimpleRobot {
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
+		ardu = new ArduinoAdapter();
 		
+		System.out.println("All objects initialized");
 		driveToPoint(new Position(2000, 1000), 1);
+		System.out.println("Drove to point");
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
@@ -88,9 +97,7 @@ public class SimpleRobot {
 	public static void driveToPoint(Position dest, double speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
-		
-		System.out.println(dest.getDist(currentPos));
-		
+				
 		while(!dest.isNearby(currentPos)){
 			drive(speed, turnPid.update(currentPos.getHead()));
 			updateAll();

@@ -1,13 +1,23 @@
 package util;
 
+import java.io.File;
+
 import com.pi4j.wiringpi.Serial;
 
 public class ArduinoAdapter {
 	
-	int fd;
+	int fd = -1;
 	
 	public ArduinoAdapter(){
-		fd = Serial.serialOpen("/dev/ttyACM0", 115200);
+		File dev = new File("/dev/");
+		for(String device:dev.list()){
+			if(device.contains("ttyACM")){
+				fd = Serial.serialOpen("/dev/" + device, 115200);
+			}
+		}
+		if(fd == -1){
+			fd = Serial.serialOpen("/dev/ttyACM0", 115200);
+		}
 	}
 	
 	public double readData(){
@@ -32,7 +42,7 @@ public class ArduinoAdapter {
 		return Double.parseDouble(new String(serialChars).split("<|>")[1].split("/")[1]);
 	}
 	
-	public boolean setMotorSpeed(int pin, int speed){
+	public boolean setMotorSpeed(int pin, double speed){
 		Serial.serialFlush(fd);
 		Serial.serialPuts(fd, String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d",speed)));
 		
