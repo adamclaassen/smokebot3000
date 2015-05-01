@@ -15,6 +15,7 @@ import util.*;
 
 import com.pi4j.wiringpi.Spi;
 import com.pi4j.wiringpi.Serial;
+import java.time.Clock;
 
 
 public class SimpleRobot {
@@ -33,6 +34,7 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
+	//private static Clock myClock = new Clock();
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -42,9 +44,10 @@ public class SimpleRobot {
 	
 	public static void main(String[] args) {
 		currentPos = radio.getCurrentPos();
+		obsticleMap = new ArrayList<Zone>();
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap);
 		routeTaken = new ArrayList<Position>();
-		obsticleMap = new ArrayList<Zone>();
+		
 		destinations = new ArrayList<Position>();
 		//radio = new Radio();
 		distPid = new Pid(1, 1, 1);
@@ -52,14 +55,13 @@ public class SimpleRobot {
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 		servoMotor= new ArduinoMotorController(11);
-	//
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		//addSetGoal Method
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		//openClaw method goes right here
-		servoMotor.setSpeed(170);
+		
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
@@ -78,8 +80,8 @@ public class SimpleRobot {
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
 	}
 	
-	public static void openClaw(){
-		
+	public static void openClaw(){ //this is a servo motor
+		servoMotor.setSpeed(170); 
 	}
 	
 	public static void readSensors(){
