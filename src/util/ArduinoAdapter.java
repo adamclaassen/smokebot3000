@@ -55,10 +55,10 @@ public class ArduinoAdapter {
 			}
 			readCount++;
 		}
-		byte[] serialBytes = Serial.serialGetAvailableBytes(fd);
-		char[] serialChars = new char[serialBytes.length];
-		for(int i = 0; i<serialBytes.length; i++){
-			serialChars[i] = (char) serialBytes[i];
+		char[] serialChars = new char[Serial.serialDataAvail(fd)];
+		int i = 0;
+		while(Serial.serialDataAvail(fd)>0){
+			serialChars[i] = (char) Serial.serialGetByte(fd);
 		}
 		if(serialChars[1] == 'a'){
 			return true;
