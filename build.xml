@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<target name="clean">
-		<delete dir="build"/>
+		<delete dir="build/classes"/>
 	</target>
 	<target name="compile">
-		<mkdir dir="build/">
-		<javac srcdir="src" destdir="build/"/>
+		<mkdir dir="build/classes">
+		<javac srcdir="src" destdir="build/classes" classpath=".:classes:/opt/lib/*"/>
 	</target>
 	<target name="run">
-		<cd build/>
+		<cd build/classes>
 		<java robot.SimpleRobot/>
 	</target>
 </project>
