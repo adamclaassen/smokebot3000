@@ -16,7 +16,7 @@ public class ArduinoAdapter {
 			robot.SimpleRobot.serial.flush();
 			
 		} catch (IllegalStateException | IOException e1) {
-			e1.printStackTrace();
+			robot.SimpleRobot.eHandler.addError(e1);
 		}
 		
 		byte[] serialBytes = null;
@@ -55,7 +55,7 @@ public class ArduinoAdapter {
 			}
 			return setMotorSpeed(pin, speed);
 		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+			robot.SimpleRobot.eHandler.addError(e);
 		}
 		return false;
 	}
