@@ -8,7 +8,6 @@
 		<javac srcdir="src" destdir="build/classes" classpath=".:classes:/opt/lib/*"/>
 	</target>
 	<target name="run">
-		<cd build/classes>
-		<java robot.SimpleRobot/>
+		<java file="robot.SimpleRobot"/>
 	</target>
 </project>
