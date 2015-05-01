@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+	<target name="compile">
+		<mkdir dir="build/">
+		<javac srcdir="src" destdir="build/"/>
+	</target>
+	<target name="run">
+		<cd build/>
+		<java robot.SimpleRobot/>
+	</target>
+</project>
