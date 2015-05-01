@@ -1,1 +1,7 @@
-javac -classpath .:classes:/opt/pi4j/lib/'*' $i
+for i in $(ls ../src); do
+  for k in $(ls ../src/$i); do
+    echo $i
+    echo $k
+    javac -classpath .:classes:/opt/pi4j/lib/'*' -sourcepath ../src ../src/$i/$k
+  done
+done

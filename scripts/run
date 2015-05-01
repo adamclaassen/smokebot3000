@@ -1,1 +1,1 @@
-java -classpath .:classes:/opt/pi4j/lib/'*' $i
+java -classpath .:classes:/opt/pi4j/lib/* ~/smokebot3000/src/robot/SimpleRobot
