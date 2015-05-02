@@ -53,5 +53,21 @@ public class SerialWrapper {
 		return String.copyValueOf(data);
 		
 	}
-	
+
+	public void write(byte[] bytes) {
+		try {
+			output.write(bytes);
+		} catch (IOException e) {
+			robot.SimpleRobot.eHandler.addError(e);
+		}
+	}
+
+	public int available() {
+		try {
+			return input.available();
+		} catch (IOException e) {
+			robot.SimpleRobot.eHandler.addError(e);
+		}
+		return -1;
+	}	
 }
