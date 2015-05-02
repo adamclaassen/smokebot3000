@@ -41,8 +41,10 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
-	public static Serial serial = SerialFactory.createInstance();
+	public static SerialWrapper serial;
 	public static ArduinoAdapter ardu;
+	public static SPIWrapper spi;
+	public static I2CWrapper i2c;
 
 	
 	// constants
@@ -64,11 +66,6 @@ public class SimpleRobot {
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		ardu = new ArduinoAdapter();
-		try {
-			serial.open(Serial.FIRST_USB_COM_PORT, 115200);
-		} catch (IOException e) {
-			robot.SimpleRobot.eHandler.addError(e);
-		}
 		
 		System.out.println("All objects initialized");
 		driveToPoint(new Position(2000, 1000), 1);
