@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.time.Clock;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import javafx.geometry.Pos;
 
 import org.w3c.dom.*;
@@ -38,6 +42,9 @@ public class SimpleRobot {
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	private static Clock timer;
+	private static DocumentBuilderFactory dbf;
+	private static DocumentBuilder db;
+	private static Document xmldoc;
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -69,8 +76,20 @@ public class SimpleRobot {
 		serial = new SerialWrapper();
 		spi = new SPIWrapper();
 		i2c = new I2CWrapper(0);
+		//xml doc stuff
+		dbf = DocumentBuilderFactory.newInstance();
+		db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			eHandler.addError(e);
+		}
+		xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
+		
+		generateXML(xmldoc);
+		
 		leftMotor.setSpeed(150);
 		driveToPoint(new Position(2000, 1000), 1);
 		System.out.println("Drove to point");
