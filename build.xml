@@ -9,7 +9,6 @@
 		<fileset dir="${basedir}/lib/">
 			<include name="*.jar"/>
 		</fileset>
-		<fileset dir="${basedir}/build/classes/"/>
 	</path>
 
 	<pathconvert property="classpathProp" refid="classpath"/>
@@ -31,11 +30,9 @@
 	</target>
 
 	<target name="run">
-		<java 
-			dir="${basedir}/build/classes" 
+		<java  
 			classname="robot.SimpleRobot" 
-			fork="true" 
-			classpath=":${basedir}/build/classes/:${basedir}/lib/*.jar:"
+			classpath=":${basedir}/build/classes:${classpathProp}"
 		/>
 	</target>
 
