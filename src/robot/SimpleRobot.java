@@ -34,6 +34,9 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
+	private static Salinity salinity;
+	private static Depth depth;
+	private static ArduinoAdapter ard;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
@@ -63,15 +66,8 @@ public class SimpleRobot {
 
 	
 	// constants
-<<<<<<< HEAD
-	private final static double defaultSpeed = 10;
-		
-	public SimpleRobot(){
-		pathfinder = new Pathfinder(currentPos,obs,goals); // add obsticle map
-	}
-=======
+
 	private final static double defaultSpeed = 1;
->>>>>>> origin/master-develop
 	
 	public static void main(String[] args) {
 		
@@ -93,7 +89,7 @@ public class SimpleRobot {
 		System.out.println("All objects initialized");
 		driveToPoint(new Position(2000, 1000), 1);
 		System.out.println("Drove to point");
-		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
+		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
 	/**
@@ -112,7 +108,10 @@ public class SimpleRobot {
 	}
 	
 	public static void readSensors(){
-		
+		String msg = serial.read();
+		if(msg.substring(1, 3).equals("sd")){
+			ard.readData(msg);
+		}
 		//radio.send(Double.toString());
 	}
 	
@@ -148,7 +147,7 @@ public class SimpleRobot {
 	 * to anything that doesn't update some other way. 
 	 */
 	public static void updateAll(){
-		//this.currentPos = radio.getLatestPos();
+		currentPos = radio.getCurrentPos();
 	}
 	
 	/**

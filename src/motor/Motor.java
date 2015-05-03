@@ -5,6 +5,7 @@ public abstract class Motor {
 	protected int outputLow;
 	protected int outputHigh;
 	protected double speed;
+	protected util.ArduinoAdapter ard = new util.ArduinoAdapter();
 	
 	public Motor(int pin, int outputLow, int outputHigh){
 		this.pin = pin;
@@ -12,7 +13,9 @@ public abstract class Motor {
 		this.outputHigh = outputHigh;
 	}
 	
-	public abstract void setSpeed(double speed);
+	public void setSpeed(double speed){
+		ard.setMotorSpeed(pin, speed);
+	}
 	
 	public double getSpeed(){
 		return this.speed;

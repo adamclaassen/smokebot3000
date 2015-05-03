@@ -1,7 +1,6 @@
 package comm;
 
 import util.Position;
-
 import com.pi4j.wiringpi.Serial;
 
 

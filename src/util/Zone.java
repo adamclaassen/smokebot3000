@@ -24,13 +24,4 @@ public class Zone {
 	private int getDistance(Position pos){
 		return  (int) Math.sqrt((pos.getX()-this.center.getX())^2 + (pos.getY()-this.center.getY())^2);
 	}
-<<<<<<< HEAD
 }
-
-=======
-	
-	public void setZoneSize(int radius){
-		
-	}
-}
->>>>>>> origin/master-develop

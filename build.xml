@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="smokebot3000" basedir="." default="main">
+<project name="smokebot3000" basedir="." default="">
 	<property name="src.dir" value="src"/>
 	<property name="build.dir" value="build"/>
 	<property name="main.class" value="robot.SimpleRobot"/>
