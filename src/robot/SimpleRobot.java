@@ -63,7 +63,7 @@ public class SimpleRobot {
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-		//radio = new Radio();
+		radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		leftMotor = new ArduinoMotorController(9);
