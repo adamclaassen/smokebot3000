@@ -18,7 +18,7 @@ public class AStar {
 	 */
 	private ArrayList<Node> closedList;
 	private SortedNodeList openList;
-	private Path shortestPath;
+	protected Path shortestPath;
 	
 
 	AStar(AreaMap map, AStarHeuristic heuristic) {
@@ -124,7 +124,7 @@ public class AStar {
 				} else if (node.isGoal) {
 					System.out.print("g");
 				} else if (shortestPath.contains(node.getX(), node.getY())) {
-					System.out.print("¤");
+					System.out.print("*");
 				} else {
 					System.out.print(" ");
 				}

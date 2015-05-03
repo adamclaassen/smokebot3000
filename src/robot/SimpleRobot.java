@@ -1,8 +1,16 @@
 package robot;
 
+
 import java.util.ArrayList;
+import java.io.IOException;
+import java.time.Clock;
+
+import javafx.geometry.Pos;
 
 import org.w3c.dom.*;
+
+import com.pi4j.io.serial.Serial;
+import com.pi4j.io.serial.SerialFactory;
 
 import pathfinder.Pathfinder;
 import motor.*;
@@ -10,8 +18,8 @@ import sensor.*;
 import comm.*;
 import util.*;
 
-import com.pi4j.wiringpi.Spi;
-import com.pi4j.wiringpi.Serial;
+
+
 
 
 public class SimpleRobot {
@@ -19,17 +27,17 @@ public class SimpleRobot {
 	// various private objects
 	private static Pathfinder pathfinder;
 	private static ArrayList<Position> routeTaken;
+	private static ArrayList<Zone> obsticleMap;
+	private static ArrayList<Position> destinations;
 	private static Radio radio;
 	private static Pid distPid;
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
-	private static Gpio gpio;
-	private static Spi spi;
-	private static Serial serial;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
+	private static Clock timer;
 	
 	private static int obsDist;
 	private Zone[] obs = {
@@ -48,18 +56,44 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
+	public static SerialWrapper serial;
+	public static ArduinoAdapter ardu;
+	public static SPIWrapper spi;
+	public static I2CWrapper i2c;
+
 	
 	// constants
+<<<<<<< HEAD
 	private final static double defaultSpeed = 10;
 		
 	public SimpleRobot(){
 		pathfinder = new Pathfinder(currentPos,obs,goals); // add obsticle map
 	}
+=======
+	private final static double defaultSpeed = 1;
+>>>>>>> origin/master-develop
 	
 	public static void main(String[] args) {
-		startup();
-		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); //
 		
+		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		routeTaken = new ArrayList<Position>();
+		obsticleMap = new ArrayList<Zone>();
+		destinations = new ArrayList<Position>();
+		//radio = new Radio();
+		distPid = new Pid(1, 1, 1);
+		turnPid = new Pid(1, 1, 1);
+		leftMotor = new ArduinoMotorController(9);
+		rightMotor = new ArduinoMotorController(10);
+		//currentPos = radio.getCurrentPos();
+		currentPos = new Position(0,0,0);
+		adc = new AnalogDigitalConverter(0, 1024);
+		eHandler = new ErrorHandler();
+		ardu = new ArduinoAdapter();
+		
+		System.out.println("All objects initialized");
+		driveToPoint(new Position(2000, 1000), 1);
+		System.out.println("Drove to point");
+		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	
 	/**
@@ -68,7 +102,7 @@ public class SimpleRobot {
 	 * The speed of the outside motor in a turn is fwdSpeed+|turnSpeed|.
 	 * The speed of the inside motor is fwdSpeed-|turnSpeed|.
 	 * The actual math below is mathematically equivalent to the steps above,
-	 * but requires less code to implement.
+	 * but requires less code to implement. (I think)
 	 * @param fwdSpeed
 	 * @param turnSpeed
 	 */
@@ -91,6 +125,7 @@ public class SimpleRobot {
 	public static void driveToPoint(Position dest, double speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
+				
 		while(!dest.isNearby(currentPos)){
 			drive(speed, turnPid.update(currentPos.getHead()));
 			updateAll();
@@ -111,18 +146,9 @@ public class SimpleRobot {
 	/**
 	 * This method should include update calls
 	 * to anything that doesn't update some other way. 
-	 * Will be depreciated in favor of separate subsystem update calls
 	 */
 	public static void updateAll(){
 		//this.currentPos = radio.getLatestPos();
-	}
-	
-	/**
-	 * Any code to be run once at startup.
-	 * Behaves the same as arduino's setup()
-	 */
-	public static void startup(){
-		
 	}
 	
 	/**
@@ -142,6 +168,7 @@ public class SimpleRobot {
 		Element routeTakenXML = docXML.createElement("route taken");
 		Element batteryStatusXML = docXML.createElement("battery");
 		Element sensorValueXML = docXML.createElement("sensor data");
+		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
 		robotXML.appendChild(currentPosXML);
@@ -149,6 +176,9 @@ public class SimpleRobot {
 		robotXML.appendChild(routeTakenXML);
 		robotXML.appendChild(batteryStatusXML);
 		robotXML.appendChild(sensorValueXML);
+		robotXML.appendChild(errors);
+		
+		
 		
 		//create structures for all positional elements
 		addPositionXML(docXML, currentPosXML, radio.getCurrentPos());
@@ -158,6 +188,10 @@ public class SimpleRobot {
 		//add data for all other elements
 		batteryStatusXML.appendChild(docXML.createTextNode(Double.toString(10)));
 		sensorValueXML.appendChild(docXML.createTextNode(Double.toString(20)));
+		
+		//Append to errors node a string representation.
+		eHandler.getErrors().forEach((e) -> errors.appendChild(docXML.createTextNode(e.toString())));
+		
 	}
 	
 	private static void addPositionXML(Document doc, Element parent, Position pos){
