@@ -163,11 +163,11 @@ public class SimpleRobot {
 
 		//declare elements
 		Element robotXML = docXML.createElement("robot");
-		Element currentPosXML = docXML.createElement("current position");
+		Element currentPosXML = docXML.createElement("current-position");
 		Element pathXML = docXML.createElement("path");
-		Element routeTakenXML = docXML.createElement("route taken");
+		Element routeTakenXML = docXML.createElement("route-taken");
 		Element batteryStatusXML = docXML.createElement("battery");
-		Element sensorValueXML = docXML.createElement("sensor data");
+		Element sensorValueXML = docXML.createElement("sensor-data");
 		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
