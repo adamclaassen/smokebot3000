@@ -36,6 +36,8 @@ public class SimpleRobot {
 	private static Motor rightMotor;
 	private static Salinity salinity;
 	private static Depth depth;
+	private static Double sal;
+	private static Double d;
 	private static ArduinoAdapter ard;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
@@ -110,7 +112,10 @@ public class SimpleRobot {
 	public static void readSensors(){
 		String msg = serial.read();
 		if(msg.substring(1, 3).equals("sd")){
-			ard.readData(msg);
+			d = depth.read(msg);
+		}
+		else if(msg.substring(1,3).equals("ss")){
+			sal = salinity.read(msg);
 		}
 		//radio.send(Double.toString());
 	}
