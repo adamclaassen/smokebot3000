@@ -9,13 +9,10 @@
 		<fileset dir="${basedir}/lib/">
 			<include name="*.jar"/>
 		</fileset>
-		<fileset dir="${basedir}/build/classes/">
-			<include name="*/*.class"/>
-		</fileset>
+		<fileset dir="${basedir}/build/classes/"/>
 	</path>
 
 	<pathconvert property="classpathProp" refid="classpath"/>
-
 
 	<target name="clean">
 		<delete dir="build/classes"/>
@@ -25,13 +22,21 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="build/classes"/>
-		<javac srcdir="src" destdir="build/classes">
-			<classpath refid="classpath"/>
-		</javac>
+		<javac 
+			srcdir="src" 
+			destdir="build/classes"
+			debug="true"
+			classpathref="classpath"
+		/>
 	</target>
 
 	<target name="run">
-		<java classname="robot.SimpleRobot" classpathref="classpath"/>
+		<java 
+			dir="${basedir}/build/classes" 
+			classname="robot.SimpleRobot" 
+			fork="true" 
+			classpath=":${basedir}/build/classes/:${basedir}/lib/*.jar:"
+		/>
 	</target>
 
 	<target name="debug">
