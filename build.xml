@@ -11,11 +11,10 @@
 		</fileset>
 	</path>
 
-	<path id="srcPath">
-		<fileset dir="${basedir}/build/classes"/>
-	</path>
-
-	<pathconvert property="libPathProp" refid="libPath"/>
+	<pathconvert
+		property="libPathProp"
+		refid="libPath"
+	/>
 
 	<target name="clean">
 		<delete dir="build/classes"/>
@@ -36,8 +35,7 @@
 	<target name="run">
 		<java
 			classname="robot.SimpleRobot"
-			classpathref="libPath"
-			classpathref="srcPath"
+			classpath="${libPathProp}:${basedir}/build/classes"
 		/>
 	</target>
 
