@@ -66,6 +66,9 @@ public class SimpleRobot {
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		ardu = new ArduinoAdapter();
+		serial = new SerialWrapper();
+		spi = new SPIWrapper();
+		i2c = new I2CWrapper(0);
 		
 		System.out.println("All objects initialized");
 		leftMotor.setSpeed(150);
