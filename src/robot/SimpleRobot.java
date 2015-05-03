@@ -68,6 +68,7 @@ public class SimpleRobot {
 		ardu = new ArduinoAdapter();
 		
 		System.out.println("All objects initialized");
+		leftMotor.setSpeed(150);
 		driveToPoint(new Position(2000, 1000), 1);
 		System.out.println("Drove to point");
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
