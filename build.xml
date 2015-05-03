@@ -20,9 +20,7 @@
 		<delete dir="build/classes"/>
 	</target>
 
-	<target name="build" depends="compile"/>
-
-	<target name="compile" depends="clean">
+	<target name="build" depends="clean">
 		<mkdir dir="build/classes"/>
 		<javac
 			srcdir="src"
@@ -38,5 +36,10 @@
 			classpath="${libPathProp}:${basedir}/build/classes"
 		/>
 	</target>
-
+	
+	<target name="pull">
+		<exec executable="git">
+			<arg line="pull"/>
+		</exec>
+	</target>
 </project>
