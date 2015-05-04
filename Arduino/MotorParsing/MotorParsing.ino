@@ -18,17 +18,17 @@ void loop(){
 String parseData() {
     String inData = ""; // Allocate some space for the string
     char inChar=-1; // Where to store the character read
-    
+
     while ((char)Serial.read() != '>'){
         inChar = Serial.read(); // Read a character
         inData += (char)inChar;// Store it
     }
     processInput(inData);
-   
+
 }
 void processInput(String msg){
     if(msg[1] == 'r'){
-
+      readSensor();
     }
     if(msg[1] == 'm'){
         motorControl(msg);
@@ -61,4 +61,8 @@ void motorControl(String msg){
         }
     }
     analogWrite(pin.toInt(),spd.toInt());
+}
+
+void readSensor(){
+  //must Serial.write(sensor_data)
 }

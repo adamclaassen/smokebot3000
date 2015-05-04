@@ -6,7 +6,9 @@ public class ErrorHandler {
 	
 	private ArrayList<Exception> errors;
 	
-	public ErrorHandler(){}
+	public ErrorHandler(){
+		errors = new ArrayList<Exception>();
+	}
 	
 	public void addError(Exception e){
 		this.errors.add(e);
