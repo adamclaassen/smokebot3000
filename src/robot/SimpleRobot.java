@@ -87,7 +87,7 @@ public class SimpleRobot {
 			eHandler.addError(e);
 		}
 		
-		
+		System.out.println(color.read());
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
