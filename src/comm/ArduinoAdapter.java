@@ -22,7 +22,7 @@ public class ArduinoAdapter {
 			int readCount = 0;
 			while(robot.SimpleRobot.serial.available()<=5){
 				if(readCount>100){
-					robot.SimpleRobot.serial.write(String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d",speed)).getBytes());
+					robot.SimpleRobot.serial.write(String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d", (int) speed)).getBytes());
 					readCount = 0;
 				}
 				readCount++;
