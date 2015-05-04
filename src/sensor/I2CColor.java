@@ -18,9 +18,7 @@ public class I2CColor extends Sensor{
 	public int[] read(){
 		byte[] data = null;
 		
-		int red;
-		int green;
-		int blue;
+		int red, green, blue;
 		
 		try {
 			this.color.read(0x16, data, 0, 2);
@@ -29,7 +27,7 @@ public class I2CColor extends Sensor{
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
-		
+		System.out.println("debug 1");
 		red = data[0] << 8;
 		red |= data[1];
 		
