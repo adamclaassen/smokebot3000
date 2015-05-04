@@ -76,7 +76,7 @@ public class SimpleRobot {
 		ardu = new ArduinoAdapter();
 		serial = new SerialWrapper();
 		spi = new SPIWrapper();
-		i2c = new I2CWrapper();
+		i2c = new I2CWrapper(0);
 		color = new I2CColor(0, 0);
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
