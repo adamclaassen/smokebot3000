@@ -46,10 +46,10 @@ public class I2CColor extends Sensor{
 		red |= redLow;
 		
 		green = greenHigh << 8;
-		green += greenLow;
+		green |= greenLow;
 		
 		blue = blueHigh << 8;
-		blue += blueLow;
+		blue |= blueLow;
 		int[] ret = {red, green, blue};
 		return ret;
 	}
