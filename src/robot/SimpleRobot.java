@@ -46,6 +46,7 @@ public class SimpleRobot {
 	private static DocumentBuilder db;
 	private static Document xmldoc;
 	private static I2CColor color;
+	private static Gyro gyro;
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -53,6 +54,7 @@ public class SimpleRobot {
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
+	
 
 	
 	// constants
@@ -79,6 +81,7 @@ public class SimpleRobot {
 		i2c = new I2CWrapper();
 		System.out.println(eHandler.getErrors().toString());
 		color = new I2CColor(0, 0);
+		gyro = new Gyro(0,0);
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
@@ -91,6 +94,9 @@ public class SimpleRobot {
 		System.out.println(color.read()[0]);
 		System.out.println(color.read()[1]);
 		System.out.println(color.read()[2]);
+		System.out.println(gyro.read()[0]);
+		System.out.println(gyro.read()[1]);
+		System.out.println(gyro.read()[2]);
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");

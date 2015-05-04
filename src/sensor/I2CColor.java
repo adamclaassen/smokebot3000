@@ -27,7 +27,7 @@ public class I2CColor extends Sensor{
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
-		System.out.println("debug 1");
+		//System.out.println("debug 1");
 
 		int[] ret = {red, green, blue};
 		return ret;
