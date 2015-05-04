@@ -10,6 +10,7 @@ public class Gyro extends Sensor{
 		super(inputHigh, inputLow);
 		try {
 			gyro = robot.SimpleRobot.i2c.bus.getDevice(0x68);
+			gyro.write(0x6B, (byte) 0);
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
