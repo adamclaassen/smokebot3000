@@ -61,6 +61,7 @@ public class SimpleRobot {
 	public static void main(String[] args) {
 		
 		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
@@ -72,11 +73,11 @@ public class SimpleRobot {
 		//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
-		eHandler = new ErrorHandler();
 		ardu = new ArduinoAdapter();
 		serial = new SerialWrapper();
 		spi = new SPIWrapper();
 		i2c = new I2CWrapper();
+		System.out.println(eHandler.getErrors().toString());
 		color = new I2CColor(0, 0);
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
