@@ -97,6 +97,8 @@ public class SimpleRobot {
 		System.out.println(gyro.read()[0]);
 		System.out.println(gyro.read()[1]);
 		System.out.println(gyro.read()[2]);
+		
+		leftMotor.setSpeed(150);
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
