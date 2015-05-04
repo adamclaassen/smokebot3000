@@ -16,40 +16,17 @@ public class I2CColor extends Sensor{
 	}
 	
 	public int[] read(){
-		byte redHigh = 0;
-		byte redLow = 0;
-		byte blueHigh = 0;
-		byte blueLow = 0;
-		byte greenHigh = 0;
-		byte greenLow = 0;
+		byte redLow, redHigh, greenLow, greenHigh, blueLow, blueHigh;
 		
-		int red;
-		int green;
-		int blue;
+		int red, green, blue;
 		
 		try {
-			redLow = (byte) this.color.read(0x16);
-			redHigh = (byte) this.color.read(0x17);
 			
-			blueLow = (byte) this.color.read(0x1A);
-			blueHigh = (byte) this.color.read(0x1B);
-			
-			greenLow = (byte) this.color.read(0x18);
-			greenHigh = (byte) this.color.read(0x19);
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
-		System.out.println(redLow);
-		System.out.println(redHigh);
-		
-		red = redHigh << 8;
-		red |= redLow;
-		
-		green = greenHigh << 8;
-		green |= greenLow;
-		
-		blue = blueHigh << 8;
-		blue |= blueLow;
+		System.out.println("debug 1");
+
 		int[] ret = {red, green, blue};
 		return ret;
 	}
