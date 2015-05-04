@@ -6,8 +6,9 @@ import com.pi4j.io.i2c.*;
 
 
 public class I2CWrapper {
-	
-	 I2CBus bus;
+
+	 public I2CBus bus;
+
 	 //I2CDevice device;
 
 public I2CWrapper(int address){

@@ -2,10 +2,19 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.io.IOException;
+import java.time.Clock;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import javafx.geometry.Pos;
 
 import org.w3c.dom.*;
+
+import com.pi4j.io.serial.Serial;
+import com.pi4j.io.serial.SerialFactory;
 
 import pathfinder.Pathfinder;
 import motor.*;
@@ -14,7 +23,7 @@ import comm.*;
 import util.*;
 
 import com.pi4j.wiringpi.Spi;
-import com.pi4j.wiringpi.Serial;
+
 import java.time.Clock;
 
 
@@ -34,22 +43,41 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
-	//private static Clock myClock = new Clock();
+
+	private static Clock timer;
+	private static DocumentBuilderFactory dbf;
+	private static DocumentBuilder db;
+	private static Document xmldoc;
+	private static I2CColor color;
+
 	
 	//public objects
 	public static ErrorHandler eHandler;
+	public static SerialWrapper serial;
+	public static ArduinoAdapter ardu;
+	public static SPIWrapper spi;
+	public static I2CWrapper i2c;
+
 	
 	// constants
 	private final static double defaultSpeed = 1;
 	
 	public static void main(String[] args) {
+
+		
+		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
 		eHandler = new ErrorHandler();
+		routeTaken = new ArrayList<Position>();
+		obsticleMap = new ArrayList<Zone>();
+		destinations = new ArrayList<Position>();
+
 		radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
+
 		servoMotor= new ArduinoMotorController(11);
 		obsticleMap = new ArrayList<Zone>();
 		routeTaken = new ArrayList<Position>();
@@ -64,7 +92,38 @@ public class SimpleRobot {
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		//openClaw method goes right here
 		
+			//currentPos = radio.getCurrentPos();
+		currentPos = new Position(0,0,0);
+		adc = new AnalogDigitalConverter(0, 1024);
+		ardu = new ArduinoAdapter();
+		serial = new SerialWrapper();
+		spi = new SPIWrapper();
+
+		i2c = new I2CWrapper(currentDriveSpeed);
+		System.out.println(eHandler.getErrors().toString());
+
+		color = new I2CColor(0, 0);
+		//xml doc stuff
+		dbf = DocumentBuilderFactory.newInstance();
+		db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			eHandler.addError(e);
+		}
 		
+		System.out.println(color.read());
+		/*xmldoc = db.newDocument();
+		
+		System.out.println("All objects initialized");
+		
+		generateXML(xmldoc);
+		
+		leftMotor.setSpeed(150);
+		driveToPoint(new Position(2000, 1000), 1);
+		System.out.println("Drove to point");*/
+		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
+
 	}
 	
 	/**
@@ -100,9 +159,7 @@ public class SimpleRobot {
 	public static void driveToPoint(Position dest, double speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
-		
-		System.out.println(dest.getDist(currentPos));
-		
+				
 		while(!dest.isNearby(currentPos)){
 			drive(speed, turnPid.update(currentPos.getHead()));
 			updateAll();
@@ -140,11 +197,11 @@ public class SimpleRobot {
 
 		//declare elements
 		Element robotXML = docXML.createElement("robot");
-		Element currentPosXML = docXML.createElement("current position");
+		Element currentPosXML = docXML.createElement("current-position");
 		Element pathXML = docXML.createElement("path");
-		Element routeTakenXML = docXML.createElement("route taken");
+		Element routeTakenXML = docXML.createElement("route-taken");
 		Element batteryStatusXML = docXML.createElement("battery");
-		Element sensorValueXML = docXML.createElement("sensor data");
+		Element sensorValueXML = docXML.createElement("sensor-data");
 		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
