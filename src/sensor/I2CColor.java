@@ -15,8 +15,24 @@ public class I2CColor extends Sensor{
 		}
 	}
 	
-	public Double read(){
-		return (double) robot.SimpleRobot.i2c.read(color);
+
+	public int[] read(){
+		byte redLow, redHigh, greenLow, greenHigh, blueLow, blueHigh;
+		
+		int red = 0, green = 0, blue = 0;
+		
+		try {
+			red = color.read(0x17) << 8 | color.read(0x16);
+			green = color.read(0x18) << 8 | color.read(0x19);
+			blue = color.read(0x20) << 8 | color.read(0x21);
+		} catch (IOException e) {
+			robot.SimpleRobot.eHandler.addError(e);
+		}
+		//System.out.println("debug 1");
+
+		int[] ret = {red, green, blue};
+		return ret;
+
 	}
 
 }

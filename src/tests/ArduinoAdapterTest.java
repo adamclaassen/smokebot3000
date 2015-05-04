@@ -1,5 +1,5 @@
 package tests;
-import util.ArduinoAdapter;
+import comm.ArduinoAdapter;
 
 public class ArduinoAdapterTest {
 

@@ -22,6 +22,7 @@ import sensor.*;
 import comm.*;
 import util.*;
 
+
 import com.pi4j.wiringpi.Spi;
 
 import java.time.Clock;
@@ -50,6 +51,8 @@ public class SimpleRobot {
 	private static Document xmldoc;
 	private static I2CColor color;
 
+	private static Gyro gyro;
+
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -57,6 +60,7 @@ public class SimpleRobot {
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
+
 
 	
 	// constants
@@ -95,14 +99,15 @@ public class SimpleRobot {
 			//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
+
+		serial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new ArduinoAdapter();
-		serial = new SerialWrapper();
 		spi = new SPIWrapper();
-
-		i2c = new I2CWrapper(currentDriveSpeed);
+		i2c = new I2CWrapper();
 		System.out.println(eHandler.getErrors().toString());
-
 		color = new I2CColor(0, 0);
+		gyro = new Gyro(0,0);
+
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
@@ -110,13 +115,28 @@ public class SimpleRobot {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
-		}
+
 		
-		System.out.println(color.read());
+		System.out.println(color.read());}
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
 		
+=======
+		
+		System.out.println(color.read()[0]);
+		System.out.println(color.read()[1]);
+		System.out.println(color.read()[2]);
+		System.out.println(gyro.read()[0]);
+		System.out.println(gyro.read()[1]);
+		System.out.println(gyro.read()[2]);
+		
+		leftMotor.setSpeed(150);
+		/*xmldoc = db.newDocument();
+		
+		System.out.println("All objects initialized");
+		
+>>>>>>> master-develop
 		generateXML(xmldoc);
 		
 		leftMotor.setSpeed(150);
