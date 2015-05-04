@@ -73,8 +73,8 @@ public class SimpleRobot {
 		//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
-		ardu = new ArduinoAdapter();
 		serial = new SerialWrapper();
+		ardu = new ArduinoAdapter();
 		spi = new SPIWrapper();
 		i2c = new I2CWrapper();
 		System.out.println(eHandler.getErrors().toString());

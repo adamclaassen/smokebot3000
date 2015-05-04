@@ -10,7 +10,7 @@ public class I2CWrapper {
 	 public I2CBus bus;
 	 //I2CDevice device;
 
-public I2CWrapper(){
+	 public I2CWrapper(){
 		
         try {
 			bus = I2CFactory.getInstance(I2CBus.BUS_1);
