@@ -6,11 +6,10 @@ import com.pi4j.io.i2c.*;
 
 public class I2CColor extends Sensor{
 	I2CDevice color;
-
 	public I2CColor(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
 		try {
-			color = robot.SimpleRobot.i2c.bus.getDevice(0x29);
+			color = robot.SimpleRobot.i2c.bus.getDevice(4);
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
