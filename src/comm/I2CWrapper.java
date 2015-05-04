@@ -9,11 +9,8 @@ public class I2CWrapper {
 	 public I2CBus bus;
 	 //I2CDevice device;
 
-<<<<<<< HEAD
 	 public I2CWrapper(){
-=======
-public I2CWrapper(int address){
->>>>>>> f1657f0bd12841ce74ad91e16372ee300af993e1
+
 		
         try {
 			bus = I2CFactory.getInstance(I2CBus.BUS_1);
