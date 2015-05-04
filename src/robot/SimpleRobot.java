@@ -45,6 +45,7 @@ public class SimpleRobot {
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
+	private static I2CColor color;
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -75,7 +76,8 @@ public class SimpleRobot {
 		ardu = new ArduinoAdapter();
 		serial = new SerialWrapper();
 		spi = new SPIWrapper();
-		i2c = new I2CWrapper(0);
+		i2c = new I2CWrapper();
+		color = new I2CColor(0, 0);
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
@@ -84,7 +86,9 @@ public class SimpleRobot {
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
 		}
-		xmldoc = db.newDocument();
+		
+		
+		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
 		
@@ -92,7 +96,7 @@ public class SimpleRobot {
 		
 		leftMotor.setSpeed(150);
 		driveToPoint(new Position(2000, 1000), 1);
-		System.out.println("Drove to point");
+		System.out.println("Drove to point");*/
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 	}
 	

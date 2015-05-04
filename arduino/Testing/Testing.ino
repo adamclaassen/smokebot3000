@@ -1,10 +1,11 @@
 void setup() {
-  pinMode(9,OUTPUT);
-  pinMode(10,OUTPUT);
+  pinMode(5,OUTPUT);
+  pinMode(6,OUTPUT);
+  analogWrite(6,150);
+  analogWrite(5,240);
 }
 
 void loop() {
-  analogWrite(9,170);
-  analogWrite(10,170);
+  
 
 }
