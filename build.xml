@@ -5,37 +5,41 @@
 	<property name="main.class" value="robot.SimpleRobot"/>
 
 
-	<path id="classpath">
+	<path id="libPath">
 		<fileset dir="${basedir}/lib/">
 			<include name="*.jar"/>
 		</fileset>
-		<fileset dir="${basedir}/build/classes/">
-			<include name="*/*.class"/>
-		</fileset>
 	</path>
 
-	<pathconvert property="classpathProp" refid="classpath"/>
-
+	<pathconvert
+		property="libPathProp"
+		refid="libPath"
+	/>
 
 	<target name="clean">
 		<delete dir="build/classes"/>
 	</target>
 
-	<target name="build" depends="compile"/>
-
-	<target name="compile" depends="clean">
+	<target name="build" depends="clean">
 		<mkdir dir="build/classes"/>
-		<javac srcdir="src" destdir="build/classes">
-			<classpath refid="classpath"/>
-		</javac>
+		<javac
+			srcdir="src"
+			destdir="build/classes"
+			debug="true"
+			classpathref="libPath"
+		/>
 	</target>
 
 	<target name="run">
-		<java classname="robot.SimpleRobot" classpathref="classpath"/>
+		<java
+			classname="robot.SimpleRobot"
+			classpath="${libPathProp}:${basedir}/build/classes"
+		/>
 	</target>
-
-	<target name="debug">
-		<echo message="${classpathProp}"/>
+	
+	<target name="pull">
+		<exec executable="git">
+			<arg line="pull"/>
+		</exec>
 	</target>
-
 </project>

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.time.Clock;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import javafx.geometry.Pos;
 
 import org.w3c.dom.*;
@@ -43,6 +47,9 @@ public class SimpleRobot {
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	private static Clock timer;
+	private static DocumentBuilderFactory dbf;
+	private static DocumentBuilder db;
+	private static Document xmldoc;
 	
 	private static int obsDist;
 	private Zone[] obs = {
@@ -77,7 +84,7 @@ public class SimpleRobot {
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-		//radio = new Radio();
+		radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		leftMotor = new ArduinoMotorController(9);
@@ -87,8 +94,24 @@ public class SimpleRobot {
 		adc = new AnalogDigitalConverter(0, 1024);
 		eHandler = new ErrorHandler();
 		ardu = new ArduinoAdapter();
+		serial = new SerialWrapper();
+		spi = new SPIWrapper();
+		i2c = new I2CWrapper(0);
+		//xml doc stuff
+		dbf = DocumentBuilderFactory.newInstance();
+		db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			eHandler.addError(e);
+		}
+		xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
+		
+		generateXML(xmldoc);
+		
+		leftMotor.setSpeed(150);
 		driveToPoint(new Position(2000, 1000), 1);
 		System.out.println("Drove to point");
 		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
@@ -167,11 +190,11 @@ public class SimpleRobot {
 
 		//declare elements
 		Element robotXML = docXML.createElement("robot");
-		Element currentPosXML = docXML.createElement("current position");
+		Element currentPosXML = docXML.createElement("current-position");
 		Element pathXML = docXML.createElement("path");
-		Element routeTakenXML = docXML.createElement("route taken");
+		Element routeTakenXML = docXML.createElement("route-taken");
 		Element batteryStatusXML = docXML.createElement("battery");
-		Element sensorValueXML = docXML.createElement("sensor data");
+		Element sensorValueXML = docXML.createElement("sensor-data");
 		Element errors = docXML.createElement("errors");
 		
 		//append all sub-elements of root
