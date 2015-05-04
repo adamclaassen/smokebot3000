@@ -18,10 +18,12 @@ public class I2CColor extends Sensor{
 	public int[] read(){
 		byte redLow, redHigh, greenLow, greenHigh, blueLow, blueHigh;
 		
-		int red, green, blue;
+		int red = 0, green = 0, blue = 0;
 		
 		try {
-			
+			red = color.read(0x17) << 8 | color.read(0x16);
+			green = color.read(0x18) << 8 | color.read(0x19);
+			blue = color.read(0x20) << 8 | color.read(0x21);
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
