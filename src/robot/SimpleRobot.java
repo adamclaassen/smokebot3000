@@ -89,6 +89,8 @@ public class SimpleRobot {
 		}
 		
 		System.out.println(color.read()[0]);
+		System.out.println(color.read()[1]);
+		System.out.println(color.read()[2]);
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");

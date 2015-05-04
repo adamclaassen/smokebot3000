@@ -39,8 +39,6 @@ public class I2CColor extends Sensor{
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
-		System.out.println(redLow);
-		System.out.println(redHigh);
 		
 		red = redHigh << 8;
 		red |= redLow;
