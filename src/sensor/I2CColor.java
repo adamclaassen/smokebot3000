@@ -42,15 +42,15 @@ public class I2CColor extends Sensor{
 		System.out.println(redLow);
 		System.out.println(redHigh);
 		
-		red = redHigh << 8;
-		red += redLow;
+		redHigh <<= 8;
+		redHigh |= redLow;
 		
 		green = greenHigh << 8;
 		green += greenLow;
 		
 		blue = blueHigh << 8;
 		blue += blueLow;
-		int[] ret = {red, green, blue};
+		int[] ret = {redHigh, green, blue};
 		return ret;
 	}
 
