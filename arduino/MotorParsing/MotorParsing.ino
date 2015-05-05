@@ -10,24 +10,18 @@ void setup() {
 }
 
 void loop(){
-    bool donePacket = false;
-    while(Serial.available() >= 0 && donePacket != true){
-      inChar = Serial.read();
-      if(inChar == '<'){
-        msg += inChar;
-        while(Serial.available() >= 0 && !donePacket){
-          inChar = Serial.read();
-          msg += inChar;
-          Serial.write(inChar);
-          if(inChar == '>'){
-            donePacket = true;
-          }
-        }
-      }
-    }  
-  Serial.println(msg);
-  processInput(msg);
-  
+  if(Serial.available()>0){
+    Serial.println("hi");
+  }
+  if(Serial.available()>=5){
+    Serial.println("found more than or eual to 5 serial bytes");
+    msg = Serial.readString();
+  }
+  while(msg.length()>=5){
+    Serial.println(msg);
+    processInput(msg.substring(msg.indexOf("<"), msg.indexOf(">")));
+    msg = msg.substring(msg.indexOf(">"))+1;
+  }
 }
 
 
