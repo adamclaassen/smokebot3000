@@ -102,7 +102,7 @@ public class SimpleRobot {
 		destinations = new ArrayList<Position>();
 		currentPos = radio.getCurrentPos();
 		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); //GET THE OBSTACLE MAP
+		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		//openClaw method goes right here
 		
