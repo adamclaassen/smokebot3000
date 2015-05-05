@@ -41,7 +41,7 @@ public class ArduinoAdapter {
 					System.out.println("Timed out");
 				}
 				System.out.println("Read Count: " + readCount);
-				robot.SimpleRobot.eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+				
 				readCount++;
 			}
 
@@ -49,6 +49,7 @@ public class ArduinoAdapter {
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
+		robot.SimpleRobot.eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 		return false;
 	}
 }
