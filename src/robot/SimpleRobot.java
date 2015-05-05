@@ -55,6 +55,17 @@ public class SimpleRobot {
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
 	
+	private static int obsDist = 50;
+	private Zone[] obs = {
+			new Zone(1200,1400,obsDist),
+			new Zone(1200,600 ,obsDist),
+			new Zone(2100,1800,obsDist),
+			new Zone(2400,1800,obsDist),
+			new Zone(2200,8000,obsDist),
+			new Zone(2200,800 ,obsDist),
+			new Zone(3200,700 ,obsDist)
+	};
+	
 
 	
 	// constants

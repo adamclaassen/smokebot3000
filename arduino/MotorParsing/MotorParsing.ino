@@ -1,7 +1,7 @@
 // Index into array; where to store the character
 char msgType;
-
-
+char inChar;
+String msg;
 void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
@@ -10,29 +10,25 @@ void setup() {
 }
 
 void loop(){
-    while(Serial.available() >= 0){
-      parseData();
-    }
-}
-
-String parseData() {
-    String inData = ""; // Allocate some space for the string
-    char inChar = (char)Serial.read();
-    Serial.write(inChar);
-    if(inChar == '<'){
-      inData += inChar;
-      while (inChar != '>'){
-        inData += inChar;// Store it
-        inChar = (char)Serial.read();
-        Serial.write(inChar);
+    bool donePacket = false;
+    while(Serial.available() >= 0 && donePacket != true){
+      inChar = Serial.read();
+      if(inChar == '<'){
+        msg += inChar;
+        while(Serial.available() >= 0 && !donePacket){
+          inChar = Serial.read();
+          msg += inChar;
+          if(inChar == '>'){
+            donePacket = true;
+          }
+        }
       }
-      char chars[inData.length()];
-      inData.toCharArray(chars, inData.length()); 
-      Serial.write(chars);
-      processInput(inData);
-    }
-
+    }  
+  char msgTemp[msg.length()];  
+  Serial.write(msg.getBytes(msgTemp, msg.length());
 }
+
+
 void processInput(String msg){
     //Serial.write(msg);
     if(msg[1] == 'r'){
