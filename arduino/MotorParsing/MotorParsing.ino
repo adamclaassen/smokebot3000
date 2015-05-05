@@ -10,10 +10,6 @@ void setup() {
 }
 
 void loop(){
-    for(int i = 0; i < 255; i+= 10){
-      analogWrite(9, i);
-      delay(100);
-    }
     while(Serial.available() >= 0){
       parseData();
     }
@@ -22,12 +18,17 @@ void loop(){
 String parseData() {
     String inData = ""; // Allocate some space for the string
     char inChar = (char)Serial.read();
+    Serial.write(inChar);
     if(inChar == '<'){
+      inData += inChar;
       while (inChar != '>'){
         inData += inChar;// Store it
         inChar = (char)Serial.read();
+        Serial.write(inChar);
       }
-      inData += inChar;
+      char chars[inData.length()];
+      inData.toCharArray(chars, inData.length()); 
+      Serial.write(chars);
       processInput(inData);
     }
 
