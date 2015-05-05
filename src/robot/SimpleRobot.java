@@ -83,16 +83,12 @@ public class SimpleRobot {
 		rightMotor = new ArduinoMotorController(10);
 
 		servoMotor= new ArduinoMotorController(11);
-		obsticleMap = new ArrayList<Zone>();
+		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
 		currentPos = radio.getCurrentPos();
 		
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); //GET THE OBSTACLE MAP
-		
-		
-		
-		
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		//openClaw method goes right here
 		
