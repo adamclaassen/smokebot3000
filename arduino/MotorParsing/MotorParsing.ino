@@ -6,7 +6,7 @@ void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
     Serial.begin(9600);
-    analogWrite(9,150);
+    //analogWrite(9,150);
 }
 
 void loop(){
@@ -14,9 +14,9 @@ void loop(){
       analogWrite(9, i);
       delay(100);
     }
-    //while(Serial.available() >= 0){
-      //Serial.write(Serial.read());
-    //}
+    while(Serial.available() >= 0){
+      parseData();
+    }
 }
 
 String parseData() {
