@@ -29,9 +29,11 @@ String parseData() {
 void processInput(String msg){
     if(msg[1] == 'r'){
       readSensor();
+      acknowledge();
     }
     if(msg[1] == 'm'){
-        motorControl(msg);
+      motorControl(msg);'
+      acknowledge();
     }
 }
 
@@ -66,3 +68,8 @@ void motorControl(String msg){
 void readSensor(){
   //must Serial.write(sensor_data)
 }
+
+void acknowledge(){
+   Serial.write("<a//>");
+}
+ 
