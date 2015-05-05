@@ -24,8 +24,8 @@ void loop(){
         }
       }
     }  
-  char msgTemp[msg.length()];  
-  Serial.write(msg.getBytes(msgTemp, msg.length());
+  processInput(msg);
+  
 }
 
 

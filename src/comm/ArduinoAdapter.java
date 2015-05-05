@@ -17,7 +17,7 @@ public class ArduinoAdapter {
 	
 	public boolean setMotorSpeed(int pin, int speed){
 		try {
-			int readCount = 0;
+			int readCount = 100;
 			boolean timeOut = false;
 			boolean ack = false;
 			String inMsg;
