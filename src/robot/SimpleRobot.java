@@ -63,15 +63,6 @@ public class SimpleRobot {
 
 	
 	private static int obsDist = 50;
-	private Zone[] obs = {
-			new Zone(1200,1400,obsDist),
-			new Zone(1200,600 ,obsDist),
-			new Zone(2100,1800,obsDist),
-			new Zone(2400,1800,obsDist),
-			new Zone(2200,8000,obsDist),
-			new Zone(2200,800 ,obsDist),
-			new Zone(3200,700 ,obsDist)
-	};
 	
 
 
@@ -144,6 +135,7 @@ public class SimpleRobot {
 		
 		//leftMotor.setSpeed(150);
 		leftMotor.setSpeed(150);
+		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
