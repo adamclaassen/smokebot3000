@@ -10,9 +10,9 @@ import com.pi4j.io.serial.*;
 
 public class SerialWrapper {
 	
-	private static final Serial usbSerial = SerialFactory.createInstance();
-	private static InputStream input;
-	private static OutputStream output;
+	private final Serial usbSerial = SerialFactory.createInstance();
+	private InputStream input;
+	private OutputStream output;
 	
 	public SerialWrapper(String device){
 		try {

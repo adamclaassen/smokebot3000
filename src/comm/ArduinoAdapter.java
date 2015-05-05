@@ -12,7 +12,7 @@ public class ArduinoAdapter {
 	}
 	
 	public double readData(){
-		return Double.parseDouble(robot.SimpleRobot.serial.read().split("<|>")[1].split("/")[1]);
+		return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 	}
 	
 	public boolean setMotorSpeed(int pin, int speed){
@@ -23,10 +23,10 @@ public class ArduinoAdapter {
 			String inMsg;
 			String msg = String.format("<m/%d/%d>",pin,speed);
 			while(!timeOut && !ack){
-				robot.SimpleRobot.serial.write(msg);
+				robot.SimpleRobot.arduinoSerial.write(msg);
 				System.out.println("Message: " +msg);
-				if(robot.SimpleRobot.serial.available() > 0){
-					inMsg = robot.SimpleRobot.serial.readOSVPacket();
+				if(robot.SimpleRobot.arduinoSerial.available() > 0){
+					inMsg = robot.SimpleRobot.arduinoSerial.readOSVPacket();
 					System.out.println(inMsg);
 					if(inMsg.length() >= 4){
 						if(inMsg.substring(1,2).equals("a")){

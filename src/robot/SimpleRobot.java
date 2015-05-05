@@ -50,7 +50,7 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
-	public static SerialWrapper serial;
+	public static SerialWrapper arduinoSerial;
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
@@ -75,7 +75,7 @@ public class SimpleRobot {
 		//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
-		serial = new SerialWrapper("/dev/ttyACM0");
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new ArduinoAdapter();
 		spi = new SPIWrapper();
 		//i2c = new I2CWrapper();
