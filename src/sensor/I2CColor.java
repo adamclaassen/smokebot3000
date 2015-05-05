@@ -17,8 +17,6 @@ public class I2CColor extends Sensor{
 	
 
 	public int[] read(){
-		byte redLow, redHigh, greenLow, greenHigh, blueLow, blueHigh;
-		
 		int red = 0, green = 0, blue = 0;
 		
 		try {

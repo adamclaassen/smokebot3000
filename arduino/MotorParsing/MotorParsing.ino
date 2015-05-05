@@ -1,37 +1,43 @@
 // Index into array; where to store the character
 char msgType;
-
-
+char inChar;
+String msg;
 void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
     Serial.begin(9600);
-    Serial.write("Power On");
+    //analogWrite(9,150);
 }
 
 void loop(){
-    while(Serial.available() > 0){
-        parseData();
-    }
+    bool donePacket = false;
+    while(Serial.available() >= 0 && donePacket != true){
+      inChar = Serial.read();
+      if(inChar == '<'){
+        msg += inChar;
+        while(Serial.available() >= 0 && !donePacket){
+          inChar = Serial.read();
+          msg += inChar;
+          if(inChar == '>'){
+            donePacket = true;
+          }
+        }
+      }
+    }  
+  char msgTemp[msg.length()];  
+  Serial.write(msg.getBytes(msgTemp, msg.length());
 }
 
-String parseData() {
-    String inData = ""; // Allocate some space for the string
-    char inChar=-1; // Where to store the character read
 
-    while ((char)Serial.read() != '>'){
-        inChar = Serial.read(); // Read a character
-        inData += (char)inChar;// Store it
-    }
-    processInput(inData);
-
-}
 void processInput(String msg){
+    //Serial.write(msg);
     if(msg[1] == 'r'){
+      acknowledge();
       readSensor();
     }
     if(msg[1] == 'm'){
-        motorControl(msg);
+      acknowledge();
+      motorControl(msg);
     }
 }
 
@@ -61,8 +67,14 @@ void motorControl(String msg){
         }
     }
     analogWrite(pin.toInt(),spd.toInt());
+    Serial.println("<a//>");
 }
 
 void readSensor(){
   //must Serial.write(sensor_data)
 }
+
+void acknowledge(){
+   Serial.write("<a//>");
+}
+ 

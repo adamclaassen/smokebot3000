@@ -10,9 +10,9 @@ import com.pi4j.io.serial.*;
 
 public class SerialWrapper {
 	
-	private static final Serial usbSerial = SerialFactory.createInstance();
-	private static InputStream input;
-	private static OutputStream output;
+	private final Serial usbSerial = SerialFactory.createInstance();
+	private InputStream input;
+	private OutputStream output;
 	
 
 	public SerialWrapper(String device){
@@ -31,6 +31,7 @@ public class SerialWrapper {
 			output.write(data.getBytes());
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
+			System.out.println("Error in a write statement");
 		}
 	}
 	
@@ -55,6 +56,26 @@ public class SerialWrapper {
 		return String.copyValueOf(data);
 		
 	}
+	public String readOSVPacket(){
+		String msg = "";
+		try{
+			while(input.available() > 0){
+				char inChar = (char)input.read();
+				if(inChar == '<'){
+					msg+=inChar;
+					while(inChar != '>'){
+						inChar = (char)input.read();
+						msg+= inChar;
+					}
+				}
+			}
+		}
+		catch(IOException e){
+			robot.SimpleRobot.eHandler.addError(e);
+		}
+		return msg;
+	}
+		
 
 	public void write(byte[] bytes) {
 		try {
@@ -64,6 +85,16 @@ public class SerialWrapper {
 		}
 	}
 
+	public char readChar(){
+		try{
+			char inChar = (char)input.read();
+			return inChar;
+		}
+		catch(IOException e){
+			robot.SimpleRobot.eHandler.addError(e);
+			return 'q';
+		}
+	}
 	public int available() {
 		try {
 			return input.available();

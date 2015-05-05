@@ -12,6 +12,10 @@ public class Zone {
 		this.radius = radius;
 	}
 	
+	public Zone(int x, int y, int radius){
+		this(new Position(x,y),radius);
+	}
+	
 	public boolean isInZone(Position pos){
 		if(this.getDistance(pos)<this.radius){
 			return true;
