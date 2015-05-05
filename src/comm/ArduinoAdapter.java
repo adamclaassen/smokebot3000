@@ -49,7 +49,6 @@ public class ArduinoAdapter {
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
-		robot.SimpleRobot.eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 		return false;
 	}
 }

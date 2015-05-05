@@ -102,6 +102,7 @@ public class SimpleRobot {
 		
 		//leftMotor.setSpeed(150);
 		leftMotor.setSpeed(150);
+		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
