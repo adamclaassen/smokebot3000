@@ -17,7 +17,7 @@ public class ArduinoAdapter {
 	
 	public boolean setMotorSpeed(int pin, double speed){
 		try {
-			robot.SimpleRobot.serial.write(String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d", (int) speed)).getBytes());
+			robot.SimpleRobot.serial.write(String.format("<m/%05d/%05d>", pin, speed).getBytes());
 			
 			int readCount = 0;
 			while(robot.SimpleRobot.serial.available()<=5){
