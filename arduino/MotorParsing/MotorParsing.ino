@@ -61,6 +61,7 @@ void motorControl(String msg){
         }
     }
     analogWrite(pin.toInt(),spd.toInt());
+    Serial.println("<a//>");
 }
 
 void readSensor(){
