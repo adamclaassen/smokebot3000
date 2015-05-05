@@ -16,12 +16,13 @@ public class ArduinoAdapter {
 	}
 	
 	public boolean setMotorSpeed(int pin, int speed){
+		int readCount = 0;
+		boolean timeOut = false;
+		boolean ack = false;
+		String inMsg;
+		String msg = String.format("<m/%d/%d>",pin,speed);
 		try {
-			int readCount = 0;
-			boolean timeOut = false;
-			boolean ack = false;
-			String inMsg;
-			String msg = String.format("<m/%d/%d>",pin,speed);
+			
 			robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("Message: " +msg);
 			while(!timeOut && !ack){
@@ -38,10 +39,9 @@ public class ArduinoAdapter {
 				}
 				if(readCount > 100){
 					timeOut = true;
-					System.out.println("Timed out");
+					setMotorSpeed(pin, speed);
 				}
 				System.out.println("Read Count: " + readCount);
-				
 				readCount++;
 			}
 
