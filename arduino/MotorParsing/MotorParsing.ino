@@ -18,12 +18,14 @@ void loop(){
         while(Serial.available() >= 0 && !donePacket){
           inChar = Serial.read();
           msg += inChar;
+          Serial.write(inChar);
           if(inChar == '>'){
             donePacket = true;
           }
         }
       }
     }  
+  Serial.println(msg);
   processInput(msg);
   
 }
