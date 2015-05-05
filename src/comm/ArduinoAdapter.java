@@ -15,10 +15,12 @@ public class ArduinoAdapter {
 		return Double.parseDouble(robot.SimpleRobot.serial.read().split("<|>")[1].split("/")[1]);
 	}
 	
-	public boolean setMotorSpeed(int pin, double speed){
+	public boolean setMotorSpeed(int pin, int speed){
 		try {
-			robot.SimpleRobot.serial.write(String.format("<m/%05d/%05d>", pin, speed).getBytes());
-			
+
+			String msg = String.format("<m/%d/%d>",pin,speed);
+			robot.SimpleRobot.serial.write(msg.getBytes());
+			System.out.println(msg);
 			int readCount = 0;
 			while(robot.SimpleRobot.serial.available()<=5){
 				if(readCount>100){

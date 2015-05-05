@@ -12,7 +12,7 @@ public abstract class Motor {
 		this.outputHigh = outputHigh;
 	}
 	
-	public abstract void setSpeed(double speed);
+	public abstract void setSpeed(int speed);
 	
 	public double getSpeed(){
 		return this.speed;

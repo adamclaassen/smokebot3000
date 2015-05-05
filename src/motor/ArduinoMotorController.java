@@ -9,7 +9,7 @@ public class ArduinoMotorController extends Motor{
 	}
 
 	@Override
-	public void setSpeed(double speed) {
+	public void setSpeed(int speed) {
 		this.speed = speed;
 		robot.SimpleRobot.ardu.setMotorSpeed(this.pin, speed);
 	}
