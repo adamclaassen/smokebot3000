@@ -97,6 +97,8 @@ public class SimpleRobot {
 			eHandler.addError(e);
 		}
 		
+		System.out.println("Everything freaking initialized");
+		
 		leftMotor.setSpeed(150);
 		rightMotor.setSpeed(150);
 		System.out.println("I guess nothing went wrong, printing any handled errors");
