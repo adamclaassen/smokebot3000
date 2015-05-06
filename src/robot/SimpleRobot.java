@@ -2,8 +2,6 @@ package robot;
 
 
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.Clock;
 
@@ -24,6 +22,7 @@ import sensor.*;
 import comm.*;
 import util.*;
 
+
 import com.pi4j.wiringpi.Spi;
 
 import java.time.Clock;
@@ -41,12 +40,19 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
+	private static Motor servoMotor;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
+
+	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
+	private static I2CColor color;
+
+	private static Gyro gyro;
+
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -54,50 +60,66 @@ public class SimpleRobot {
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
-	public static Clock timer;
+
+	
+	private static int obsDist = 50;
+	
+
+
 	
 	// constants
 	private final static int defaultSpeed = 1;
-	private static int obsDist = 50;
 	
 	public static void main(String[] args) {
 
-		//software objects
+		
 		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
 		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
+
+		//radio = new Radio();
+
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
-		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
-		routeTaken = new ArrayList<Position>();
-		destinations = new ArrayList<Position>();
-		
-		//busses
-		spi = new SPIWrapper();
-		arduinoSerial = new SerialWrapper(getArduinoSerialPort());
-		ardu = new ArduinoAdapter();
-		//i2c = new I2CWrapper();
-		
-		//hardware objects
-		radio = new Radio();
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		
-		//hardware-dependant software objects
+
+		servoMotor= new ArduinoMotorController(11);
+		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
+		routeTaken = new ArrayList<Position>();
+		destinations = new ArrayList<Position>();
 		currentPos = radio.getCurrentPos();
 		
-		//xml code
+		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		//openClaw method goes right here
+		
+			//currentPos = radio.getCurrentPos();
+		currentPos = new Position(0,0,0);
+		adc = new AnalogDigitalConverter(0, 1024);
+
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+
+		ardu = new ArduinoAdapter();
+		spi = new SPIWrapper();
+		//i2c = new I2CWrapper();
+		System.out.println(eHandler.getErrors().toString());
+
+		//color = new I2CColor(0, 0);
+		//gyro = new Gyro(0,0);
+		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
 		try {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
-		}
+
 		
+
 		/*drive(150, 0);
 		long time = timer.millis();
 		while(time+10000>timer.millis()){
@@ -105,12 +127,13 @@ public class SimpleRobot {
 		}
 		drive(0,0);
 		*/
-		while(true){
+			while(true){
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 				System.out.println(adc.read(0));
 				System.out.println(adc.read(1));
 			}
 		}
+	}
 	
 	/**
 	 * fwdSpeed is between -1 (full back) and 1 (full fwd).
@@ -123,8 +146,12 @@ public class SimpleRobot {
 	 * @param turnSpeed
 	 */
 	public static void drive(int fwdSpeed, int turnSpeed){
-		leftMotor.setSpeed(fwdSpeed);
-		rightMotor.setSpeed(fwdSpeed);
+		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
+		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
+	}
+	
+	public static void openClaw(){ //this is a servo motor
+		servoMotor.setSpeed(170); 
 	}
 	
 	public static void readSensors(){
@@ -222,16 +249,6 @@ public class SimpleRobot {
 		parent.appendChild(x);
 		parent.appendChild(y);
 		parent.appendChild(rot);
-	}
-	
-	public static String getArduinoSerialPort(){
-		File dev = new File("/dev/");
-		for(String f:dev.list()){
-			if(f.startsWith("ttyACM")){
-				return "/dev/"+f;
-			}
-		}
-		return null;
 	}
 
 }
