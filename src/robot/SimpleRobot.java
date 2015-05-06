@@ -79,7 +79,7 @@ public class SimpleRobot {
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
 
-		//radio = new Radio();
+		radio = new Radio();
 
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
@@ -91,7 +91,7 @@ public class SimpleRobot {
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
-		currentPos = radio.getCurrentPos();
+		//currentPos = radio.getCurrentPos();
 		
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
@@ -117,37 +117,7 @@ public class SimpleRobot {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
-
-		
-
-		
-		//System.out.println(color.read()[0]);
-		//System.out.println(color.read()[1]);
-		//System.out.println(color.read()[2]);
-		//System.out.println(gyro.read()[0]);
-		//System.out.println(gyro.read()[1]);
-		//System.out.println(gyro.read()[2]);
-		
-		//leftMotor.setSpeed(150);
-		/*xmldoc = db.newDocument();
-		
-		System.out.println("All objects initialized");
-		
-		generateXML(xmldoc);
-		
-		leftMotor.setSpeed(150);
-		driveToPoint(new Position(2000, 1000), 1);
-		System.out.println("Drove to point");*/
-		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
-
-
-		/*drive(150, 0);
-		long time = timer.millis();
-		while(time+10000>timer.millis()){
-			
 		}
-		drive(0,0);
-		*/
 
 			while(true){
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
@@ -156,7 +126,6 @@ public class SimpleRobot {
 			}
 		}
 
-	}
 	
 	/**
 	 * fwdSpeed is between -1 (full back) and 1 (full fwd).
