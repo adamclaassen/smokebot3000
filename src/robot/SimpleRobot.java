@@ -99,6 +99,8 @@ public class SimpleRobot {
 		
 		leftMotor.setSpeed(150);
 		rightMotor.setSpeed(150);
+		
+		eHandler.getErrors().forEach((e) -> System.out.println(e));
 
 	}
 	
