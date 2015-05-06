@@ -20,6 +20,7 @@ public class ArduinoAdapter {
 		int readCount = 0;
 		try {
 			robot.SimpleRobot.arduinoSerial.write(msg);
+			System.out.println("The serial write happened");
 			while(robot.SimpleRobot.arduinoSerial.read() != "<a//>"){
 				long time = robot.SimpleRobot.timer.millis();
 				while(time != robot.SimpleRobot.timer.millis()+10){
