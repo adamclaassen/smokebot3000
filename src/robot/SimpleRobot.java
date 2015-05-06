@@ -106,7 +106,7 @@ public class SimpleRobot {
 		drive(0,0);
 		*/
 		while(true){
-			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 			while(radio.radioSer.available()>0){
 				//[1,3.394,3.435,2.324,
 				//currentPos = radio.getCurrentPos();
