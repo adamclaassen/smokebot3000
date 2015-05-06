@@ -6,34 +6,41 @@ void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
     Serial.begin(9600);
-    Serial.write("Power On");
+    analogWrite(9,150);
 }
 
 void loop(){
-    while(Serial.available() > 0){
-        parseData();
+    for(int i = 0; i < 255; i+= 10){
+      analogWrite(9, i);
+      delay(100);
     }
+    //while(Serial.available() >= 0){
+      //Serial.write(Serial.read());
+    //}
 }
 
 String parseData() {
     String inData = ""; // Allocate some space for the string
-    char inChar=-1; // Where to store the character read
-
-    while ((char)Serial.read() != '>'){
-        inChar = Serial.read(); // Read a character
-        inData += (char)inChar;// Store it
+    char inChar = (char)Serial.read();
+    if(inChar == '<'){
+      while (inChar != '>'){
+        inData += inChar;// Store it
+        inChar = (char)Serial.read();
+      }
+      inData += inChar;
+      processInput(inData);
     }
-    processInput(inData);
 
 }
 void processInput(String msg){
+    //Serial.write(msg);
     if(msg[1] == 'r'){
-      readSensor();
       acknowledge();
+      readSensor();
     }
     if(msg[1] == 'm'){
-      motorControl(msg);'
       acknowledge();
+      motorControl(msg);
     }
 }
 
