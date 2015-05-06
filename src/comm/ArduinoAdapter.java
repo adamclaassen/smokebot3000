@@ -27,6 +27,7 @@ public class ArduinoAdapter {
 				}
 				readCount++;
 				if(readCount == 40){
+					System.out.println("Timed out, I guess");
 					return false;
 				}
 			}
