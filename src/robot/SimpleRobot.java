@@ -86,7 +86,7 @@ public class SimpleRobot {
 		rightMotor = new ArduinoMotorController(10);
 		
 		//hardware-dependant software objects
-		currentPos = radio.getCurrentPos();
+		//currentPos = radio.getCurrentPos();
 		
 		//xml code
 		dbf = DocumentBuilderFactory.newInstance();

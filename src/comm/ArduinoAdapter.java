@@ -5,9 +5,7 @@ import java.io.IOException;
 
 
 public class ArduinoAdapter {
-	
-	int fd = -1;
-	
+		
 	public ArduinoAdapter(){
 	}
 	
