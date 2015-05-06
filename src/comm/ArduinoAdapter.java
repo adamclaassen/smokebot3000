@@ -12,27 +12,38 @@ public class ArduinoAdapter {
 	}
 	
 	public double readData(){
-		return Double.parseDouble(robot.SimpleRobot.serial.read().split("<|>")[1].split("/")[1]);
+		return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 	}
 	
-	public boolean setMotorSpeed(int pin, double speed){
+	public boolean setMotorSpeed(int pin, int speed){
 		try {
-			robot.SimpleRobot.serial.write(String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d", (int) speed)).getBytes());
-			
 			int readCount = 0;
-			while(robot.SimpleRobot.serial.available()<=5){
-				if(readCount>100){
-					robot.SimpleRobot.serial.write(String.format("<m/{0}/{1}>", String.format("%05d",pin), String.format("%05d", (int) speed)).getBytes());
-					readCount = 0;
+			boolean timeOut = false;
+			boolean ack = false;
+			String inMsg;
+			String msg = String.format("<m/%d/%d>",pin,speed);
+			while(!timeOut && !ack){
+				robot.SimpleRobot.arduinoSerial.write(msg);
+				System.out.println("Message: " +msg);
+				if(robot.SimpleRobot.arduinoSerial.available() > 0){
+					inMsg = robot.SimpleRobot.arduinoSerial.readOSVPacket();
+					System.out.println(inMsg);
+					if(inMsg.length() >= 4){
+						if(inMsg.substring(1,2).equals("a")){
+							ack = true;
+							System.out.println("Message Acknowledged");
+						}
+					}
 				}
+				if(readCount > 100){
+					timeOut = true;
+					System.out.println("Timed out");
+				}
+				System.out.println("Read Count: " + readCount);
 				readCount++;
 			}
+
 			
-			if(robot.SimpleRobot.serial.read().substring(1, 2).equals("a")){
-				return true;
-			}
-			
-			return setMotorSpeed(pin, speed);
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}

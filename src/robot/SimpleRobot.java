@@ -50,7 +50,7 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
-	public static SerialWrapper serial;
+	public static SerialWrapper arduinoSerial;
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
@@ -58,7 +58,7 @@ public class SimpleRobot {
 
 	
 	// constants
-	private final static double defaultSpeed = 1;
+	private final static int defaultSpeed = 1;
 	
 	public static void main(String[] args) {
 		
@@ -75,13 +75,13 @@ public class SimpleRobot {
 		//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
 		adc = new AnalogDigitalConverter(0, 1024);
-		serial = new SerialWrapper("/dev/ttyACM0");
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new ArduinoAdapter();
 		spi = new SPIWrapper();
-		i2c = new I2CWrapper();
+		//i2c = new I2CWrapper();
 		System.out.println(eHandler.getErrors().toString());
-		color = new I2CColor(0, 0);
-		gyro = new Gyro(0,0);
+		//color = new I2CColor(0, 0);
+		//gyro = new Gyro(0,0);
 		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
@@ -91,13 +91,14 @@ public class SimpleRobot {
 			eHandler.addError(e);
 		}
 		
-		System.out.println(color.read()[0]);
-		System.out.println(color.read()[1]);
-		System.out.println(color.read()[2]);
-		System.out.println(gyro.read()[0]);
-		System.out.println(gyro.read()[1]);
-		System.out.println(gyro.read()[2]);
+		//System.out.println(color.read()[0]);
+		//System.out.println(color.read()[1]);
+		//System.out.println(color.read()[2]);
+		//System.out.println(gyro.read()[0]);
+		//System.out.println(gyro.read()[1]);
+		//System.out.println(gyro.read()[2]);
 		
+		//leftMotor.setSpeed(150);
 		leftMotor.setSpeed(150);
 		/*xmldoc = db.newDocument();
 		
@@ -121,7 +122,7 @@ public class SimpleRobot {
 	 * @param fwdSpeed
 	 * @param turnSpeed
 	 */
-	public static void drive(double fwdSpeed, double turnSpeed){
+	public static void drive(int fwdSpeed, int turnSpeed){
 		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
 	}
@@ -137,12 +138,12 @@ public class SimpleRobot {
 	 * @param dest
 	 * @param speed
 	 */
-	public static void driveToPoint(Position dest, double speed){
+	public static void driveToPoint(Position dest, int speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
 				
 		while(!dest.isNearby(currentPos)){
-			drive(speed, turnPid.update(currentPos.getHead()));
+			drive(speed, (int)turnPid.update(currentPos.getHead()));
 			updateAll();
 		}
 	}
@@ -154,7 +155,7 @@ public class SimpleRobot {
 	 * @param path
 	 * @param speed
 	 */
-	public static void driveOnPath(ArrayList<Position> path, double speed){
+	public static void driveOnPath(ArrayList<Position> path, int speed){
 		path.forEach((pos) -> driveToPoint(pos, speed));
 	}
 	
