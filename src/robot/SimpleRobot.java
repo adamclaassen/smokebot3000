@@ -108,7 +108,19 @@ public class SimpleRobot {
 		while(true){
 			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 			while(radio.radioSer.available()>0){
-				System.out.println(radio.radioSer.readChar());
+				try {
+					byte[] hi = radio.radioSer.usbSerial.read();
+					for(int i = 0; i<radio.radioSer.available(); i++){
+						System.out.println(hi[i]);
+					}
+					
+				} catch (IllegalStateException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
