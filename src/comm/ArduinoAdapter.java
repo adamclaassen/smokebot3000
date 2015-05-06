@@ -21,16 +21,13 @@ public class ArduinoAdapter {
 		try {
 			robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("The serial write happened");
-			while(!robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
-				long time = robot.SimpleRobot.timer.millis();
-				while(time < robot.SimpleRobot.timer.millis()+10){
-					
-				}
-				readCount++;
-				if(readCount == 40){
-					System.out.println("Timed out, I guess");
-					return false;
-				}
+			while(robot.SimpleRobot.arduinoSerial.available()<5){
+				
+			}
+			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
+				return true;
+			}else{
+				setMotorSpeed(pin, speed);
 			}
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
