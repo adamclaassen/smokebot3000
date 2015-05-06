@@ -95,7 +95,7 @@ public class SimpleRobot {
 		
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		//openClaw method goes right here
+		openClaw();
 		
 			//currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
@@ -130,12 +130,12 @@ public class SimpleRobot {
 		
 		//leftMotor.setSpeed(150);
 		leftMotor.setSpeed(150);
-		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+		
 		/*xmldoc = db.newDocument();
 		
 		System.out.println("All objects initialized");
 		
->>>>>>> master-develop
+
 		generateXML(xmldoc);
 		
 		leftMotor.setSpeed(150);
@@ -180,7 +180,15 @@ public class SimpleRobot {
 	}
 	
 	public static void openClaw(){ //this is a servo motor
-		servoMotor.setSpeed(170); 
+		long startTime = System.currentTimeMillis();
+		while(System.currentTimeMillis() - startTime <= 3000){ //opens servo for 3 seconds
+			servoMotor.setSpeed(170);
+		}
+		startTime = System.currentTimeMillis();	
+		while(System.currentTimeMillis() - startTime <= 3000){ //opens servo for 3 seconds
+			servoMotor.setSpeed(-170);
+		}
+	 
 	}
 	
 	public static void readSensors(){
