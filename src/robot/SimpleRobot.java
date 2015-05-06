@@ -120,6 +120,27 @@ public class SimpleRobot {
 
 		
 
+		
+		//System.out.println(color.read()[0]);
+		//System.out.println(color.read()[1]);
+		//System.out.println(color.read()[2]);
+		//System.out.println(gyro.read()[0]);
+		//System.out.println(gyro.read()[1]);
+		//System.out.println(gyro.read()[2]);
+		
+		//leftMotor.setSpeed(150);
+		/*xmldoc = db.newDocument();
+		
+		System.out.println("All objects initialized");
+		
+		generateXML(xmldoc);
+		
+		leftMotor.setSpeed(150);
+		driveToPoint(new Position(2000, 1000), 1);
+		System.out.println("Drove to point");*/
+		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
+
+
 		/*drive(150, 0);
 		long time = timer.millis();
 		while(time+10000>timer.millis()){
@@ -127,12 +148,14 @@ public class SimpleRobot {
 		}
 		drive(0,0);
 		*/
+
 			while(true){
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 				System.out.println(adc.read(0));
 				System.out.println(adc.read(1));
 			}
 		}
+
 	}
 	
 	/**
