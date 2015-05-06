@@ -73,50 +73,37 @@ public class SimpleRobot {
 	public static void main(String[] args) {
 
 		
-		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		
+		i2c = new I2CWrapper();
 		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		ardu = new ArduinoAdapter();
+		spi = new SPIWrapper();
 		radio = new Radio();
-
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-
 		servoMotor= new ArduinoMotorController(11);
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
-		//currentPos = radio.getCurrentPos();
+		currentPos = radio.getCurrentPos();
 		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		
+		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		driveToPoint(new Position(10,10),150);
+		driveToPoint(new Position(2200,800),150);
 		openClaw();
+		driveToPoint(currentPos,150);
 		
-			//currentPos = radio.getCurrentPos();
-		currentPos = new Position(0,0,0);
-		adc = new AnalogDigitalConverter(0, 1024);
-
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-
-		ardu = new ArduinoAdapter();
-		spi = new SPIWrapper();
-		//i2c = new I2CWrapper();
-		System.out.println(eHandler.getErrors().toString());
-
-		//color = new I2CColor(0, 0);
-		//gyro = new Gyro(0,0);
-		//xml doc stuff
-		dbf = DocumentBuilderFactory.newInstance();
-		db = null;
-		try {
-			db = dbf.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			eHandler.addError(e);
+		
+		}
 
 
 		
@@ -130,7 +117,7 @@ public class SimpleRobot {
 		//System.out.println(gyro.read()[2]);
 		
 		//leftMotor.setSpeed(150);
-		leftMotor.setSpeed(150);
+		//leftMotor.setSpeed(150);
 		
 		/*xmldoc = db.newDocument();
 		
