@@ -107,8 +107,8 @@ public class SimpleRobot {
 		*/
 		while(true){
 			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			if(radio.radioSer.available()>0){
-				System.out.println(radio.radioSer.read());
+			while(radio.radioSer.available()>0){
+				System.out.println(radio.radioSer.readChar());
 				
 			}else{
 			
