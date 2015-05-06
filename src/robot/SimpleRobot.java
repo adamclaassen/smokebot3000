@@ -99,6 +99,11 @@ public class SimpleRobot {
 		}
 		
 		drive(150, 0);
+		long time = timer.millis();
+		while(time+10000>timer.millis()){
+			
+		}
+		drive(0,0);
 
 	}
 	
