@@ -106,7 +106,7 @@ public class SimpleRobot {
 		drive(0,0);
 		*/
 		while(true){
-			if(radio.radioSer.available()>0){
+			if(radio.radioSer.available()>10){
 				System.out.println(radio.radioSer.read());
 			}else{
 			}
