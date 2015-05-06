@@ -9,14 +9,17 @@ public class Gyro extends Sensor{
 	public Gyro(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
 		try {
+
 			gyro = robot.SimpleRobot.i2c.bus.getDevice(0x68);
 			gyro.write(0x6B, (byte) 0);
+
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
 		
 		
 	}
+
 
 	public int[] read() {
 		int x = 0, y =0  , z = 0;
@@ -30,7 +33,7 @@ public class Gyro extends Sensor{
 		}
 		
 		return new int[]{x, y, z};
-		
+
 	}
 	
 	

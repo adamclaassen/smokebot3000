@@ -15,6 +15,7 @@ public class I2CColor extends Sensor{
 		}
 	}
 	
+
 	public int[] read(){
 		int red = 0, green = 0, blue = 0;
 		
@@ -29,6 +30,7 @@ public class I2CColor extends Sensor{
 
 		int[] ret = {red, green, blue};
 		return ret;
+
 	}
 
 }
