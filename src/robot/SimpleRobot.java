@@ -76,6 +76,7 @@ public class SimpleRobot {
 		//busses
 		spi = new SPIWrapper();
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		ardu = new ArduinoAdapter();
 		//i2c = new I2CWrapper();
 		
 		//hardware objects
