@@ -2,6 +2,8 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.Clock;
 
@@ -21,7 +23,6 @@ import motor.*;
 import sensor.*;
 import comm.*;
 import util.*;
-
 
 import com.pi4j.wiringpi.Spi;
 
@@ -75,7 +76,7 @@ public class SimpleRobot {
 		
 		//busses
 		spi = new SPIWrapper();
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		arduinoSerial = new SerialWrapper(getArduinoSerialPort());
 		ardu = new ArduinoAdapter();
 		//i2c = new I2CWrapper();
 		
@@ -219,6 +220,16 @@ public class SimpleRobot {
 		parent.appendChild(x);
 		parent.appendChild(y);
 		parent.appendChild(rot);
+	}
+	
+	public static String getArduinoSerialPort(){
+		File dev = new File("/dev/");
+		for(String f:dev.list()){
+			if(f.startsWith("ttyACM")){
+				return "/dev/"+f;
+			}
+		}
+		return null;
 	}
 
 }

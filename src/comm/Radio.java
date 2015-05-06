@@ -10,7 +10,7 @@ public class Radio {
 	private SerialWrapper radioSer;
 	
 	public Radio(){
-		radioSer = new SerialWrapper("/dev/ttyUSB0");
+		radioSer = new SerialWrapper("/dev/ttyAMA0");
 	}
 	
 	public Position getCurrentPos(){
