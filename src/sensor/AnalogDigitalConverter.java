@@ -17,7 +17,7 @@ public class AnalogDigitalConverter extends Sensor{
 		}
 	}
 
-	public byte[] read(int channel) {
+	public int read(int channel) {
 		/*
 		 * Format for spi: 000011(0/1)1
 		 *  four leading zeros to make the byte
@@ -29,7 +29,8 @@ public class AnalogDigitalConverter extends Sensor{
 		//byte[] settings = {0,1,1,(byte) channel, 1,0,0,0  ,0,0,0,0 ,0,0,0,0};
 		byte[] settings = {(byte) ((16*channel)+32+64+8), 0};
 		byte[] data = robot.SimpleRobot.spi.write(adc, settings);
-		return data;
+		int value = data[1] + (data[0] & 0x03) << 8;
+		return value;
 	}
 
 	@Override
