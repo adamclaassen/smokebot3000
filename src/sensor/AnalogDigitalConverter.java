@@ -27,9 +27,9 @@ public class AnalogDigitalConverter extends Sensor{
 		 *  4th bit selects MSB/LSB (keep 1 for MSB)
 		 */
 		//byte[] settings = {0,1,1,(byte) channel, 1,0,0,0  ,0,0,0,0 ,0,0,0,0};
-		byte[] settings = {(byte) (0b01100000+(channel*16)), 0b00000000};
+		byte[] settings = {(byte) (0b01101000+(channel*16)), 0b00000000};
 		byte[] data = robot.SimpleRobot.spi.write(adc, settings);
-		int value = data[1] + ((data[0] & 0x03) << 8);
+		int value = data[1] + ((data[0] & 0b11) << 8);
 		return value;
 	}
 
