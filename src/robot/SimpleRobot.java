@@ -107,11 +107,12 @@ public class SimpleRobot {
 		*/
 		while(true){
 			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			while(radio.radioSer.available()>15){
+			if(radio.radioSer.available()>15){
 				//[1,3.394,3.435,2.324,
-				currentPos = radio.getCurrentPos();
-				System.out.println(currentPos.getX());
-				System.out.println(currentPos.getY());
+				//currentPos = radio.getCurrentPos();
+				//System.out.println(currentPos.getX());
+				//System.out.println(currentPos.getY());
+				System.out.println(radio.radioSer.read());
 			}
 		}
 	}
