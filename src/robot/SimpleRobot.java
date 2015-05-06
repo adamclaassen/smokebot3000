@@ -107,16 +107,10 @@ public class SimpleRobot {
 		*/
 		while(true){
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			if(radio.radioSer.available()>0){
-				//[1,3.394,3.435,2.324,
-				//currentPos = radio.getCurrentPos();
-				//System.out.println(currentPos.getX());
-				//System.out.println(currentPos.getY());
-				System.out.print(radio.radioSer.read());
-				System.out.println(".");
+				System.out.println(adc.read(0));
+				System.out.println(adc.read(1));
 			}
 		}
-	}
 	
 	/**
 	 * fwdSpeed is between -1 (full back) and 1 (full fwd).
