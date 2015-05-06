@@ -76,7 +76,6 @@ public class SimpleRobot {
 		//busses
 		spi = new SPIWrapper();
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-		ardu = new ArduinoAdapter();
 		//i2c = new I2CWrapper();
 		
 		//hardware objects
@@ -98,7 +97,7 @@ public class SimpleRobot {
 		}
 		
 		System.out.println("Everything freaking initialized");
-		
+		eHandler.getErrors().forEach((e) -> System.out.println(e));
 		leftMotor.setSpeed(150);
 		rightMotor.setSpeed(150);
 		System.out.println("I guess nothing went wrong, printing any handled errors");
