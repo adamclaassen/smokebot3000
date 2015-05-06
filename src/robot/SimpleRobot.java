@@ -81,7 +81,7 @@ public class SimpleRobot {
 		//i2c = new I2CWrapper();
 		
 		//hardware objects
-		//radio = new Radio();
+		radio = new Radio();
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
