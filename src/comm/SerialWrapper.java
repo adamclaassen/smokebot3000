@@ -17,7 +17,7 @@ public class SerialWrapper {
 
 	public SerialWrapper(String device){
 		try {
-			usbSerial.open(device, 9600);
+			usbSerial.open(device, 115200);
 
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
