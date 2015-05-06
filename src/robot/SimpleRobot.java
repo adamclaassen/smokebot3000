@@ -81,7 +81,7 @@ public class SimpleRobot {
 		destinations = new ArrayList<Position>();
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		
+		System.out.println("Software");
 		//software dependant hardware
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
