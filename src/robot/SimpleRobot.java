@@ -79,8 +79,8 @@ public class SimpleRobot {
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		System.out.println("Software");
 		//software dependant hardware
 		adc = new AnalogDigitalConverter(0, 1024);
