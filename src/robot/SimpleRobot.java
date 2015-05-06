@@ -40,17 +40,12 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
-	private static Motor servoMotor;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
-	private static I2CColor color;
-
-	private static Gyro gyro;
-
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -66,81 +61,44 @@ public class SimpleRobot {
 	
 	public static void main(String[] args) {
 
-		
+		//software objects
 		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
 		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-
-		//radio = new Radio();
-
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
-		adc = new AnalogDigitalConverter(0, 1024);
-		leftMotor = new ArduinoMotorController(9);
-		rightMotor = new ArduinoMotorController(10);
-
-		servoMotor= new ArduinoMotorController(11);
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
+		
+		//busses
+		spi = new SPIWrapper();
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		ardu = new ArduinoAdapter();
+		//i2c = new I2CWrapper();
+		
+		//hardware objects
+		//radio = new Radio();
+		adc = new AnalogDigitalConverter(0, 1024);
+		leftMotor = new ArduinoMotorController(9);
+		rightMotor = new ArduinoMotorController(10);
+		
+		//hardware-dependant software objects
 		currentPos = radio.getCurrentPos();
 		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); //GET THE OBSTACLE MAP
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		//openClaw method goes right here
-		
-			//currentPos = radio.getCurrentPos();
-		currentPos = new Position(0,0,0);
-		adc = new AnalogDigitalConverter(0, 1024);
-
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-
-		ardu = new ArduinoAdapter();
-		spi = new SPIWrapper();
-		//i2c = new I2CWrapper();
-		System.out.println(eHandler.getErrors().toString());
-
-		//color = new I2CColor(0, 0);
-		//gyro = new Gyro(0,0);
-		//xml doc stuff
+		//xml code
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
 		try {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
-
-		
-		System.out.println(color.read());}
-		/*xmldoc = db.newDocument();
-		
-		System.out.println("All objects initialized");
-		
-=======
-		
-		//System.out.println(color.read()[0]);
-		//System.out.println(color.read()[1]);
-		//System.out.println(color.read()[2]);
-		//System.out.println(gyro.read()[0]);
-		//System.out.println(gyro.read()[1]);
-		//System.out.println(gyro.read()[2]);
-		
-		//leftMotor.setSpeed(150);
-		leftMotor.setSpeed(150);
-		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-		/*xmldoc = db.newDocument();
-		
-		System.out.println("All objects initialized");
-		
->>>>>>> master-develop
-		generateXML(xmldoc);
+		}
 		
 		leftMotor.setSpeed(150);
-		driveToPoint(new Position(2000, 1000), 1);
-		System.out.println("Drove to point");*/
-		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
+		rightMotor.setSpeed(150);
 
 	}
 	
@@ -157,10 +115,6 @@ public class SimpleRobot {
 	public static void drive(int fwdSpeed, int turnSpeed){
 		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
-	}
-	
-	public static void openClaw(){ //this is a servo motor
-		servoMotor.setSpeed(170); 
 	}
 	
 	public static void readSensors(){
