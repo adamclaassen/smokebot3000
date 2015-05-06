@@ -15,7 +15,7 @@ public class Radio {
 	
 	public Position getCurrentPos(){
 		
-		String rawInput = this.radioSer.read();
+		String rawInput = this.radioSer.read(); 
 		String lastPos = rawInput.substring(rawInput.lastIndexOf('[')+1, rawInput.lastIndexOf(']'));
 		String[] splitData = lastPos.split(",");
 		return new Position(
