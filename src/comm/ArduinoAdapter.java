@@ -22,7 +22,7 @@ public class ArduinoAdapter {
 			robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("The serial write happened");
 			while(robot.SimpleRobot.arduinoSerial.available()<5){
-				
+				System.out.println("Still waiting for serial data return");
 			}
 			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
 				return true;
