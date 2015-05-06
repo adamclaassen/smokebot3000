@@ -112,7 +112,8 @@ public class SimpleRobot {
 				//currentPos = radio.getCurrentPos();
 				//System.out.println(currentPos.getX());
 				//System.out.println(currentPos.getY());
-				System.out.println(radio.radioSer.read());
+				System.out.print(radio.radioSer.read());
+				System.out.println(".");
 			}
 		}
 	}
