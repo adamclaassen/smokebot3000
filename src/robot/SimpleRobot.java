@@ -105,8 +105,9 @@ public class SimpleRobot {
 		}
 		drive(0,0);
 		*/
-		
+		while(true){
 		System.out.println(radio.radioSer.read());
+		}
 	}
 	
 	/**
