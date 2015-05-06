@@ -72,6 +72,7 @@ public class SimpleRobot {
 		ardu = new ArduinoAdapter();
 		spi = new SPIWrapper();
 		//i2c = new I2CWrapper();
+		System.out.println("Hardware busses");
 		//software
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
