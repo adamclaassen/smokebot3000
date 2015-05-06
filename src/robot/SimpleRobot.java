@@ -41,7 +41,6 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
-	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
@@ -54,6 +53,7 @@ public class SimpleRobot {
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
+	public static Clock timer;
 	
 	private static int obsDist = 50;
 	
