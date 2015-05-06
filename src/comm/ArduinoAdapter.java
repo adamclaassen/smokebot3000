@@ -17,17 +17,18 @@ public class ArduinoAdapter {
 	public boolean setMotorSpeed(int pin, int speed){
 		String msg = String.format("<m/%d/%d>",pin,speed);
 		boolean ack = false;
+		int readCount = 0;
 		try {
 			robot.SimpleRobot.arduinoSerial.write(msg);
-			while(!ack){
-				if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
-					return true;
-				}
+			while(robot.SimpleRobot.arduinoSerial.read() != "<a//>"){
 				long time = robot.SimpleRobot.timer.millis();
-				if(robot.SimpleRobot.timer.millis()!=time+100){
+				while(time != robot.SimpleRobot.timer.millis()+10){
+					
+				}
+				readCount++;
+				if(readCount == 40){
 					return false;
 				}
-				
 			}
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
