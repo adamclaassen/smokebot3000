@@ -44,13 +44,11 @@ public class SimpleRobot {
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
-
 	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
 	private static I2CColor color;
-
 	private static Gyro gyro;
 
 	
@@ -61,56 +59,35 @@ public class SimpleRobot {
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
 
-	
-	private static int obsDist = 50;
-	
-
-
-	
 	// constants
 	private final static int defaultSpeed = 1;
+	private static int obsDist = 50;
 	
 	public static void main(String[] args) {
 
-		
-		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
 		eHandler = new ErrorHandler();
+		//hardware busses
+		radio = new Radio();
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		ardu = new ArduinoAdapter();
+		spi = new SPIWrapper();
+		//i2c = new I2CWrapper();
+		//software
+		distPid = new Pid(1, 1, 1);
+		turnPid = new Pid(1, 1, 1);
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-
-		radio = new Radio();
-
-		distPid = new Pid(1, 1, 1);
-		turnPid = new Pid(1, 1, 1);
+		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		
+		//software dependant hardware
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 
-		servoMotor= new ArduinoMotorController(11);
-		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
-		routeTaken = new ArrayList<Position>();
-		destinations = new ArrayList<Position>();
-		//currentPos = radio.getCurrentPos();
-		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		//openClaw method goes right here
-		
-			//currentPos = radio.getCurrentPos();
-		currentPos = new Position(0,0,0);
-		adc = new AnalogDigitalConverter(0, 1024);
-
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-
-		ardu = new ArduinoAdapter();
-		spi = new SPIWrapper();
-		//i2c = new I2CWrapper();
 		System.out.println(eHandler.getErrors().toString());
 
-		//color = new I2CColor(0, 0);
-		//gyro = new Gyro(0,0);
-		//xml doc stuff
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
 		try {
