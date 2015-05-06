@@ -79,7 +79,7 @@ public class SimpleRobot {
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
 
-		//radio = new Radio();
+		radio = new Radio();
 
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
@@ -91,7 +91,7 @@ public class SimpleRobot {
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
-		currentPos = radio.getCurrentPos();
+		//currentPos = radio.getCurrentPos();
 		
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
@@ -117,6 +117,7 @@ public class SimpleRobot {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
+
 
 		
 
@@ -148,21 +149,17 @@ public class SimpleRobot {
 		long time = timer.millis();
 		while(time+10000>timer.millis()){
 			
+
+>>>>>>> origin/master-develop
 		}
-		drive(0,0);
-		*/
-		while(true){
+
+			while(true){
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			if(radio.radioSer.available()>0){
-				//[1,3.394,3.435,2.324,
-				//currentPos = radio.getCurrentPos();
-				//System.out.println(currentPos.getX());
-				//System.out.println(currentPos.getY());
-				System.out.println(radio.radioSer.read());
+				System.out.println(adc.read(0));
+				System.out.println(adc.read(1));
 			}
 		}
-		}
-	}
+
 	
 	/**
 	 * fwdSpeed is between -1 (full back) and 1 (full fwd).
