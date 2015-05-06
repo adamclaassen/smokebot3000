@@ -107,6 +107,7 @@ public class SimpleRobot {
 		*/
 		while(true){
 		System.out.println(radio.radioSer.read());
+		radio.radioSer.write("hi");
 		}
 	}
 	
