@@ -15,7 +15,7 @@ public class ArduinoAdapter {
 	}
 	
 	public boolean setMotorSpeed(int pin, int speed){
-		String msg = String.format("<m/%d/%d>",pin,speed);
+		String msg = String.format("<m/%d/%d>\n",pin,speed);
 		boolean ack = false;
 		int readCount = 0;
 		try {
