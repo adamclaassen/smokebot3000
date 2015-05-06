@@ -109,7 +109,6 @@ public class SimpleRobot {
 			if(radio.radioSer.available()>0){
 				System.out.println(radio.radioSer.read());
 			}else{
-				System.out.println("no data :(");
 			}
 		}
 	}
