@@ -99,7 +99,10 @@ public class SimpleRobot {
 		
 		System.out.println("Everything freaking initialized");
 		eHandler.getErrors().forEach((e) -> System.out.println(e));
-		System.out.println(adc.read(0)[0]);
+		byte[] adcOut = adc.read(0);
+		for(int i = 0; i<adcOut.length; i++){
+			System.out.println(adcOut[i]);
+		}
 		leftMotor.setSpeed(150);
 		rightMotor.setSpeed(150);
 		System.out.println("I guess nothing went wrong, printing any handled errors");
