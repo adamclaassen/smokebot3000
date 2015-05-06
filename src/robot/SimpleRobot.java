@@ -110,7 +110,8 @@ public class SimpleRobot {
 			while(radio.radioSer.available()>15){
 				//[1,3.394,3.435,2.324,
 				currentPos = radio.getCurrentPos();
-				System.out.println(currentPos.toString());
+				System.out.println(currentPos.getX());
+				System.out.println(currentPos.getY());
 			}
 		}
 	}
