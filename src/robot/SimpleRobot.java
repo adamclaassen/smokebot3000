@@ -98,13 +98,15 @@ public class SimpleRobot {
 			eHandler.addError(e);
 		}
 		
-		drive(150, 0);
+		/*drive(150, 0);
 		long time = timer.millis();
 		while(time+10000>timer.millis()){
 			
 		}
 		drive(0,0);
-
+		*/
+		
+		System.out.println(radio.radioSer.read());
 	}
 	
 	/**
