@@ -101,7 +101,7 @@ public class SimpleRobot {
 		eHandler.getErrors().forEach((e) -> System.out.println(e));
 		System.out.println(adc.read(0));
 		System.out.println(adc.read(1));
-		//leftMotor.setSpeed(150);
+		leftMotor.setSpeed(150);
 		//rightMotor.setSpeed(150);
 		System.out.println("I guess nothing went wrong, printing any handled errors");
 		
