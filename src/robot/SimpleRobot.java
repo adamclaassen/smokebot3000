@@ -106,8 +106,11 @@ public class SimpleRobot {
 		drive(0,0);
 		*/
 		while(true){
-		System.out.println(radio.radioSer.read());
-		radio.radioSer.write("hi");
+			if(radio.radioSer.available()>0){
+				System.out.println(radio.radioSer.read());
+			}else{
+				System.out.println("no data :(");
+			}
 		}
 	}
 	
