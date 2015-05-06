@@ -118,8 +118,8 @@ public class SimpleRobot {
 	 * @param turnSpeed
 	 */
 	public static void drive(int fwdSpeed, int turnSpeed){
-		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
-		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
+		leftMotor.setSpeed(fwdSpeed);
+		rightMotor.setSpeed(fwdSpeed);
 	}
 	
 	public static void readSensors(){
