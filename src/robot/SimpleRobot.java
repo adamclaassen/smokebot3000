@@ -87,7 +87,7 @@ public class SimpleRobot {
 		rightMotor = new ArduinoMotorController(10);
 		
 		//hardware-dependant software objects
-		//currentPos = radio.getCurrentPos();
+		currentPos = radio.getCurrentPos();
 		
 		//xml code
 		dbf = DocumentBuilderFactory.newInstance();
@@ -107,8 +107,10 @@ public class SimpleRobot {
 		*/
 		while(true){
 			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			while(radio.radioSer.available()>10){
-				System.out.println(radio.radioSer.read());
+			while(radio.radioSer.available()>15){
+				//[1,3.394,3.435,2.324,
+				currentPos = radio.getCurrentPos();
+				System.out.println(currentPos.toString());
 			}
 		}
 	}
