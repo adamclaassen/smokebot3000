@@ -10,15 +10,15 @@ void setup() {
 }
 
 void loop(){
-  if(Serial.available()>0){
+  /*if(Serial.available()>0){
     Serial.println("hi");
-  }
+  }*/
   if(Serial.available()>=5){
-    Serial.println("found more than or eual to 5 serial bytes");
+    //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
   }
   while(msg.length()>=5){
-    Serial.println(msg);
+    //Serial.println(msg);
     processInput(msg.substring(msg.indexOf("<"), msg.indexOf(">")));
     msg = msg.substring(msg.indexOf(">"))+1;
   }
@@ -28,12 +28,12 @@ void loop(){
 void processInput(String msg){
     //Serial.write(msg);
     if(msg[1] == 'r'){
-      acknowledge();
       readSensor();
+      acknowledge();
     }
     if(msg[1] == 'm'){
-      acknowledge();
       motorControl(msg);
+      acknowledge();
     }
 }
 
@@ -63,7 +63,7 @@ void motorControl(String msg){
         }
     }
     analogWrite(pin.toInt(),spd.toInt());
-    Serial.println("<a//>");
+    //Serial.println("<a//>");
 }
 
 void readSensor(){

@@ -16,36 +16,14 @@ public class ArduinoAdapter {
 	}
 	
 	public boolean setMotorSpeed(int pin, int speed){
-		int readCount = 0;
-		boolean timeOut = false;
-		boolean ack = false;
 		String inMsg;
 		String msg = String.format("<m/%d/%d>",pin,speed);
+		boolean ack = false;
 		try {
-			
 			robot.SimpleRobot.arduinoSerial.write(msg);
-			System.out.println("Message: " +msg);
-			while(!timeOut && !ack){
-				if(robot.SimpleRobot.arduinoSerial.available() > 0){
-					inMsg = robot.SimpleRobot.arduinoSerial.readOSVPacket();
-					System.out.println(inMsg);
-					if(inMsg.length() >= 4){
-						if(inMsg.substring(1,2).equals("a")){
-							ack = true;
-							System.out.println("Message Acknowledged");
-							return true;
-						}
-					}
-				}
-				if(readCount > 100){
-					timeOut = true;
-					setMotorSpeed(pin, speed);
-				}
-				System.out.println("Read Count: " + readCount);
-				readCount++;
+			while(!ack){
+				
 			}
-
-			
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
