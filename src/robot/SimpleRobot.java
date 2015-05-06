@@ -110,7 +110,7 @@ public class SimpleRobot {
 			while(radio.radioSer.available()>0){
 				try {
 					byte[] hi = radio.radioSer.usbSerial.read();
-					for(int i = 0; i<radio.radioSer.available(); i++){
+					for(int i = 0; i<hi.length; i++){
 						System.out.println(hi[i]);
 					}
 					
