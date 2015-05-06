@@ -96,12 +96,12 @@ public class SimpleRobot {
 			eHandler.addError(e);
 		}
 
-			while(true){
+			
 			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
 				System.out.println("new read:");
 				System.out.println(adc.read(0));
 				System.out.println(adc.read(1));
-			}
+			
 		}
 
 	
