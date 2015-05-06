@@ -11,7 +11,7 @@ public class AnalogDigitalConverter extends Sensor{
 	public AnalogDigitalConverter(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
 		try {
-			adc = SpiFactory.getInstance(SpiChannel.CS0, SpiMode.MODE_1);
+			adc = SpiFactory.getInstance(SpiChannel.CS0, 3200000,SpiMode.MODE_1);
 		} catch (IOException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
