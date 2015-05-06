@@ -119,12 +119,7 @@ public class SimpleRobot {
 			eHandler.addError(e);
 
 		
-		System.out.println(color.read());}
-		/*xmldoc = db.newDocument();
-		
-		System.out.println("All objects initialized");
-		
-=======
+
 		
 		//System.out.println(color.read()[0]);
 		//System.out.println(color.read()[1]);
@@ -148,6 +143,25 @@ public class SimpleRobot {
 		System.out.println("Drove to point");*/
 		//driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
 
+
+		/*drive(150, 0);
+		long time = timer.millis();
+		while(time+10000>timer.millis()){
+			
+		}
+		drive(0,0);
+		*/
+		while(true){
+			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+			if(radio.radioSer.available()>0){
+				//[1,3.394,3.435,2.324,
+				//currentPos = radio.getCurrentPos();
+				//System.out.println(currentPos.getX());
+				//System.out.println(currentPos.getY());
+				System.out.println(radio.radioSer.read());
+			}
+		}
+		}
 	}
 	
 	/**
