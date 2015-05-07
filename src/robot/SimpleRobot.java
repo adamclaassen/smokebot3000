@@ -73,11 +73,6 @@ public class SimpleRobot {
 	public static I2CWrapper i2c;
 
 	
-	private static int obsDist = 50;
-	
-
-
-	
 	// constants
 
 	private final static int defaultSpeed = 1;
@@ -98,7 +93,6 @@ public class SimpleRobot {
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 
-		servoMotor= new ArduinoMotorController(11);
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
@@ -118,7 +112,7 @@ public class SimpleRobot {
 
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 
-		ardu = new ArduinoAdapter();
+		ardu = new comm.ArduinoAdapter();
 		spi = new SPIWrapper();
 		System.out.println(eHandler.getErrors().toString());
 
@@ -152,21 +146,6 @@ public class SimpleRobot {
 	public static void drive(int fwdSpeed, int turnSpeed){
 		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
-	}
-	
-	public static void openClaw(){ //this is a servo motor
-		servoMotor.setSpeed(170); 
-	}
-	
-	public static void readSensors(){
-		String msg = arduinoSerial.read();
-		if(msg.substring(1, 3).equals("sd")){
-			d = depth.read(msg);
-		}
-		else if(msg.substring(1,3).equals("ss")){
-			sal = salinity.read(msg);
-		}
-		//radio.send(Double.toString());
 	}
 	
 	/**

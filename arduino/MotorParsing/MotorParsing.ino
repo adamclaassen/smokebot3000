@@ -1,18 +1,19 @@
 // Index into array; where to store the character
+#include <Servo.h>
+Servo sensor;
 char msgType;
 char inChar;
+int base = 77;
 String msg;
 void setup() {
     pinMode(9, OUTPUT);
     pinMode(10, OUTPUT);
     Serial.begin(9600);
-    //analogWrite(9,150);
+    sensor.attach(11);
 }
 
 void loop(){
-  /*if(Serial.available()>0){
-    Serial.println("hi");
-  }*/
+  dip();
   if(Serial.available()>=5){
     //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
@@ -28,7 +29,7 @@ void loop(){
 void processInput(String msg){
     //Serial.write(msg);
     if(msg[1] == 'r'){
-      readSensor();
+      dip();
       acknowledge();
     }
     if(msg[1] == 'm'){
@@ -66,10 +67,16 @@ void motorControl(String msg){
     //Serial.println("<a//>");
 }
 
-void readSensor(){
-  //must Serial.write(sensor_data)
-}
-
+void dip(){
+  sensor.write(base+15);
+  delay(2000);
+  for(int i = base; i>base-30; i--){
+    sensor.write(i);
+    delay(100);
+  }
+  sensor.write(base-60);
+  delay(2000);
+}  
 void acknowledge(){
    Serial.write("<a//>");
 }
