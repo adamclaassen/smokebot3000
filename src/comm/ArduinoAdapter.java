@@ -10,7 +10,7 @@ public class ArduinoAdapter {
 	}
 	
 	public double readData(){
-		robot.SimpleRobot.arduinoSerial.write("<r//>");
+		robot.SimpleRobot.arduinoSerial.write("<r//>\n");
 		return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 	}
 	
