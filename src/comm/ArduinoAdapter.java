@@ -9,9 +9,9 @@ public class ArduinoAdapter {
 	public ArduinoAdapter(){
 	}
 	
-	public double readData(){
+	public void readData(){
 		robot.SimpleRobot.arduinoSerial.write("<r//>\n");
-		return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
+		//return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 	}
 	
 	public boolean setMotorSpeed(int pin, int speed){

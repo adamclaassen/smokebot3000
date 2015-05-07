@@ -2,6 +2,8 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Clock;
 
@@ -47,7 +49,7 @@ public class SimpleRobot {
 	private static Document xmldoc;
 	private static I2CColor color;
 	private static Gyro gyro;
-
+	private static int tempC;
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -79,12 +81,13 @@ public class SimpleRobot {
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		rightMotor.setSpeed(130);
-		leftMotor.setSpeed(130);
+		
 		System.out.println(eHandler.getErrors().toString());
 			
 		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-			
+		driveToPoint(new Position(1700,3250),150);
+		tempC = readSensors();
+		System.out.println(tempC);
 		}
 
 	
@@ -107,9 +110,24 @@ public class SimpleRobot {
 		servoMotor.setSpeed(170); 
 	}
 	
-	public static void readSensors(){
-		
-		//radio.send(Double.toString());
+	public static int readSensors(){
+		while(!arduinoSerial.read().equals("<a//")){
+			ardu.readData();
+		}
+		try{
+			File file = new File("/sys/bus/w1/devices/xxxx/w1_slave");
+			FileInputStream fis = new FileInputStream(file);
+			byte[] data = new byte[(int) file.length()];
+			fis.read(data);
+			fis.close();
+			String str = new String(data,"UTF-8"); //Whole File
+			String temp = str.substring(str.indexOf("t")+2);
+			return (int)(Integer.parseInt(temp)/1000.0);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return -1;
+		}
 	}
 	
 	/**
@@ -144,7 +162,7 @@ public class SimpleRobot {
 	 * to anything that doesn't update some other way. 
 	 */
 	public static void updateAll(){
-		//this.currentPos = radio.getLatestPos();
+		currentPos = radio.getCurrentPos();
 	}
 	
 	/**
@@ -203,4 +221,5 @@ public class SimpleRobot {
 		parent.appendChild(y);
 		parent.appendChild(rot);
 	}
+
 }
