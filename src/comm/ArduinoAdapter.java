@@ -20,23 +20,27 @@ public class ArduinoAdapter {
 		int readCount = 0;
 		try {
 			while(!ack){
-			robot.SimpleRobot.arduinoSerial.write(msg);
-			System.out.println("The serial write happened");
-			while(robot.SimpleRobot.arduinoSerial.available()<5 && readCount<= 200){
-				//System.out.println("Still waiting for serial data return");
-				readCount++;
-			}
-			if(robot.SimpleRobot.arduinoSerial.available() >= 0){
-			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
-				System.out.println("Acked");
-				ack =  true;
-				
-			}else{
-				if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
-					System.out.println("Acked");
-					ack = true;
+				robot.SimpleRobot.arduinoSerial.write(msg);
+				System.out.println("The serial write happened");
+				while(robot.SimpleRobot.arduinoSerial.available()<5 && readCount<= 200){
+					//System.out.println("Still waiting for serial data return");
+					readCount++;
 				}
-			}}}
+				if(robot.SimpleRobot.arduinoSerial.available() >= 0){
+					if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
+						System.out.println("Acked");
+						ack =  true;
+				
+					}else{
+						if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
+							System.out.println("Acked");
+							ack = true;
+						}
+					}	
+				}
+			}
+
+
 			return true;
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);

@@ -81,13 +81,15 @@ public class SimpleRobot {
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		
+		rightMotor.setSpeed(140);
 		System.out.println(eHandler.getErrors().toString());
 		
 		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+		
+
 		//driveToPoint(new Position(1700,3250),150);
-		tempC = readSensors();
-		System.out.println(tempC);
+		//tempC = readSensors();
+		//System.out.println(tempC);
 		}
 		
 	
