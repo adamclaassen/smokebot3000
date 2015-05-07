@@ -96,9 +96,10 @@ public class SimpleRobot {
 
 			
 		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-		System.out.println("new read:");
-		System.out.println(adc.read(0));
-		System.out.println(adc.read(1));
+		leftMotor.setSpeed(150);
+		//System.out.println("new read:");
+		//System.out.println(adc.read(0));
+		//System.out.println(adc.read(1));
 			
 		}
 
