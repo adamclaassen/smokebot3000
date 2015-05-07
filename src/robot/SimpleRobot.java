@@ -22,9 +22,6 @@ import sensor.*;
 import comm.*;
 import util.*;
 
-
-import com.pi4j.wiringpi.Spi;
-
 import java.time.Clock;
 
 
@@ -99,7 +96,6 @@ public class SimpleRobot {
 		currentPos = radio.getCurrentPos();
 		
 		//busses
-		spi = new SPIWrapper();
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new comm.ArduinoAdapter();
 		
