@@ -83,12 +83,11 @@ public class SimpleRobot {
 		rightMotor = new ArduinoMotorController(10);
 		
 		System.out.println(eHandler.getErrors().toString());
-		leftMotor.setSpeed(150);	
+		
 		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-		/*driveToPoint(new Position(1700,3250),150);
+		//driveToPoint(new Position(1700,3250),150);
 		tempC = readSensors();
 		System.out.println(tempC);
-		*/
 		}
 		
 	

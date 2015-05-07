@@ -53,7 +53,7 @@ public boolean sendSerialMessage(String mesg){
 			robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("The serial write happened");
 			while(robot.SimpleRobot.arduinoSerial.available()<5 && readCount<= 200){
-				//System.out.println("Still waiting for serial data return");
+				System.out.println("Still waiting for serial data return");
 				readCount++;
 			}
 			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
