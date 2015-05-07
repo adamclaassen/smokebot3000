@@ -19,11 +19,10 @@ public class ArduinoAdapter {
 		boolean ack = false;
 		int readCount = 0;
 		try {
-			robot.SimpleRobot.arduinoSerial.write(msg);
+			//robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("The serial write happened");
 			while(robot.SimpleRobot.arduinoSerial.available()<5){
-				System.out.println("Still waiting for serial data return");
-				robot.SimpleRobot.arduinoSerial.write(msg);
+				System.out.println("nada");
 			}
 			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
 				return true;
