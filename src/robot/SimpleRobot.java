@@ -41,7 +41,7 @@ public class SimpleRobot {
 	private static Motor leftMotor;
 	private static Motor rightMotor;
 	private static Position currentPos;
-	private static AnalogDigitalConverter adc;
+	//private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
@@ -80,7 +80,7 @@ public class SimpleRobot {
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		System.out.println("Software");
 		//software dependant hardware
-		adc = new AnalogDigitalConverter(0, 1024);
+		//adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 

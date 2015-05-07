@@ -10,7 +10,7 @@ public class ArduinoAdapter {
 	}
 	
 	public double readData(){
-		robot.SimpleRobot.arduinoSerial.write("<r//>");
+		robot.SimpleRobot.arduinoSerial.write("<r//>\n");
 		return Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 	}
 	
@@ -19,18 +19,24 @@ public class ArduinoAdapter {
 		boolean ack = false;
 		int readCount = 0;
 		try {
+			while(!ack){
 			robot.SimpleRobot.arduinoSerial.write(msg);
 			System.out.println("The serial write happened");
-			while(robot.SimpleRobot.arduinoSerial.available()<5){
-				System.out.println("Still waiting for serial data return");
+			while(robot.SimpleRobot.arduinoSerial.available()<5 && readCount<= 200){
+				//System.out.println("Still waiting for serial data return");
+				readCount++;
 			}
-			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
+			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
 				System.out.println("Acked");
-				return true;
+				ack =  true;
 				
 			}else{
-				setMotorSpeed(pin, speed);
-			}
+				if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
+					System.out.println("Acked");
+					ack = true;
+				}
+			}}
+			return true;
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
 		}
