@@ -8,8 +8,9 @@ import pathfinder.Node;
 
 public class Pathfinder {
 	private Position start;
-	private Position[] goals;
-	private Zone[] illegalZones;
+
+	private Position goals;
+	private ArrayList<Zone> illegalZones;
 	private ArrayList<Position> turnPoints;
 	
 	private AreaMap map;
@@ -17,7 +18,7 @@ public class Pathfinder {
 	private AStar astar;
 	
 
-	public Pathfinder(Position start, Position[] goals, Zone[] illegalZones){
+	public Pathfinder(Position start, Position goals, ArrayList<Zone> illegalZones){
 		this.goals = goals;
 		this.illegalZones = illegalZones;
 		map = new AreaMap(4000, 2000, this.illegalZones);
@@ -31,7 +32,15 @@ public class Pathfinder {
 	
 	public void calculateRoute(int currentGoal){
 		this.astar.calcShortestPath(this.start.getX(), this.start.getY(), 
-				this.goals[currentGoal].getX(), this.goals[currentGoal].getY());
+				this.goals.getX(), this.goals.getY());
 	}
 	
+	public void addIllegalZone(Zone illegalZone){
+		this.illegalZones.add(illegalZone);
+	}
+	
+	public void updateStart(Position newStart){
+		this.start = newStart;
+		this.calculateRoute();
+	}
 }

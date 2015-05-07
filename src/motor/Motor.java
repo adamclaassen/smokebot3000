@@ -12,10 +12,8 @@ public abstract class Motor {
 		this.outputLow = outputLow;
 		this.outputHigh = outputHigh;
 	}
-	
-	public void setSpeed(double speed){
-		ard.setMotorSpeed(pin, speed);
-	}
+
+	public abstract void setSpeed(int speed);
 	
 	public double getSpeed(){
 		return this.speed;

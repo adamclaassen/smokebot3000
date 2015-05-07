@@ -6,7 +6,7 @@ public class Depth extends Sensor{
 		super(inputHigh, inputLow);
 	}
 	public Double read(){
-		Double d = Double.parseDouble(robot.SimpleRobot.serial.read().split("<|>")[1].split("/")[1]);
+		Double d = Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 		depth = d;
 		return depth;
 	}

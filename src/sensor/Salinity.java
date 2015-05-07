@@ -17,7 +17,7 @@ public class Salinity extends Sensor{
 	}
 	
 	public Double read(){
-		Double sal = Double.parseDouble(robot.SimpleRobot.serial.read().split("<|>")[1].split("/")[1]);
+		Double sal = Double.parseDouble(robot.SimpleRobot.arduinoSerial.read().split("<|>")[1].split("/")[1]);
 		this.sal = sal;
 		return this.sal;
 	}

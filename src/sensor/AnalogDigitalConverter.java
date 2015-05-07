@@ -1,14 +1,23 @@
 package sensor;
 
-import com.pi4j.wiringpi.Spi;
+import java.io.IOException;
+
+import com.pi4j.io.spi.*;
 
 public class AnalogDigitalConverter extends Sensor{
+	
+	SpiDevice adc;
 
 	public AnalogDigitalConverter(float inputHigh, float inputLow) {
 		super(inputHigh, inputLow);
+		try {
+			adc = SpiFactory.getInstance(SpiChannel.CS0, 3200000,SpiMode.MODE_1);
+		} catch (IOException e) {
+			robot.SimpleRobot.eHandler.addError(e);
+		}
 	}
 
-	public Double read(int channel) {
+	public int read(int channel) {
 		/*
 		 * Format for spi: 000011(0/1)1
 		 *  four leading zeros to make the byte
@@ -17,9 +26,11 @@ public class AnalogDigitalConverter extends Sensor{
 		 *  3rd bit selects channel (channel 0 is 0)
 		 *  4th bit selects MSB/LSB (keep 1 for MSB)
 		 */
-		byte[] settings = {(byte) Integer.parseInt(String.format("000011{0}1", channel), 2)};
-		int data = Spi.wiringPiSPIDataRW(Spi.CHANNEL_0, settings);
-		return (double) data;
+		//byte[] settings = {0,1,1,(byte) channel, 1,0,0,0  ,0,0,0,0 ,0,0,0,0};
+		byte[] settings = {(byte) (0b01101000+(channel*16)), 0b00000000};
+		byte[] data = robot.SimpleRobot.spi.write(adc, settings);
+		int value = data[1] + ((data[0] & 0b11) << 8);
+		return value;
 	}
 
 	@Override

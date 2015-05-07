@@ -2,6 +2,8 @@ package robot;
 
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.Clock;
 
@@ -22,8 +24,9 @@ import sensor.*;
 import comm.*;
 import util.*;
 
+import com.pi4j.wiringpi.Spi;
 
-
+import java.time.Clock;
 
 
 public class SimpleRobot {
@@ -42,16 +45,14 @@ public class SimpleRobot {
 	private static Depth depth;
 	private static Double sal;
 	private static Double d;
-	private static ArduinoAdapter ard;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
-	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
-	
-	private static int obsDist;
+
+	private static int obsDist = 50;
 	private Zone[] obs = {
 			new Zone(1200,1400,obsDist),
 			new Zone(1200,600 ,obsDist),
@@ -68,36 +69,45 @@ public class SimpleRobot {
 	
 	//public objects
 	public static ErrorHandler eHandler;
-	public static SerialWrapper serial;
-	public static ArduinoAdapter ardu;
+	public static SerialWrapper arduinoSerial;
+	public static comm.ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
-
+	public static Clock timer;
 	
 	// constants
 
-	private final static double defaultSpeed = 1;
-	
+	private final static int defaultSpeed = 1;
 	public static void main(String[] args) {
-		
+
+		//software objects
 		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
+		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-		radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
+		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
+		routeTaken = new ArrayList<Position>();
+		destinations = new ArrayList<Position>();
+		
+		//busses
+		spi = new SPIWrapper();
+		arduinoSerial = new SerialWrapper(getArduinoSerialPort());
+		ardu = new comm.ArduinoAdapter();
+		//i2c = new I2CWrapper();
+		
+		//hardware objects
+		radio = new Radio();
+		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		//currentPos = radio.getCurrentPos();
-		currentPos = new Position(0,0,0);
-		adc = new AnalogDigitalConverter(0, 1024);
-		eHandler = new ErrorHandler();
-		ardu = new ArduinoAdapter();
-		serial = new SerialWrapper();
-		spi = new SPIWrapper();
-		i2c = new I2CWrapper(0);
-		//xml doc stuff
+		
+		//hardware-dependant software objects
+		currentPos = radio.getCurrentPos();
+		
+		//xml code
 		dbf = DocumentBuilderFactory.newInstance();
 		db = null;
 		try {
@@ -105,16 +115,24 @@ public class SimpleRobot {
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
 		}
-		xmldoc = db.newDocument();
 		
-		System.out.println("All objects initialized");
-		
-		generateXML(xmldoc);
-		
-		leftMotor.setSpeed(150);
-		driveToPoint(new Position(2000, 1000), 1);
-		System.out.println("Drove to point");
-		driveOnPath(pathfinder.getTurnPoints(), defaultSpeed); 
+		/*drive(150, 0);
+		long time = timer.millis();
+		while(time+10000>timer.millis()){
+			
+		}
+		drive(0,0);
+		*/
+		while(true){
+			eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+			while(radio.radioSer.available()>0){
+				//[1,3.394,3.435,2.324,
+				//currentPos = radio.getCurrentPos();
+				//System.out.println(currentPos.getX());
+				//System.out.println(currentPos.getY());
+				System.out.println(radio.radioSer.read());
+			}
+		}
 	}
 	
 	/**
@@ -127,13 +145,13 @@ public class SimpleRobot {
 	 * @param fwdSpeed
 	 * @param turnSpeed
 	 */
-	public static void drive(double fwdSpeed, double turnSpeed){
-		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
-		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
+	public static void drive(int fwdSpeed, int turnSpeed){
+		leftMotor.setSpeed(fwdSpeed);
+		rightMotor.setSpeed(fwdSpeed);
 	}
 	
 	public static void readSensors(){
-		String msg = serial.read();
+		String msg = arduinoSerial.read();
 		if(msg.substring(1, 3).equals("sd")){
 			d = depth.read(msg);
 		}
@@ -149,12 +167,12 @@ public class SimpleRobot {
 	 * @param dest
 	 * @param speed
 	 */
-	public static void driveToPoint(Position dest, double speed){
+	public static void driveToPoint(Position dest, int speed){
 		dest.setNearbyRadius(25);
 		turnPid.setSetpoint(currentPos.getHeadTo(dest));
 				
 		while(!dest.isNearby(currentPos)){
-			drive(speed, turnPid.update(currentPos.getHead()));
+			drive(speed, (int)turnPid.update(currentPos.getHead()));
 			updateAll();
 		}
 	}
@@ -166,7 +184,7 @@ public class SimpleRobot {
 	 * @param path
 	 * @param speed
 	 */
-	public static void driveOnPath(ArrayList<Position> path, double speed){
+	public static void driveOnPath(ArrayList<Position> path, int speed){
 		path.forEach((pos) -> driveToPoint(pos, speed));
 	}
 	
@@ -233,6 +251,16 @@ public class SimpleRobot {
 		parent.appendChild(x);
 		parent.appendChild(y);
 		parent.appendChild(rot);
+	}
+	
+	public static String getArduinoSerialPort(){
+		File dev = new File("/dev/");
+		for(String f:dev.list()){
+			if(f.startsWith("ttyACM")){
+				return "/dev/"+f;
+			}
+		}
+		return null;
 	}
 
 }

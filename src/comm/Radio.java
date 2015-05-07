@@ -1,36 +1,32 @@
 package comm;
 
 import util.Position;
-import com.pi4j.wiringpi.Serial;
+import comm.SerialWrapper;
 
 
 // int radio_id,double x,double y,double head (radians),double timer
 public class Radio {
-	int txPin;
-	int rxPin;
-	int fd;
+	
+	public SerialWrapper radioSer;
 	
 	public Radio(){
-		fd = Serial.serialOpen("/dev/ttyAMA0", 115200);
-		Serial.serialFlush(fd);
-		
+		radioSer = new SerialWrapper("/dev/ttyAMA0");
 	}
 	
-	@SuppressWarnings("deprecation")
 	public Position getCurrentPos(){
-		int dataAvail = Serial.serialDataAvail(this.fd);
-		char[] serialChars = new char[dataAvail];
-		
-		for(int i = 0; i< dataAvail; i++){
-			serialChars[i] = (char) Serial.serialGetchar(fd);
+		if(this.radioSer.available()>0){
+		String rawInput = this.radioSer.read(); 
+		if(rawInput.lastIndexOf("[")!=-1 && rawInput.lastIndexOf("]")!=-1){
+			String lastPos = rawInput.substring(rawInput.lastIndexOf('[')+1, rawInput.lastIndexOf(']'));
+			String[] splitData = lastPos.split(",");
+			return new Position(
+					(int) (1000* Double.parseDouble(splitData[1])),
+					(int) (1000* Double.parseDouble(splitData[2])),
+					(int) Double.parseDouble(splitData[3])
+					);
 		}
-		
-		String[] splitData = String.copyValueOf(serialChars).split(",");
-		return new Position(
-				(int) (1000* Double.parseDouble(splitData[1])),
-				(int) (1000* Double.parseDouble(splitData[2])),
-				(int) Double.parseDouble(splitData[3])
-				);
+		}
+		return new Position(0,0,0);
 	}
 	
 }
