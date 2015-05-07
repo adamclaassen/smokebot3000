@@ -100,7 +100,7 @@ public class SimpleRobot {
 		
 		//busses
 		spi = new SPIWrapper();
-		arduinoSerial = new SerialWrapper(getArduinoSerialPort());
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new comm.ArduinoAdapter();
 		
 		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
