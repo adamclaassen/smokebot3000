@@ -13,7 +13,6 @@ void setup() {
 }
 
 void loop(){
-  dip();
   if(Serial.available()>=5){
     //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
