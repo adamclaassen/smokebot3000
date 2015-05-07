@@ -37,29 +37,17 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
-
+	private static Motor servoMotor;
 	private static Position currentPos;
+	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
-
 	private static Clock timer;
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
+	private static I2CColor color;
+	private static Gyro gyro;
 
-	private static int obsDist = 50;
-	private Zone[] obs = {
-			new Zone(1200,1400,obsDist),
-			new Zone(1200,600 ,obsDist),
-			new Zone(2100,1800,obsDist),
-			new Zone(2400,1800,obsDist),
-			new Zone(2200,8000,obsDist),
-			new Zone(2200,800 ,obsDist),
-			new Zone(3200,700 ,obsDist)
-		};
-	
-	private Position[] goals = {
-			new Position(3250,1700)
-	};
 	
 	//public objects
 	public static ErrorHandler eHandler;
@@ -68,55 +56,39 @@ public class SimpleRobot {
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
 
-	
 	// constants
-
 	private final static int defaultSpeed = 1;
+	private static int obsDist = 50;
+	
 	public static void main(String[] args) {
 
-		
-		//pathfinder = new Pathfinder(currentPos, destinations, obsticleMap);
 		eHandler = new ErrorHandler();
+		//hardware busses
+		radio = new Radio();
+		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
+		ardu = new comm.ArduinoAdapter();
+		//i2c = new I2CWrapper();
+		System.out.println("Hardware busses");
+		//software
+		distPid = new Pid(1, 1, 1);
+		turnPid = new Pid(1, 1, 1);
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
 		destinations = new ArrayList<Position>();
-
-		radio = new Radio();
-
-		distPid = new Pid(1, 1, 1);
-		turnPid = new Pid(1, 1, 1);
+		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 
-		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
-		routeTaken = new ArrayList<Position>();
-		destinations = new ArrayList<Position>();
-		currentPos = radio.getCurrentPos();
-		
-		//busses
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-		ardu = new comm.ArduinoAdapter();
-		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		
-		currentPos = radio.getCurrentPos();
-		currentPos = new Position(0,0,0);
-
-		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
-
-		ardu = new comm.ArduinoAdapter();
 		System.out.println(eHandler.getErrors().toString());
 
-		
-		dbf = DocumentBuilderFactory.newInstance();
-		db = null;
-		try {
-			db = dbf.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			eHandler.addError(e);
+			
+		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
+		System.out.println("new read:");
+		System.out.println(adc.read(0));
+		System.out.println(adc.read(1));
+			
 		}
-	}
 
 	
 	/**
@@ -132,6 +104,15 @@ public class SimpleRobot {
 	public static void drive(int fwdSpeed, int turnSpeed){
 		leftMotor.setSpeed((fwdSpeed+turnSpeed)/2);
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
+	}
+	
+	public static void openClaw(){ //this is a servo motor
+		servoMotor.setSpeed(170); 
+	}
+	
+	public static void readSensors(){
+		
+		//radio.send(Double.toString());
 	}
 	
 	/**
@@ -166,7 +147,7 @@ public class SimpleRobot {
 	 * to anything that doesn't update some other way. 
 	 */
 	public static void updateAll(){
-		currentPos = radio.getCurrentPos();
+		//this.currentPos = radio.getLatestPos();
 	}
 	
 	/**
@@ -225,5 +206,4 @@ public class SimpleRobot {
 		parent.appendChild(y);
 		parent.appendChild(rot);
 	}
-
 }
