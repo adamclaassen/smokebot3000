@@ -39,7 +39,6 @@ public class SimpleRobot {
 	private static Motor rightMotor;
 
 	private static Position currentPos;
-	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
 
 	private static Clock timer;
@@ -86,7 +85,6 @@ public class SimpleRobot {
 
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
-		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
 
@@ -104,7 +102,6 @@ public class SimpleRobot {
 		
 		currentPos = radio.getCurrentPos();
 		currentPos = new Position(0,0,0);
-		adc = new AnalogDigitalConverter(0, 1024);
 
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 
@@ -119,13 +116,7 @@ public class SimpleRobot {
 		} catch (ParserConfigurationException e) {
 			eHandler.addError(e);
 		}
-
-			while(true){
-			//eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
-				System.out.println(adc.read(0));
-				System.out.println(adc.read(1));
-			}
-		}
+	}
 
 	
 	/**
