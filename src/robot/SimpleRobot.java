@@ -113,7 +113,6 @@ public class SimpleRobot {
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 
 		ardu = new comm.ArduinoAdapter();
-		spi = new SPIWrapper();
 		System.out.println(eHandler.getErrors().toString());
 
 		
