@@ -112,9 +112,7 @@ public class SimpleRobot {
 	}
 	
 	public static int readSensors(){
-		while(!arduinoSerial.read().equals("<a//")){
-			ardu.readData();
-		}
+		ardu.sendSerialMessage("<r//>");
 		try{
 			File file = new File("/sys/bus/w1/devices/xxxx/w1_slave");
 			FileInputStream fis = new FileInputStream(file);
