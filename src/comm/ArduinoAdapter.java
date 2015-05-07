@@ -25,7 +25,9 @@ public class ArduinoAdapter {
 				System.out.println("Still waiting for serial data return");
 			}
 			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
+				System.out.println("Acked");
 				return true;
+				
 			}else{
 				setMotorSpeed(pin, speed);
 			}
