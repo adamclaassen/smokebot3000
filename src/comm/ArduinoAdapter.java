@@ -56,7 +56,7 @@ public boolean sendSerialMessage(String mesg){
 				System.out.println("Still waiting for serial data return");
 				readCount++;
 			}
-			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
+			/*if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
 				System.out.println("Acked");
 				ack =  true;
 			
@@ -65,7 +65,7 @@ public boolean sendSerialMessage(String mesg){
 					System.out.println("Acked");
 					ack = true;
 				}
-			}
+			}*/
 		}
 		return true;
 	} catch (IllegalStateException e) {
