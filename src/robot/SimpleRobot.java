@@ -79,15 +79,15 @@ public class SimpleRobot {
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		//leftMotor.setSpeed(254);
-		//leftMotor.setSpeed(130);
+		leftMotor.setSpeed(254);
+		leftMotor.setSpeed(130);
 		System.out.println(eHandler.getErrors().toString());
-		while(arduinoSerial.available() <= 0){
-			System.out.println("nada");
-		}
-		while(arduinoSerial.available() >= 0){
-			System.out.println(arduinoSerial.read());
-		}
+		//while(arduinoSerial.available() <= 0){
+			//System.out.println("nada");
+		//}
+		//while(arduinoSerial.available() >= 0){
+			//System.out.println(arduinoSerial.read());
+		//}
 
 			
 		eHandler.getErrors().forEach((e) -> System.out.println(e.toString()));
