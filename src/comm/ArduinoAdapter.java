@@ -26,6 +26,7 @@ public class ArduinoAdapter {
 				//System.out.println("Still waiting for serial data return");
 				readCount++;
 			}
+			if(robot.SimpleRobot.arduinoSerial.available() >= 0){
 			if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
 				System.out.println("Acked");
 				ack =  true;
@@ -35,7 +36,7 @@ public class ArduinoAdapter {
 					System.out.println("Acked");
 					ack = true;
 				}
-			}}
+			}}}
 			return true;
 		} catch (IllegalStateException e) {
 			robot.SimpleRobot.eHandler.addError(e);
