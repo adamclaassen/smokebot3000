@@ -17,7 +17,7 @@ void loop(){
     //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
   }
-  while(msg.length()>=5){
+  if(msg.length()>=5){
     //Serial.println(msg);
     processInput(msg.substring(msg.indexOf("<"), msg.indexOf(">")));
     msg = msg.substring(msg.indexOf(">"))+1;
