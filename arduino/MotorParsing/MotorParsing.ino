@@ -13,12 +13,14 @@ void setup() {
 }
 
 void loop(){
+  acknowledge();
   if(Serial.available()>=5){
     //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
   }
   if(msg.length()>=5){
     //Serial.println(msg);
+    acknowledge();
     processInput(msg.substring(msg.indexOf("<"), msg.indexOf(">")));
     msg = msg.substring(msg.indexOf(">"))+1;
   }
