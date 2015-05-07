@@ -79,7 +79,7 @@ public class SimpleRobot {
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		leftMotor = new ArduinoMotorController(9);
 		rightMotor = new ArduinoMotorController(10);
-		leftMotor.setSpeed(254);
+		rightMotor.setSpeed(130);
 		leftMotor.setSpeed(130);
 		System.out.println(eHandler.getErrors().toString());
 			
