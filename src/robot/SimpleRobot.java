@@ -40,7 +40,6 @@ public class SimpleRobot {
 	private static Pid turnPid;
 	private static Motor leftMotor;
 	private static Motor rightMotor;
-	private static Motor servoMotor;
 	private static Position currentPos;
 	private static AnalogDigitalConverter adc;
 	private static int currentDriveSpeed = 0;
@@ -48,8 +47,6 @@ public class SimpleRobot {
 	private static DocumentBuilderFactory dbf;
 	private static DocumentBuilder db;
 	private static Document xmldoc;
-	private static I2CColor color;
-	private static Gyro gyro;
 
 	
 	//public objects
@@ -121,13 +118,8 @@ public class SimpleRobot {
 		rightMotor.setSpeed((fwdSpeed-turnSpeed)/2);
 	}
 	
-	public static void openClaw(){ //this is a servo motor
-		servoMotor.setSpeed(170); 
-	}
-	
 	public static void readSensors(){
 		
-		//radio.send(Double.toString());
 	}
 	
 	/**

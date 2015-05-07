@@ -29,7 +29,7 @@ void processInput(String msg){
     //Serial.write(msg);
     if(msg[1] == 'r'){
       readSensor();
-      acknowledge();
+      //acknowledge();
     }
     if(msg[1] == 'm'){
       motorControl(msg);
