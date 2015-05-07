@@ -86,9 +86,9 @@ public class SimpleRobot {
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		adc = new AnalogDigitalConverter(0, 1024);
-		leftMotor = new ArduinoMotorController(9);
-		rightMotor = new ArduinoMotorController(10);
-		servoMotor= new ArduinoMotorController(11);
+		leftMotor = new ArduinoMotorController(3);
+		rightMotor = new ArduinoMotorController(6);
+		servoMotor= new ArduinoMotorController(5);
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
@@ -97,10 +97,13 @@ public class SimpleRobot {
 		
 		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
 		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		driveToPoint(new Position(10,10),150);
+		driveToPoint(new Position(1200,1000),150);
 		driveToPoint(new Position(2200,800),150);
 		openClaw();
+		closeClaw();
 		driveToPoint(currentPos,150);
+		openClaw();
+		
 		
 		
 		}
@@ -165,14 +168,18 @@ public class SimpleRobot {
 	
 	public static void openClaw(){ //this is a servo motor
 		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime <= 3000){ //opens servo for 3 seconds
-			servoMotor.setSpeed(170);
+		while(System.currentTimeMillis() - startTime <= 1500){ //opens servo for 3 seconds
+			servoMotor.setSpeed(255);
 		}
-		startTime = System.currentTimeMillis();	
-		while(System.currentTimeMillis() - startTime <= 3000){ //opens servo for 3 seconds
-			servoMotor.setSpeed(-170);
-		}
+		
 	 
+	}
+	
+	public static void closeClaw(){
+		long startTime = System.currentTimeMillis();	
+		while(System.currentTimeMillis() - startTime <= 1500){ //opens servo for 3 seconds
+			servoMotor.setSpeed(-255);
+		}
 	}
 	
 	public static void readSensors(){
