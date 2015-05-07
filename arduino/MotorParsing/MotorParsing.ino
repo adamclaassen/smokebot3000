@@ -10,17 +10,21 @@ void setup() {
     pinMode(10, OUTPUT);
     Serial.begin(9600);
     sensor.attach(11);
+    //analogWrite(9,150);
+    
+  sensor.write(base);
 }
 
 void loop(){
-  acknowledge();
+  /*if(Serial.available()>0){
+    Serial.println("hi");
+  }*/
   if(Serial.available()>=5){
     //Serial.println("found more than or eual to 5 serial bytes");
     msg = Serial.readString();
   }
-  if(msg.length()>=5){
+  while(msg.length()>=5){
     //Serial.println(msg);
-    acknowledge();
     processInput(msg.substring(msg.indexOf("<"), msg.indexOf(">")));
     msg = msg.substring(msg.indexOf(">"))+1;
   }
@@ -67,7 +71,6 @@ void motorControl(String msg){
     analogWrite(pin.toInt(),spd.toInt());
     //Serial.println("<a//>");
 }
-
 void dip(){
   sensor.write(base+15);
   delay(2000);
