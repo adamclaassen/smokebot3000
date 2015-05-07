@@ -25,17 +25,20 @@ public class ArduinoAdapter {
 				while(robot.SimpleRobot.arduinoSerial.available()<5 && readCount<= 200){
 					//System.out.println("Still waiting for serial data return");
 					readCount++;
-				}
+				}System.out.println("T");
 				if(robot.SimpleRobot.arduinoSerial.available() >= 0){
+					System.out.println("E");
 					if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>\n")){
 						System.out.println("Acked");
 						ack =  true;
 				
 					}else{
+						System.out.println("S");
 						if(robot.SimpleRobot.arduinoSerial.read().equals("<a//>")){
 							System.out.println("Acked");
 							ack = true;
 						}
+						System.out.println("T");
 					}	
 				}
 			}
