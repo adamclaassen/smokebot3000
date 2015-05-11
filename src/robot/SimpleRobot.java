@@ -92,18 +92,20 @@ public class SimpleRobot {
 		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
-		currentPos = radio.getCurrentPos();
+		//currentPos = radio.getCurrentPos();
+		currentPos = new Position(200,200);
 		
 		
-		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
-		driveToPoint(new Position(1200,1000),150);
-		driveToPoint(new Position(2200,800),150);
+		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		//driveToPoint(new Position(1200,1000),150);
+		//driveToPoint(new Position(2200,800),150);
 		openClaw();
 		closeClaw();
 		driveToPoint(currentPos,150);
 		openClaw();
 		
+		//run one motor 1/4th of another
 		
 		
 		}
@@ -185,6 +187,15 @@ public class SimpleRobot {
 	public static void readSensors(){
 		
 		//radio.send(Double.toString());
+	}
+	
+	public static void turn(){
+		long startTime = System.currentTimeMillis();
+		while(System.currentTimeMillis() - startTime <= 1500){ //opens servo for 3 seconds
+			leftMotor.setSpeed(160);
+			rightMotor.setSpeed(40);
+		}
+		
 	}
 	
 	/**
