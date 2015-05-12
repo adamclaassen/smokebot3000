@@ -60,9 +60,8 @@ public class SimpleRobot {
 	public static ArduinoAdapter ardu;
 	public static SPIWrapper spi;
 	public static I2CWrapper i2c;
-
-	
 	private static int obsDist = 50;
+	
 	
 
 
@@ -71,35 +70,42 @@ public class SimpleRobot {
 	private final static int defaultSpeed = 1;
 	
 	public static void main(String[] args) {
-
-		
 		
 		i2c = new I2CWrapper();
 		eHandler = new ErrorHandler();
 		routeTaken = new ArrayList<Position>();
 		obsticleMap = new ArrayList<Zone>();
+		obsticleMap.add(new Zone(1200,1400,obsDist));
+		obsticleMap.add(new Zone(1200,600 ,obsDist));
+		obsticleMap.add(new Zone(2100,1800,obsDist));
+		obsticleMap.add(new Zone(2400,1800,obsDist));
+		obsticleMap.add(new Zone(2200,8000,obsDist));
+		obsticleMap.add(new Zone(2200,800,obsDist));
+		obsticleMap.add(new Zone(3200,700 ,obsDist));
+		
 		destinations = new ArrayList<Position>();
 		arduinoSerial = new SerialWrapper("/dev/ttyACM0");
 		ardu = new ArduinoAdapter();
 		spi = new SPIWrapper();
-		radio = new Radio();
+		//radio = new Radio();
 		distPid = new Pid(1, 1, 1);
 		turnPid = new Pid(1, 1, 1);
 		adc = new AnalogDigitalConverter(0, 1024);
 		leftMotor = new ArduinoMotorController(3);
 		rightMotor = new ArduinoMotorController(6);
 		servoMotor= new ArduinoMotorController(5);
-		obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
+		//obsticleMap = new ArrayList<Zone>(); //fill in obstacle map
 		routeTaken = new ArrayList<Position>();
 		destinations = new ArrayList<Position>();
 		//currentPos = radio.getCurrentPos();
 		currentPos = new Position(200,200);
 		
 		
-		pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
-		pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
+		//pathfinder = new Pathfinder(currentPos, new Position(2200,800), obsticleMap); 
+		//pathfinder.getTurnPoints().forEach((pos) -> (driveToPoint(pos, 1)));
 		//driveToPoint(new Position(1200,1000),150);
 		//driveToPoint(new Position(2200,800),150);
+		turn();
 		openClaw();
 		closeClaw();
 		driveToPoint(currentPos,150);
